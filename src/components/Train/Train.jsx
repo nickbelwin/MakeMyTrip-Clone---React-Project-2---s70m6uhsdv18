@@ -8,7 +8,7 @@ import TrainModal from "../Modals/TrainModal";
 
 function Train(props) {
     const { trainClassCode, setTrainClassesCode, source, setSource,
-        destination,isModalOpen,setIsModalOpen, fromOrTo, setFromOrTo, } = useContext(AppContext);
+        destination, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, } = useContext(AppContext);
     const [sourceModal, setSourceModal] = useState(false);
     const [destinationModal, setDestinationModal] = useState(false);
     const [date, setDate] = useState("");
@@ -21,8 +21,8 @@ function Train(props) {
         setDestinationModal(false);
         setIsModalOpen(true);
         setFromOrTo("from");
-        document.getElementById("toArrow").style.transform="rotate(0deg)";
-        document.getElementById("fromArrow").style.transform="rotate(180deg)";
+        document.getElementById("toArrow").style.transform = "rotate(0deg)";
+        document.getElementById("fromArrow").style.transform = "rotate(180deg)";
     }
     const handleTo = (e) => {
         e.stopPropagation();
@@ -30,15 +30,15 @@ function Train(props) {
         setSourceModal(false);
         setIsModalOpen(true);
         setFromOrTo("to");
-        document.getElementById("toArrow").style.transform="rotate(180deg)";
-        document.getElementById("fromArrow").style.transform="rotate(0deg)";
+        document.getElementById("toArrow").style.transform = "rotate(180deg)";
+        document.getElementById("fromArrow").style.transform = "rotate(0deg)";
     }
     useEffect(() => {
         if (!isModalOpen) {
             setSourceModal(false);
             setDestinationModal(false);
-            document.getElementById("fromArrow").style.transform="rotate(0deg)";
-            document.getElementById("toArrow").style.transform="rotate(0deg)";
+            document.getElementById("fromArrow").style.transform = "rotate(0deg)";
+            document.getElementById("toArrow").style.transform = "rotate(0deg)";
         }
     }, [isModalOpen]);
     useEffect(() => {
@@ -56,9 +56,11 @@ function Train(props) {
                     <div className=" relative flex justify-center subNavbarBoxCover">
                         <TravelOptions />
                         <div className=" bg-white  rounded-2xl pt-16 pb-12 px-6 text-left mt-12 ">
+                            <p className=" w-full mb-2 text-center font-bold text-gray-700">Train Ticket Booking
+                                IRCTC Authorized e-ticketing.</p>
                             <div className=" grid borderGray rounded-lg w-full cursor-pointer bookingBox">
                                 <div onClick={handleFrom} className=" relative px-6 py-3 borderRight  hoverLightBlue">
-                                <span className="flex flex-row gap-1 alignCenter text-gray-800">From <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
+                                    <span className="flex flex-row gap-1 alignCenter text-gray-800">From <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {cityListArray?.map((val) => {
                                         return (
                                             <>
@@ -70,12 +72,12 @@ function Train(props) {
                                         )
                                     })}
                                     {sourceModal ?
-                                        <div className=" absolute z-20 top-28 flightModal" >
+                                        <div className=" absolute w-full z-20 top-10 flightModal" >
                                             <TrainModal />
                                         </div> : ""}
                                 </div>
                                 <div onClick={handleTo} className=" relative px-6 py-3 borderRight hoverLightBlue">
-                                <span className="flex flex-row gap-1 alignCenter text-gray-800">To <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
+                                    <span className="flex flex-row gap-1 alignCenter text-gray-800">To <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {cityListArray?.map((val) => {
                                         return (
                                             <>
@@ -87,7 +89,7 @@ function Train(props) {
                                         )
                                     })}
                                     {destinationModal ?
-                                        <div className=" absolute z-20 top-28 flightModal" >
+                                        <div className=" absolute z-20 w-full top-10 flightModal" >
                                             <TrainModal />
                                         </div> : ""}
                                 </div>
@@ -106,13 +108,13 @@ function Train(props) {
                                             return (
                                                 <>{
                                                     val.code === trainClassCode ?
-                                                    <>
-                                                    <span className=" font-extrabold text-3xl">{val.code}</span>
-                                                    <p className=" text-gray-800">{val.class}</p></>:""
+                                                        <>
+                                                            <span className=" font-extrabold text-3xl">{val.code}</span>
+                                                            <p className=" text-gray-800">{val.class}</p></> : ""
                                                 }</>
                                             )
                                         })}
-                                        
+
                                     </p>
                                 </div>
                             </div>

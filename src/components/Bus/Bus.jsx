@@ -55,6 +55,7 @@ function Bus(props) {
                     <div className=" relative flex justify-center subNavbarBoxCover">
                         <TravelOptions />
                         <div className=" bg-white  rounded-2xl pt-16 pb-12 px-6 text-left mt-12 ">
+                        <p className=" w-full mb-2 text-center font-bold text-gray-700">Bus Ticket Booking.</p>
                             <div className=" grid borderGray rounded-lg w-full cursor-pointer busBookingBox">
                                 <div onClick={handleFrom} className=" relative px-6 py-3 borderRight  hoverLightBlue">
                                 <span className="flex flex-row gap-1 alignCenter text-gray-800">From <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
@@ -69,7 +70,7 @@ function Bus(props) {
                                         )
                                     })}
                                     {sourceModal ?
-                                        <div className=" absolute z-20 top-28 flightModal" >
+                                        <div className=" absolute w-full z-20 top-10 flightModal" >
                                             <BusModal />
                                         </div> : ""}
                                 </div>
@@ -86,7 +87,7 @@ function Bus(props) {
                                         )
                                     })}
                                     {destinationModal ?
-                                        <div className=" absolute z-20 top-28 flightModal" >
+                                        <div className=" absolute w-full z-20 top-10 flightModal" >
                                             <BusModal />
                                         </div> : ""}
                                 </div>

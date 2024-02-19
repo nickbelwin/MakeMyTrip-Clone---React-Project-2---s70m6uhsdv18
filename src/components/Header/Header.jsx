@@ -7,7 +7,7 @@ const Header = () => {
             <header className=" overflow-hidden headerOne">
                 <div className=" flex flex-row m-auto alignCenter justify-between headerBox">
                     <div className=" cursor-pointer mmtlogo">
-                        <img className=" w-36" src="https://imgak.mmtcdn.com/pwa_v3/pwa_hotel_assets/header/mmtLogoWhite.png" alt="" />
+                        <img className=" w-28 mt-2" src="https://imgak.mmtcdn.com/pwa_v3/pwa_hotel_assets/header/mmtLogoWhite.png" alt="" />
                     </div>
                     <ul className=" flex flex-row text-white gap-3">
                         <li className=" flex flex-row alignCenter cursor-pointer">
