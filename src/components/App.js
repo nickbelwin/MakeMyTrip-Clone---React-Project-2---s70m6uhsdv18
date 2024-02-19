@@ -1,7 +1,26 @@
 import "../styles/App.css";
+import { Route, Routes } from "react-router";
+import AppContextProvider from "./ContextAPI/AppContext";
+import Home from "./Home/Home";
+import Header from "./Header/Header";
+import Hotel from "./Hotel/Hotel";
 
 function App() {
-  return <div className="App">App</div>;
+  return (<div className="App">
+    <AppContextProvider>
+      <div className=" overflow-hidden">
+        <Routes>
+          <Route path="/" element={<Header />} >
+            <Route index element={<Home/>} />
+            {/* <Route path="/flight" element={<Home/>} />
+            <Route path="/hotels" element={<Home/>} />
+            <Route path="/train" element={<Home/>} />
+            <Route path="/bus" element={<Home/>} /> */}
+          </Route>
+        </Routes>
+      </div>
+    </AppContextProvider>
+  </div>)
 }
 
 export default App;

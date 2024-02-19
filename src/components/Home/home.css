@@ -1,0 +1,8 @@
+.mainBannerImg{
+    width: 100vw;
+    min-height: 75vh;
+    background-image: url("https://imgak.mmtcdn.com/pwa_v3/pwa_commons_assets/desktop/bg6.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

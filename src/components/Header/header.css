@@ -1,0 +1,30 @@
+.headerOne{
+    width: 100vw;
+    position: absolute;
+    background-color: transparent;
+    -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+.headerBox{
+    max-width: 1200px;
+    min-width: 690px;
+}
+.alignCenter{
+    align-items: center;
+}
+.loginBtn{
+    width: 15vw;
+    background-image: var(--color-btn-primary-bg, linear-gradient(93deg, #53b2fe, #065af3));
+}
+.rotating {
+    animation: rotation 2s infinite linear;
+}
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
