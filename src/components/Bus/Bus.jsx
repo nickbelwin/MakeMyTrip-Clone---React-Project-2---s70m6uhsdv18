@@ -20,6 +20,8 @@ function Bus(props) {
         setDestinationModal(false);
         setIsModalOpen(true);
         setFromOrTo("from");
+        document.getElementById("fromArrow").style.transform="rotate(180deg)";
+        document.getElementById("toArrow").style.transform="rotate(0deg)";
     }
     const handleTo = (e) => {
         e.stopPropagation();
@@ -27,11 +29,15 @@ function Bus(props) {
         setSourceModal(false);
         setIsModalOpen(true);
         setFromOrTo("to");
+        document.getElementById("fromArrow").style.transform="rotate(0deg)";
+        document.getElementById("toArrow").style.transform="rotate(180deg)";
     }
     useEffect(() => {
         if (!isModalOpen) {
             setSourceModal(false);
             setDestinationModal(false);
+            document.getElementById("fromArrow").style.transform="rotate(0deg)";
+            document.getElementById("toArrow").style.transform="rotate(0deg)";
         }
     }, [isModalOpen]);
     useEffect(() => {
@@ -51,7 +57,7 @@ function Bus(props) {
                         <div className=" bg-white  rounded-2xl pt-16 pb-12 px-6 text-left mt-12 ">
                             <div className=" grid borderGray rounded-lg w-full cursor-pointer busBookingBox">
                                 <div onClick={handleFrom} className=" relative px-6 py-3 borderRight  hoverLightBlue">
-                                    <span className=" text-gray-800">From</span>
+                                <span className="flex flex-row gap-1 alignCenter text-gray-800">From <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {cityListArray?.map((val) => {
                                         return (
                                             <>
@@ -68,7 +74,7 @@ function Bus(props) {
                                         </div> : ""}
                                 </div>
                                 <div onClick={handleTo} className=" relative px-6 py-3 borderRight hoverLightBlue">
-                                    <span className=" text-gray-800">To</span>
+                                <span className="flex flex-row gap-1 alignCenter text-gray-800">To <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {cityListArray?.map((val) => {
                                         return (
                                             <>

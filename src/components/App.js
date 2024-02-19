@@ -12,10 +12,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Header />} >
             <Route index element={<Home/>} />
-            {/* <Route path="/flight" element={<Home/>} />
-            <Route path="/hotels" element={<Home/>} />
-            <Route path="/train" element={<Home/>} />
-            <Route path="/bus" element={<Home/>} /> */}
           </Route>
         </Routes>
       </div>

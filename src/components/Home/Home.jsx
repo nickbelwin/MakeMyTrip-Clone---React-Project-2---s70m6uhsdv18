@@ -4,7 +4,6 @@ import Flight from "../Flight/Flight";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../ContextAPI/AppContext";
 import Hotel from "../Hotel/Hotel";
-import { Route, Routes } from "react-router";
 import Train from "../Train/Train";
 import Bus from "../Bus/Bus";
 import { getAirportName, getHotelName } from "../Constant/constant";

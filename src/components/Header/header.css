@@ -18,7 +18,7 @@
     background-image: var(--color-btn-primary-bg, linear-gradient(93deg, #53b2fe, #065af3));
 }
 .rotating {
-    animation: rotation 2s infinite linear;
+    animation: rotation 2.5s infinite linear;
 }
 @keyframes rotation {
     from {

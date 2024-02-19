@@ -17,19 +17,15 @@ const Flight = (props) => {
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
     const [day, setDay] = useState("");
-    // const [loading, setLoading] = useState(false);
-    // const airNameData = async () => {
-    //     setLoading(true);
-    //     let res = await getAirportName();
-    //     setFlightArray(res);
-    //     setLoading(false);
-    // }
+
     const handleFrom = (e) => {
         e.stopPropagation();
         setSourceModal(true);
         setDestinationModal(false);
         setIsModalOpen(true);
         setFromOrTo("from");
+        document.getElementById("fromArrow").style.transform="rotate(180deg)";
+        document.getElementById("toArrow").style.transform="rotate(0deg)";
     }
     const handleTo = (e) => {
         e.stopPropagation();
@@ -37,15 +33,19 @@ const Flight = (props) => {
         setSourceModal(false);
         setIsModalOpen(true);
         setFromOrTo("to");
+        document.getElementById("toArrow").style.transform="rotate(180deg)";
+        document.getElementById("fromArrow").style.transform="rotate(0deg)";
     }
     useEffect(() => {
         if (!isModalOpen) {
             setSourceModal(false);
             setDestinationModal(false);
+            document.getElementById("fromArrow").style.transform="rotate(0deg)";
+            document.getElementById("toArrow").style.transform="rotate(0deg)";
         }
     }, [isModalOpen]);
     useEffect(() => {
-        // airNameData();
+    
         let date = new Date();
         setDate(date.getDate());
         setMonth(date.getMonth());
@@ -61,7 +61,7 @@ const Flight = (props) => {
                         <div className=" bg-white  rounded-2xl pt-16 pb-12 px-6 text-left mt-12 ">
                             <div className=" relative grid borderGray rounded-lg w-full cursor-pointer  bookingBox">
                                 <div onClick={handleFrom} className=" px-6 py-3 relative borderRight  hoverLightBlue">
-                                    <span className=" text-gray-800">From</span>
+                                    <span className="flex flex-row gap-1 alignCenter text-gray-800">From <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {!loading ? flightArray?.map((val) => {
                                         return (
                                             <>
@@ -78,7 +78,7 @@ const Flight = (props) => {
                                         </div> : ""}
                                 </div>
                                 <div onClick={handleTo} className=" relative px-6 py-3 borderRight hoverLightBlue">
-                                    <span className=" text-gray-800">To</span>
+                                    <span className="flex flex-row gap-1 alignCenter text-gray-800">To <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {!loading ? flightArray?.map((val) => {
                                         return (
                                             <>
