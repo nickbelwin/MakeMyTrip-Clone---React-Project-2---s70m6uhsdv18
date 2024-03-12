@@ -1,27 +1,58 @@
 import { memo, useContext, useEffect, useState } from "react";
 import "./flight.css";
 import { AppContext } from "../ContextAPI/AppContext";
-import { getAirportName, monthNames, weekName } from "../Constant/constant";
+import { flightCodeArray, getAirportName, monthNames, weekName } from "../Constant/constant";
 import { BrowserView } from "react-device-detect";
 import TravelOptions from "../TravelOptions/TravelOptions";
 import FlightModal from "../Modals/FlightModal";
 import ShimmerLocation from "../Loader/ShimmerLocation";
+import Calendar from "react-calendar";
+import { useNavigate } from "react-router";
 
 
 const Flight = (props) => {
     const {loading,  } = props;
-    const {flightArray,setFlightArray, source, destination, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo } = useContext(AppContext);
+    const {flightArray,setFlightArray, source, destination, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo,flightdate, setFlightDate } = useContext(AppContext);
     const [sourceModal, setSourceModal] = useState(false);
     const [destinationModal, setDestinationModal] = useState(false);
+    const [flightSourceCode,setFlightSourceCode]= useState("DEL");
+    const [flightDestinationCode,setFlightDestinationCode]= useState("BOM");
+    const [flightDateModal,setFlightDateModal]=useState(false);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
     const [day, setDay] = useState("");
-
+    const navigate=useNavigate();
+    
+    useEffect(()=>{
+        let from=flightCodeArray?.filter((val)=>{
+            if(source === val.city){
+                return val.code;
+            }
+        });
+        let to=flightCodeArray?.filter((val)=>{
+            if(destination === val.city){
+                return val.code;
+            }
+        });
+        setFlightSourceCode(from[0]?.code);
+        setFlightDestinationCode(to[0]?.code);
+        console.log(from[0]?.code,to[0]?.code);
+    },[source,destination])
+    const onChange = (newDate) => {
+        let chek=newDate;
+        setFlightDate(chek);
+        setDate(chek.getDate());
+        setMonth(chek.getMonth());
+        setYear(chek.getFullYear());
+        setDay(chek.getDay());
+      // Add any additional logic you need when the date changes
+    };
     const handleFrom = (e) => {
         e.stopPropagation();
         setSourceModal(true);
         setDestinationModal(false);
+        setFlightDateModal(false);
         setIsModalOpen(true);
         setFromOrTo("from");
         document.getElementById("fromArrow").style.transform="rotate(180deg)";
@@ -31,27 +62,36 @@ const Flight = (props) => {
         e.stopPropagation();
         setDestinationModal(true);
         setSourceModal(false);
+        setFlightDateModal(false);
         setIsModalOpen(true);
         setFromOrTo("to");
         document.getElementById("toArrow").style.transform="rotate(180deg)";
         document.getElementById("fromArrow").style.transform="rotate(0deg)";
     }
+    const handleDateModal=(e)=>{
+        e.stopPropagation();
+        setDestinationModal(false);
+        setSourceModal(false);
+        setFlightDateModal(true);
+        setIsModalOpen(true);
+    }
     useEffect(() => {
         if (!isModalOpen) {
             setSourceModal(false);
             setDestinationModal(false);
+            setFlightDateModal(false);
             document.getElementById("fromArrow").style.transform="rotate(0deg)";
             document.getElementById("toArrow").style.transform="rotate(0deg)";
         }
     }, [isModalOpen]);
     useEffect(() => {
-    
         let date = new Date();
         setDate(date.getDate());
         setMonth(date.getMonth());
         setYear(date.getFullYear());
         setDay(date.getDay());
     }, []);
+    console.log(day);
     return (
         <>
             <BrowserView>
@@ -74,7 +114,7 @@ const Flight = (props) => {
                                         )
                                     }) : <ShimmerLocation/>}
                                     {sourceModal ?
-                                        <div className=" absolute w-full z-20 top-10 flightModal" >
+                                        <div className=" absolute w-full z-20 left-0 top-10 flightModal" >
                                             <FlightModal />
                                         </div> : ""}
                                 </div>
@@ -91,28 +131,31 @@ const Flight = (props) => {
                                         )
                                     }) : <ShimmerLocation/> }
                                     {destinationModal ?
-                                        <div className=" absolute w-full z-20 top-10 flightModal" >
+                                        <div className=" absolute w-full z-20 left-0 top-10 flightModal" >
                                             <FlightModal />
                                         </div> : ""}
                                 </div>
-                                <div className=" px-6 py-3 borderRight hoverLightBlue">
+                                <div onClick={handleDateModal} className=" relative px-6 py-3 hoverLightBlue">
                                     <span className=" text-gray-800">Departure</span>
                                     <p>
-                                        <span className=" font-extrabold text-3xl">{date + 1}</span>
+                                        <span className=" font-extrabold text-3xl">{date}</span>
                                         <span className=" font-semibold">{monthNames[month]}'{year}</span>
-                                        <p className=" text-gray-800">{weekName[day - 1]}</p>
+                                        <p className=" text-gray-800">{weekName[day]}</p>
+                                        {flightDateModal ?
+                                        <div onClick={()=>{setIsModalOpen(false);}} className=" absolute w-full z-20 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                            <Calendar onChange={onChange}  />
+                                        </div> : ""}
+                                        <p>{}</p>
                                     </p>
                                 </div>
-                                <div className=" px-6 py-3 hoverLightBlue">
+                                {/* <div className=" px-6 py-3 hoverLightBlue">
                                     <span className=" text-gray-800">Travellers & Class</span>
                                     <p>
-                                        <span className=" font-extrabold text-3xl">{date + 1}</span>
-                                        <span className=" font-semibold">{monthNames[month]}'{year}</span>
-                                        <p className=" text-gray-800">{weekName[day - 1]}</p>
+                                        
                                     </p>
-                                </div>
+                                </div> */}
                             </div>
-                            <button className=" absolute px-6 w-1/6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
+                            <button onClick={()=>{ navigate(`/flights/${flightSourceCode}/${flightDestinationCode}/${weekName[day]}`)}} className=" absolute px-6 w-1/6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
                         </div>
                     </div>
                 </section>

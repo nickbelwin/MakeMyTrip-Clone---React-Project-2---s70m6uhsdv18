@@ -1,3 +1,122 @@
-.hotelBookingBox{
+.hotelBookingBox {
     grid-template-columns: 2fr 1fr 1fr 2fr 1fr;
+}
+.allHotelsBookingBox {
+    width: 50%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.lightWhite{
+    background-color: rgba(255, 255, 255, 0.068);
+}
+.fullWidth{
+    max-width: 75rem;
+}
+.hotelCardLeftSide{
+   /* width: 40rem; */
+}
+.lineHeight{
+    line-height: 0rem;
+}
+.ratingColor{
+    color: #0B58B4;
+}
+.ratingBackColor{
+    background-color: #0B58B4;
+}
+.leftGrayBorder{
+    border-left: 1px solid rgba(128, 128, 128, 0.293);
+}
+.hotelCardImg{
+    width: 13rem;
+    height: 13rem;
+}
+.gradientBackgroundBlue {
+    background: rgb(22, 65, 113);
+    background: linear-gradient(0deg, rgba(22, 65, 113, 1) 5%, rgba(6, 22, 38, 1) 100%);
+}
+.sortByBoxCover{
+    background-color: #DDF2FB;
+}
+.sortByBox{
+    max-width: 80%;
+    margin: auto;
+}
+.sortByBox p{
+    width: 30vw;
+}
+.allCardMainBox{
+    max-width: 75rem;
+    margin: auto;
+    grid-template-columns: 1fr 4fr;
+}
+.filterBox{
+    /* background-color: aquamarine; */
+}
+.sortSticky{
+    position: fixed;
+    top: 4.2rem;
+    width: 100%;
+}
+.checkbox{
+    color: #585858;
+}
+.checkbox input{
+    height: 1.3rem;
+    width: 1.3rem;
+}
+.hotelDetailBox{
+    margin: auto;
+    max-width: 75rem;
+    grid-template-columns: 3fr 1fr;
+}
+.mainImage{
+    width: 100%;
+    height: 30rem;
+}
+.arrowBack{
+    background-color: rgba(128, 128, 128, 0.032);
+}
+.hotelImageBox{
+    grid-template-columns: 3fr 1fr;
+}
+.allHotelImageBox{
+    max-height: 30.7rem;
+}
+@media (max-width: 520px){
+    .headerTwo{
+        width: 100vw;
+    }
+    /* .hotelDetailBox{
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+    }
+    .hotelImageBox{
+        display: flex;
+        flex-direction: column;
+    }
+    .allHotelImageBox{
+        overflow-x: scroll;
+        display: grid;
+        width: 100%;
+        grid-auto-flow: column;
+    } */
+    /* .hotelDetailBox{
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+    }
+    .mainImage{
+        height: 20rem;
+        margin-bottom: 1rem;
+    }
+    .hotelImageBox{
+        display: flex;
+        flex-direction: column;
+    }
+    .allHotelImageBox{
+        overflow-y: hidden;
+        overflow-x: auto;
+        grid-auto-columns: auto;
+        grid-auto-flow: column;
+        grid-template-rows: 1fr;
+    } */
 }

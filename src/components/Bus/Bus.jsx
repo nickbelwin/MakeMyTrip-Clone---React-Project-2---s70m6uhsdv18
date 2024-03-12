@@ -5,10 +5,12 @@ import { cityListArray, monthNames, weekName } from "../Constant/constant";
 import { BrowserView } from "react-device-detect";
 import TravelOptions from "../TravelOptions/TravelOptions";
 import BusModal from "../Modals/BusModal";
+import { useNavigate } from "react-router";
 function Bus(props) {
     const {isModalOpen,setIsModalOpen, source, 
         destination,fromOrTo, setFromOrTo } = useContext(AppContext);
     const [sourceModal, setSourceModal] = useState(false);
+    const navigate=useNavigate();
     const [destinationModal, setDestinationModal] = useState(false);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
@@ -70,7 +72,7 @@ function Bus(props) {
                                         )
                                     })}
                                     {sourceModal ?
-                                        <div className=" absolute w-full z-20 top-10 flightModal" >
+                                        <div className=" absolute w-full z-20 left-0 top-10 flightModal" >
                                             <BusModal />
                                         </div> : ""}
                                 </div>
@@ -87,7 +89,7 @@ function Bus(props) {
                                         )
                                     })}
                                     {destinationModal ?
-                                        <div className=" absolute w-full z-20 top-10 flightModal" >
+                                        <div className=" absolute w-full z-20 left-0 top-10 flightModal" >
                                             <BusModal />
                                         </div> : ""}
                                 </div>
@@ -100,7 +102,7 @@ function Bus(props) {
                                     </p>
                                 </div>
                             </div>
-                            <button className=" absolute px-6 w-1/6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
+                            <button onClick={()=>{navigate(`/Buses/${source}/${destination}/${weekName[day]}`)}} className=" absolute px-6 w-1/6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
                         </div>
                     </div>
                 </section>

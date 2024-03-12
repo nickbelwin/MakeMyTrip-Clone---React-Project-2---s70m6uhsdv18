@@ -1,3 +1,31 @@
 .busBookingBox{
     grid-template-columns: 3fr 3fr 1fr;
 }
+.ratingBack{
+    background-color: #23A596;
+}
+.lightBlueBack{
+    background-color: #EAF5FF;
+}
+.amenityBox{
+    border-radius: 10px;
+    color: #008CFF;
+    background-color: #EAF5FF;
+}
+.hoverLightBlue{
+    transition: .8s;
+}
+.hoverLightBlue:hover{
+    background-color: #EAF5FF;
+    border: 1px solid #008CFF;
+}
+.allBusCardMainBox{
+    max-width: 85vw;
+    margin: auto;
+    grid-template-columns: 2fr 6fr;
+}
+.sortPriceBox{
+    border: 1px solid #008CFF;
+    color: #008CFF;
+    background-color: #EAF5FF;
+}

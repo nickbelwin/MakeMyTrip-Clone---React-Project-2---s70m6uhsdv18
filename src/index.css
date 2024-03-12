@@ -25,6 +25,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+.borderGray{
+  border: 1px solid rgba(128, 128, 128, 0.293);
+}
+.borderblack{
+  border: 1px solid black;
+}
+.borderLeftGray{
+  border-left: 1px solid rgba(128, 128, 128, 0.293);
+}
+.borderTopGray{
+  border-top: 1px solid rgba(128, 128, 128, 0.293);
+}
+.borderBottomGray{
+  border-bottom: 1px solid rgba(128, 128, 128, 0.293);
+}
 .alignCenter{
   align-items: center;
 }
@@ -36,6 +56,15 @@ code {
 .hoverGrayShadow{
   transition: .8s;
 }
+.grayBlurShadow {
+  -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
+}
+.grayInsideShadow{
+  -webkit-box-shadow: inset 0px -7px 26px 0px rgba(0,0,0,0.47);
+-moz-box-shadow: inset 0px -7px 26px 0px rgba(0,0,0,0.47);
+box-shadow: inset 0px -7px 26px 0px rgba(0,0,0,0.47);
+}
 .hoverGrayShadow:hover{
   -webkit-box-shadow: 0px 0px 11px -6px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 11px -6px rgba(0, 0, 0, 0.75);
@@ -43,4 +72,16 @@ code {
 }
 .arrowAnime{
   transition: .5s;
+}
+.blueText{
+  color: #008CFF;
+}
+.blueBack{
+  background-color: #0088FF;
+}
+.blueBorderBottom{
+  border-bottom: 4px solid #0088FF;
+}
+.fullHeightInVh{
+  min-height: 100vh;
 }

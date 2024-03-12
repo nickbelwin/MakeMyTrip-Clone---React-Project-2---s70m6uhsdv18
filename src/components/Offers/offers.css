@@ -1,0 +1,57 @@
+.offerMainBox{
+    max-width: 75rem;
+    margin-bottom: 10rem;
+    margin-top: 3rem;
+}
+.navlist li{
+    cursor: pointer;
+}
+.blueNav{
+    color: #008CFF;
+    font-weight: 700;
+    border-bottom: 3px solid #008CFF;
+}
+.borderBottom{
+    border-bottom: 1.5px solid rgb(165, 164, 164);
+}
+.transformLeftArrow{
+    transform: rotate(90deg);
+}
+.transformRightArrow{
+    transform: rotate(-90deg);
+}
+.leftRadius{
+    border-radius: 50% 0 0 50%;
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: -3px 1px 4px -1px rgba(0, 0, 0, 0.2);;
+}
+.rightRadius{
+    border-radius: 0 50% 50% 0;
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 1px 4px -1px rgba(0, 0, 0, 0.2);;
+}
+.cardBorder{
+    -webkit-box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.75);
+}
+.offerCardImgBox{
+    max-width: 8rem;
+}
+.allCards{
+    height: 25rem;
+    grid-auto-flow: column;
+    grid-template-rows: 1fr 1fr;
+}
+.offerCard{
+    width: 30vw;
+    height: 11.5rem;
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+}
+.redborder{
+    width: 3rem;
+    height: 1.5px;
+    background-color:  red;
+}

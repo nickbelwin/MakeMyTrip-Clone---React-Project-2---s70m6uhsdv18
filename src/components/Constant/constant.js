@@ -3,7 +3,7 @@ import axios from "axios";
 export const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
   "July", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
-export const weekName=["Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ,"Sun",];
+export const weekName = ["Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat",];
 
 export const flightCodeArray = [
   { city: "Delhi", code: "DEL" },
@@ -28,8 +28,8 @@ export const flightCodeArray = [
   { city: "Guwahati", code: "GAU" },
   { city: "Bangalore", code: "BLR" },
 ];
-export const flightTravellersAndClass=[
-  {adult:[]}
+export const flightTravellersAndClass = [
+  { adult: [] }
 ];
 
 export const cityListArray = [
@@ -52,40 +52,118 @@ export const cityListArray = [
   { name: "VisakhaPatanam", location: "Visakhapatnam, Andhra Pradesh" },
   { name: "Allahabad", location: "Allahabad, Uttar Pradesh" },
 ];
-export const hotelPerNightPrice=[
-  "₹0-₹1500","₹1500-₹2500","₹2500-₹5000","₹5000+"
+export const hotelPerNightPrice = [
+  "₹0-₹1500", "₹1500-₹2500", "₹2500-₹5000", "₹5000+"
 ];
-export const trainClassArray=[
-  {class:"All Class",code:"ALL"},
-  {class:"Sleeper Class",code:"SL"},
-  {class:"Third AC",code:"3A"},
-  {class:"Second AC",code:"2A"},
-  {class:"First AC",code:"1A"},
-  {class:"Second Seating",code:"2S"},
-  {class:"Vistadome AC",code:"EV"},
-  {class:"AC Chair Ca",code:"CC"},
-  {class:"First Class",code:"FC"},
-  {class:"Third AC Economy",code:"3E"},
+export const trainClassArray = [
+  { class: "All Class", code: "ALL" },
+  { class: "Sleeper Class", code: "SL" },
+  { class: "Third AC", code: "3A" },
+  { class: "Second AC", code: "2A" },
+  { class: "First AC", code: "1A" },
+  { class: "Second Seating", code: "2S" },
+  { class: "Vistadome AC", code: "EV" },
+  { class: "AC Chair Ca", code: "CC" },
+  { class: "First Class", code: "FC" },
+  { class: "Third AC Economy", code: "3E" },
 ];
 
-//below API for getting airports name using city name
-export const getAirportName=async()=>{
-  try{
-    let res= await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/airport`,
-    {
-      headers:{"projectId":"ywhyenbsclpi"}
-    });
+//below API for getting airports name 
+export const getAirportName = async () => {
+  try {
+    let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/airport`,
+      {
+        headers: { "projectId": "ywhyenbsclpi" }
+      });
     return res.data.data.airports;
 
-  }catch(err){throw new Error(err)}
+  } catch (err) { throw new Error(err) }
 }
-export const getHotelName=async()=>{
-  try{
-    let res= await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/hotel`,
-    {
-      headers:{"projectId":"ywhyenbsclpi"}
-    });
+export const getAirports = async (from,to,weekDay) => {
+  try {
+    let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${from}","destination":"${to}"}&day=${weekDay}`,
+      {
+        headers: { "projectId": "ywhyenbsclpi" }
+      });
+      console.log(res);
+    if(res.status=== 200){
+      return res.data.data;
+    }
+
+  } catch (err) { console.log(err); }
+}
+//below API for getting hotels name 
+export const getHotelName = async () => {
+  try {
+    let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/city?limit=40`,
+      {
+        headers: { "projectId": "ywhyenbsclpi" }
+      });
     return res;
 
-  }catch(err){throw new Error(err)}
+  } catch (err) { throw new Error(err) }
 }
+export const searchHotels=async(city)=>{
+  try {
+    let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${city}"}`,
+      {
+        headers: { "projectId": "ywhyenbsclpi" }
+      });
+    return res;
+
+  } catch (err) { throw new Error(err) }
+}
+export const filterHotels=async(city,fields)=>{
+  try {
+    let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${city}"}&filter=${JSON.stringify(fields)}`,
+      {
+        headers: { "projectId": "ywhyenbsclpi" }
+      });
+    return res.data.data;
+
+  } catch (err) { throw new Error(err) }
+}
+export const getHotelDetails=async(hotelId)=>{
+  try {
+    let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/hotel/${hotelId}`,
+      {
+        headers: { "projectId": "ywhyenbsclpi" }
+      });
+    return res.data.data;
+
+  } catch (err) { throw new Error(err) }
+}
+// below api is related to Buses
+export const getBuses = async (from,to,weekDay) => {
+  try {
+    let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/bus?search={"source":"${from}","destination":"${to}"}&day=${weekDay}`,
+      {
+        headers: { "projectId": "ywhyenbsclpi" }
+      });
+      console.log(res);
+    if(res.status=== 200){
+      return res.data.data;
+    }
+
+  } catch (err) { console.log(err); }
+} 
+export const headerNavlist = [
+  {id:"FLIGHTS",name:"Flights", imageOff:"/img/flightOff.png",imageOn:"/img/flightOn.png"},
+  {id:"HOTELS",name:"Hotels", imageOff:"/img/hotelOff.png",imageOn:"/img/hotelOn.png"},
+  {id:"RAILS",name:"Trains", imageOff:"/img/trainOff.png",imageOn:"/img/trainOn.png"},
+  {id:"BUSES",name:"Buses", imageOff:"/img/busOff.png",imageOn:"/img/busOn.png"},
+
+]
+export const offerNavlist = [
+  {id:"ALL",name:"All Offers"},
+  {id:"FLIGHTS",name:"Flights"},
+  {id:"HOTELS",name:"Hotels"},
+  {id:"RAILS",name:"Trains"},
+]
+export const suggetionFilterArray=[
+  {id:"pool", name:"Swimming Pool"},
+  {id:"bar", name:"Bar"},
+  {id:"wifi", name:"Free WiFi"},
+  {id:"restaurant", name:"Restaurant"},
+  {id:"gym", name:"Gym"},
+] 

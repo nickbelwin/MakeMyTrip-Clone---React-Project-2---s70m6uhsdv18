@@ -1,4 +1,5 @@
 import { memo, useContext, useEffect, useState } from "react";
+import "./train.css";
 import { AppContext } from "../ContextAPI/AppContext";
 import { cityListArray, monthNames, trainClassArray, weekName } from "../Constant/constant";
 import { BrowserView } from "react-device-detect";
@@ -58,7 +59,7 @@ function Train(props) {
                         <div className=" bg-white  rounded-2xl pt-16 pb-12 px-6 text-left mt-12 ">
                             <p className=" w-full mb-2 text-center font-bold text-gray-700">Train Ticket Booking
                                 IRCTC Authorized e-ticketing.</p>
-                            <div className=" grid borderGray rounded-lg w-full cursor-pointer bookingBox">
+                            <div className=" grid borderGray rounded-lg w-full cursor-pointer trainbookingBox">
                                 <div onClick={handleFrom} className=" relative px-6 py-3 borderRight  hoverLightBlue">
                                     <span className="flex flex-row gap-1 alignCenter text-gray-800">From <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {cityListArray?.map((val) => {
@@ -72,7 +73,7 @@ function Train(props) {
                                         )
                                     })}
                                     {sourceModal ?
-                                        <div className=" absolute w-full z-20 top-10 flightModal" >
+                                        <div className=" absolute w-full z-20 left-0 top-10 flightModal" >
                                             <TrainModal />
                                         </div> : ""}
                                 </div>
@@ -89,7 +90,7 @@ function Train(props) {
                                         )
                                     })}
                                     {destinationModal ?
-                                        <div className=" absolute z-20 w-full top-10 flightModal" >
+                                        <div className=" absolute z-20 w-full left-0 top-10 flightModal" >
                                             <TrainModal />
                                         </div> : ""}
                                 </div>
