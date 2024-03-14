@@ -17,12 +17,18 @@ import { BrowserView, MobileView } from 'react-device-detect';
 function HotelDetails(props) {
     const {hotelId}=useParams();
     const [hotelInfo, sethotelInfo] = useState([]);
-    const [selectedNav, setSelectedNav] = useState("HOTELS");
     const { currentTravelOption, setCurrentTravelOption } = useContext(AppContext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
-
+    useEffect(()=>{
+        setCurrentTravelOption("HOTELS");
+    },[]);
+    const handleNav = (id) => {
+        setCurrentTravelOption(id);
+        navigate("/");
+        window.scrollTo(0, 0);
+    }
     const nextImg = () => {
         if (currentIndex < hotelInfo[0].images?.length - 1) {
             setCurrentIndex(currentIndex + 1);
@@ -54,7 +60,7 @@ function HotelDetails(props) {
     return (
         <main>
             <BrowserView>
-                <header id="showHeader" className=" overflow-hidden mb-3 bg-white headerTwo">
+                {/* <header id="showHeader" className=" overflow-hidden mb-3 bg-white headerTwo">
                     <div className=" flex flex-row m-auto alignCenter justify-between py-3 headerBox">
                         <div className=" flex flex-row alignCenter">
                             <div className="  cursor-pointer mmtlogo">
@@ -65,8 +71,8 @@ function HotelDetails(props) {
                                 {headerNavlist?.map((val) => {
                                     return (
                                         <li className="flex flex-col cursor-pointer h-full justify-between" onClick={() => { handleNav(val.id) }} key={val.id} id={val.id}>
-                                            <img className=" w-9" src={selectedNav === val.id ? val.imageOn : val.imageOff} alt="" />
-                                            {selectedNav === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
+                                            <img className=" w-9" src={currentTravelOption === val.id ? val.imageOn : val.imageOff} alt="" />
+                                            {currentTravelOption === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
                                                 <p className=" text-xs text-gray-500">{val.name}</p>}
                                         </li>
                                     )
@@ -82,7 +88,7 @@ function HotelDetails(props) {
                             </span>
                         </div>
                     </div>
-                </header>
+                </header> */}
                 {!loading ?
                     hotelInfo?.map((val) => {
                         return (
@@ -181,8 +187,8 @@ function HotelDetails(props) {
                                 {headerNavlist?.map((val) => {
                                     return (
                                         <li className="flex flex-col cursor-pointer h-full justify-between" onClick={() => { handleNav(val.id) }} key={val.id} id={val.id}>
-                                            <img className=" w-7" src={selectedNav === val.id ? val.imageOn : val.imageOff} alt="" />
-                                            {selectedNav === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
+                                            <img className=" w-7" src={currentTravelOption === val.id ? val.imageOn : val.imageOff} alt="" />
+                                            {currentTravelOption === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
                                                 <p className=" text-xs text-gray-500">{val.name}</p>}
                                         </li>
                                     )

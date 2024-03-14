@@ -12,10 +12,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 function ShowAllHotels(props) {
     const { city } = useParams();
-    const [selectedNav, setSelectedNav] = useState("HOTELS");
-    const { setCurrentTravelOption } = useContext(AppContext);
     const navigate = useNavigate();
-    const { hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource,
+    const { token, setToken, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource,
         destination, setDestination, } = useContext(AppContext);
     const [rooms, setRooms] = useState({ room: 1, guest: 2 });
     const [sourceModal, setSourceModal] = useState(false);
@@ -71,7 +69,7 @@ function ShowAllHotels(props) {
     }, [filterFields]);
     const isSticky = (e) => {
         const header = document.getElementById('showBookingBar');
-        const sorting= document.getElementById("sortBox");
+        const sorting = document.getElementById("sortBox");
         const scrollTop = window.scrollY;
         scrollTop >= 60 ? header?.classList.add('sticky') : header.classList.remove('sticky');
         scrollTop >= 60 ? sorting?.classList.add('sortSticky') : sorting.classList.remove('sortSticky');
@@ -94,13 +92,11 @@ function ShowAllHotels(props) {
         setDay(date.getDay());
     }, []);
     const handleNav = (id) => {
-        setSelectedNav(id);
         setCurrentTravelOption(id);
         navigate("/");
         window.scrollTo(0, 0);
     }
     useEffect(() => {
-        setSelectedNav("HOTELS");
         setHotelLocation(city);
         setCurrentTravelOption("HOTELS");
     }, []);
@@ -154,40 +150,40 @@ function ShowAllHotels(props) {
             });
             setListOfHotels(data);
         }
-        else{
+        else {
             getSearchedHotel();
         }
     }
-    const sortHotelsHandle=()=>{
+    const sortHotelsHandle = () => {
         setCardLoading(true);
-        if(sortByPrice===1){
-            let sorting= listOfHotels.sort((a,b)=>{
-                return Math.floor(a?.avgCostPerNight)- Math.floor(b?.avgCostPerNight);
+        if (sortByPrice === 1) {
+            let sorting = listOfHotels.sort((a, b) => {
+                return Math.floor(a?.avgCostPerNight) - Math.floor(b?.avgCostPerNight);
             });
             setListOfHotels(sorting);
         }
-        else if(sortByPrice===-1){
-            let sorting= listOfHotels.sort((a,b)=>{
+        else if (sortByPrice === -1) {
+            let sorting = listOfHotels.sort((a, b) => {
                 return Math.floor(b?.avgCostPerNight) - Math.floor(a?.avgCostPerNight);
             });
             setListOfHotels(sorting);
         }
         setCardLoading(false);
     }
-    useEffect(()=>{
+    useEffect(() => {
         sortHotelsHandle();
-    },[sortByPrice]);
-    const selectSortBy = (id,val) => {
+    }, [sortByPrice]);
+    const selectSortBy = (id, val) => {
         console.log(id);
         document.getElementById("mostPrice").style.color = "black";
         document.getElementById("mostPrice").style.borderBottom = "none";
         document.getElementById("lowPrice").style.color = "black";
         document.getElementById("lowPrice").style.borderBottom = "none";
-        if(prevSortByPrice === val){
+        if (prevSortByPrice === val) {
             getSearchedHotel();
             setPrevSortByPrice("");
         }
-        else{
+        else {
             setCardLoading(true);
             document.getElementById(id).style.color = "#008CFF";
             document.getElementById(id).style.borderBottom = "2px solid #008CFF";
@@ -197,7 +193,7 @@ function ShowAllHotels(props) {
     }
     return (
         <div onClick={() => { setIsModalOpen(false); }}>
-            <header id="showHeader" className=" overflow-hidden bg-white headerTwo">
+            {/* <header id="showHeader" className=" overflow-hidden bg-white headerTwo">
                 <div className=" flex flex-row m-auto alignCenter justify-between py-3 headerBox">
                     <div className=" flex flex-row alignCenter">
                         <div className=" cursor-pointer mmtlogo">
@@ -207,8 +203,8 @@ function ShowAllHotels(props) {
                             {headerNavlist?.map((val) => {
                                 return (
                                     <li className="flex flex-col cursor-pointer h-full justify-between" onClick={() => { handleNav(val.id) }} key={val.id} id={val.id}>
-                                        <img className=" w-9" src={selectedNav === val.id ? val.imageOn : val.imageOff} alt="" />
-                                        {selectedNav === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
+                                        <img className=" w-9" src={currentTravelOption === val.id ? val.imageOn : val.imageOff} alt="" />
+                                        {currentTravelOption === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
                                             <p className=" text-xs text-gray-500">{val.name}</p>}
                                     </li>
                                 )
@@ -224,7 +220,7 @@ function ShowAllHotels(props) {
                         </span>
                     </div>
                 </div>
-            </header>
+            </header> */}
             <div className="gradientBackgroundBlue">
                 <div id="showBookingBar" className=" flex justify-center gap-9  pt-2 pb-2 px-6 text-left">
                     <div className=" grid gap-2 rounded-lg cursor-pointer allHotelsBookingBox">
@@ -275,11 +271,11 @@ function ShowAllHotels(props) {
                     <button onClick={() => { navigate(`/hotels/${hotelLocation}`) }} className=" px-10 text-lg my-1 font-bold text-white blueSearch rounded-full">SEARCH</button>
                 </div>
             </div>
-            <div id="sortBox" className="sortByBoxCover">
-                <div  className="flex sortByBox">
+            <div id="sortBox" className=" mb-4 sortByBoxCover">
+                <div className="flex sortByBox">
                     <h1 className=" py-3">SORT BY:</h1>
-                    <p className="flex alignCenter justify-center"><span id="mostPrice" onClick={() => { selectSortBy("mostPrice",-1) }} className=" py-3 cursor-pointer">Price <span>(Highest First)</span></span></p>
-                    <p className="flex alignCenter justify-center"><span id="lowPrice" onClick={() => { selectSortBy("lowPrice",1) }} className=" py-3 cursor-pointer">Price <span>(Lowest First)</span></span></p>
+                    <p className="flex alignCenter justify-center"><span id="mostPrice" onClick={() => { selectSortBy("mostPrice", -1) }} className=" py-3 cursor-pointer">Price <span>(Highest First)</span></span></p>
+                    <p className="flex alignCenter justify-center"><span id="lowPrice" onClick={() => { selectSortBy("lowPrice", 1) }} className=" py-3 cursor-pointer">Price <span>(Lowest First)</span></span></p>
                 </div>
             </div>
             <main className="grid gap-2 allCardMainBox">
@@ -309,44 +305,49 @@ function ShowAllHotels(props) {
                 </aside>
                 {/* hotel cards div */}
                 <div className="flex flex-col gap-3">
-                    {!cardLoading? 
-                    listOfHotels?.map((val) => {
-                        return (
-                            // hotel cards
-                            <div key={val?._id} id={val?._id} onClick={()=>{ navigate(`/hotels/hotel-details/${val?._id}`)}} className="flex justify-between rounded-md borderGray grayBlurShadow">
-                                {/* card left side */}
-                                <div className="flex gap-4 p-3  hotelCardLeftSide">
-                                    <div>
-                                        <LazyLoadImage className="hotelCardImg rounded-md" src={val?.images[0]} placeholderSrc="/img/mmtLoading.gif"/>
-                                    </div>
-                                    <div >
-                                        <h2 className="flex alignCenter text-left"><span className=" font-bold text-2xl">{val?.name}</span></h2>
-                                        <p className=" text-left blueText font-semibold mb-2">{val?.location}</p>
-                                        <ul className="flex gap-2">
-                                            {val?.amenities?.map((amenity, idx) => {
-                                                return <li className="borderblack rounded text-gray-500 text-xs font-semibold p-1">{amenity}</li>;
-                                            })}
-                                        </ul>
-                                        <p className=" mt-3 text-left font-semibold text-yellow-800">{val?.rooms.length} rooms available</p>
-                                    </div>
+                    {!cardLoading ?
+                        listOfHotels?.map((val) => {
+                            return (
+                                // hotel cards
+                                <>
+                                    <div key={val?._id} id={val?._id} onClick={() => { navigate(`/hotels/hotel-details/${val?._id}`) }} className=" cursor-pointer overflow-hidden rounded-md borderGray grayBlurShadow hotelCard">
+                                        <div className="flex justify-between ">
+                                            {/* card left side */}
+                                            <div className="flex gap-4 p-3  hotelCardLeftSide">
+                                                <div>
+                                                    <LazyLoadImage className="hotelCardImg rounded-md" src={val?.images[0]} placeholderSrc="/img/mmtLoading.gif" />
+                                                </div>
+                                                <div >
+                                                    <h2 className="flex alignCenter text-left"><span className=" font-bold text-2xl">{val?.name}</span></h2>
+                                                    <p className=" text-left blueText font-semibold mb-2">{val?.location}</p>
+                                                    <ul className="flex gap-2">
+                                                        {val?.amenities?.map((amenity, idx) => {
+                                                            return <li className="borderblack rounded text-gray-500 text-xs font-semibold p-1">{amenity}</li>;
+                                                        })}
+                                                    </ul>
+                                                    <p className=" mt-3 text-left font-semibold text-yellow-800">{val?.rooms.length} rooms available</p>
+                                                </div>
 
-                                </div>
-                                {/* card right side */}
-                                <div className="flex flex-col justify-between p-3 text-right leftGrayBorder">
-                                    <span>{val?.rating >= 4.5 ?
-                                        <span className="ratingColor font-bold">Excellent <span className=" rounded-md px-1 ratingBackColor text-white">{Number.isInteger(val?.rating) ? `${val?.rating}.0` : val?.rating}</span></span> :
-                                        val?.rating >= 3.5 ?
-                                            <span className="ratingColor font-bold">Very Good <span className=" rounded-md px-1 ratingBackColor text-white">{Number.isInteger(val?.rating) ? `${val?.rating}.0` : val?.rating}</span></span> :
-                                            val?.rating >= 2.5 ?
-                                                <span className="ratingColor font-bold"> Good <span className=" rounded-md px-1 ratingBackColor text-white">{Number.isInteger(val?.rating) ? `${val?.rating}.0` : val?.rating}</span></span> :
-                                                <span className="ratingColor font-bold">Average <span className=" rounded-md px-1 ratingBackColor text-white">{Number.isInteger(val?.rating) ? `${val?.rating}.0` : val?.rating}</span></span>
-                                    }</span>
-                                    <h2 className=" lineHeight"><span className=" font-bold text-2xl">₹{Math.floor(val?.avgCostPerNight)}</span><br /><span className=" text-gray-400 text-sm">+ ₹{val?.childAndExtraBedPolicy.extraBedCharge} taxes & fees</span><br /><span className=" text-gray-400 text-sm">For per bed chargees</span></h2>
-                                    <p className="blueText font-bold">Login to unlock the best deals</p>
-                                </div>
-                            </div>
-                        )
-                    }):<img className=' m-auto w-32 ' src="/img/mmtLoading.gif" alt="" />}
+                                            </div>
+                                            {/* card right side */}
+                                            <div className="flex flex-col justify-between p-3 text-right leftGrayBorder">
+                                                <span>{val?.rating >= 4.5 ?
+                                                    <span className="ratingColor font-bold">Excellent <span className=" rounded-md px-1 ratingBackColor text-white">{Number.isInteger(val?.rating) ? `${val?.rating}.0` : val?.rating}</span></span> :
+                                                    val?.rating >= 3.5 ?
+                                                        <span className="ratingColor font-bold">Very Good <span className=" rounded-md px-1 ratingBackColor text-white">{Number.isInteger(val?.rating) ? `${val?.rating}.0` : val?.rating}</span></span> :
+                                                        val?.rating >= 2.5 ?
+                                                            <span className="ratingColor font-bold"> Good <span className=" rounded-md px-1 ratingBackColor text-white">{Number.isInteger(val?.rating) ? `${val?.rating}.0` : val?.rating}</span></span> :
+                                                            <span className="ratingColor font-bold">Average <span className=" rounded-md px-1 ratingBackColor text-white">{Number.isInteger(val?.rating) ? `${val?.rating}.0` : val?.rating}</span></span>
+                                                }</span>
+                                                <h2 className=" lineHeight"><span className=" font-bold text-2xl">₹{Math.floor(val?.avgCostPerNight)}</span><br /><span className=" text-gray-400 text-sm">+ ₹{val?.childAndExtraBedPolicy.extraBedCharge} taxes & fees</span><br /><span className=" text-gray-400 text-sm">For per bed chargees</span></h2>
+                                                <p className="blueText font-bold">{token ? "" : "Login to unlock the best deals"}</p>
+                                            </div>
+                                        </div>
+                                        <div className=" bg-green-200 px-3 py-2 text-left font-semibold text-green-900"><p>Exclusive discount of INR 1000 applied on your 1st Hotel booking.</p></div>
+                                    </div>
+                                </>
+                            )
+                        }) : <img className=' m-auto w-32 ' src="/img/mmtLoading.gif" alt="" />}
                 </div>
             </main>
         </div>

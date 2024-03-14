@@ -14,10 +14,8 @@ import Calendar from "react-calendar";
 
 function ShowAllFlights(props) {
     const { from, to, weekDay } = useParams();
-    const [selectedNav, setSelectedNav] = useState("FLIGHTS");
-    const { setCurrentTravelOption } = useContext(AppContext);
     const navigate = useNavigate();
-    const { hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, setFlightArray,
+    const {currentTravelOption,setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, setFlightArray,
         destination, setDestination, flightdate, setFlightDate, } = useContext(AppContext);
     const [rooms, setRooms] = useState({ room: 1, guest: 2 });
     const [fromCity, setFromCity] = useState(from);
@@ -159,14 +157,11 @@ function ShowAllFlights(props) {
         setDay(date.getDay());
     }, []);
     const handleNav = (id) => {
-        setSelectedNav(id);
         setCurrentTravelOption(id);
         navigate("/");
         window.scrollTo(0, 0);
     }
     useEffect(() => {
-        setSelectedNav("FLIGHTS");
-
         setCurrentTravelOption("FLIGHTS");
     }, []);
     const nonStopHandle = async () => {
@@ -211,7 +206,7 @@ function ShowAllFlights(props) {
     }
     return (
         <div className=" bg-blue-50 fullHeightInVh" onClick={() => { setIsModalOpen(false); }}>
-            <header id="showHeader" className=" overflow-hidden bg-white headerTwo">
+            {/* <header id="showHeader" className=" overflow-hidden bg-white headerTwo">
                 <div className=" flex flex-row m-auto alignCenter justify-between py-3 headerBox">
                     <div className=" flex flex-row alignCenter">
                         <div className=" cursor-pointer mmtlogo">
@@ -221,8 +216,8 @@ function ShowAllFlights(props) {
                             {headerNavlist?.map((val) => {
                                 return (
                                     <li className="flex flex-col cursor-pointer h-full justify-between" onClick={() => { handleNav(val.id) }} key={val.id} id={val.id}>
-                                        <img className=" w-9" src={selectedNav === val.id ? val.imageOn : val.imageOff} alt="" />
-                                        {selectedNav === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
+                                        <img className=" w-9" src={currentTravelOption === val.id ? val.imageOn : val.imageOff} alt="" />
+                                        {currentTravelOption === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
                                             <p className=" text-xs text-gray-500">{val.name}</p>}
                                     </li>
                                 )
@@ -238,7 +233,7 @@ function ShowAllFlights(props) {
                         </span>
                     </div>
                 </div>
-            </header>
+            </header> */}
             <div className="gradientBackgroundBlue mb-6">
                 <div id="showBookingBar" className=" flex alignCenter justify-center gap-9  pt-2 pb-2 px-6 text-left">
                     <div className=" grid gap-2 rounded-lg cursor-pointer allFlightsBookingBox">

@@ -11,9 +11,9 @@
 .fullWidth{
     max-width: 75rem;
 }
-.hotelCardLeftSide{
-   /* width: 40rem; */
-}
+/* .hotelCard{
+  grid-template-columns: 3fr 1fr;
+} */
 .lineHeight{
     line-height: 0rem;
 }

@@ -40,6 +40,7 @@ const Home = () => {
     return (
         <>
             <section onClick={modals} className=" overflow-hidden no-scrollbar home">
+                
                 <img className="mainBannerImg" src="https://imgak.mmtcdn.com/pwa_v3/pwa_commons_assets/desktop/bg6.jpg" alt="" />
                 {currentTravelOption==="FLIGHTS"?
                 <Flight loading={loading}/>:

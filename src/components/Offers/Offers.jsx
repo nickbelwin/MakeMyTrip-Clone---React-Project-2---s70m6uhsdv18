@@ -4,11 +4,11 @@ import { offerNavlist } from '../Constant/constant';
 import axios from 'axios';
 
 function Offers(props) {
-    const [selectedNav, setSelectedNav] = useState("ALL");
+    const [currentTravelOption, setcurrentTravelOption] = useState("ALL");
     const [offersArray, setOffersArray] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const getOffers = async () => {
-        let url = `https://academics.newtonschool.co/api/v1/bookingportals/offers?filter={"type":"${selectedNav}"}`;
+        let url = `https://academics.newtonschool.co/api/v1/bookingportals/offers?filter={"type":"${currentTravelOption}"}`;
         let res = await axios.get(url,
             {
                 headers: { "projectId": "ywhyenbsclpi" }
@@ -29,7 +29,7 @@ function Offers(props) {
     useEffect(() => {
         setOffersArray([]);
         getOffers();
-    }, [selectedNav]);
+    }, [currentTravelOption]);
     return (
         <div className='p-8 m-auto rounded-lg offerMainBox bg-white'>
             <nav className='flex alignCenter  justify-between'>
@@ -37,7 +37,7 @@ function Offers(props) {
                     <h1 className=' text-4xl text-gray-800 font-bold'>Offers</h1>
                     <ul className='flex gap-8 justify-between navlist borderBottom'>
                         {offerNavlist?.map((val) => {
-                            return <li id={val.id} className={`px-1 py-1 ${val.id === selectedNav ? "blueNav" : ""}`} onClick={(e) => { setSelectedNav(e.target.id); setCurrentIndex(0) }} >{val.name}</li>
+                            return <li id={val.id} className={`px-1 py-1 ${val.id === currentTravelOption ? "blueNav" : ""}`} onClick={(e) => { setcurrentTravelOption(e.target.id); setCurrentIndex(0) }} >{val.name}</li>
                         })}
                     </ul>
                 </div>

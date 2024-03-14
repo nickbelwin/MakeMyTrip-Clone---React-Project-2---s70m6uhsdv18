@@ -4,8 +4,7 @@ import { headerNavlist } from "../Constant/constant";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../ContextAPI/AppContext";
 const Header = () => {
-    const [selectedNav, setSelectedNav] = useState("FLIGHTS");
-    const {setCurrentTravelOption}=useContext(AppContext);
+    const {token,setToken,nameOfUser, setNameOfUser,isLogin,setIsLogin,currentTravelOption,setCurrentTravelOption}=useContext(AppContext);
     const navigate=useNavigate();
     const isSticky = (e) => {
         const header = document.getElementById('showHeader');
@@ -14,7 +13,6 @@ const Header = () => {
         scrollTop >= 80 ? header.classList.add('sticky') : header.classList.remove('sticky');
     };
     const handleNav=(id)=>{
-        setSelectedNav(id); 
         setCurrentTravelOption(id);
         navigate("/");
         window.scrollTo(0,0);
@@ -49,11 +47,11 @@ const Header = () => {
                                 <p className=" text-gray-300">Manage your bookings</p>
                             </span>
                         </li>
-                        <li className=" flex flex-row alignCenter p-3 rounded cursor-pointer loginBtn">
+                        <li onClick={()=>{setIsLogin({...isLogin, status:true})}} className=" flex flex-row alignCenter p-3 rounded cursor-pointer loginBtn">
                             <span className=" w-6 relative flex alignCenter justify-center mr-2"><img className=" absolute text-white " src="/img/loginLogo.png" alt="" />
                             </span>
                             <span className="flex alignCenter justify-between w-full text-xs text-left">
-                                <p className=" ">Login or Create Account</p>
+                                <p className="font-bold ">{token? <h1 className='text-lg'>Hi {nameOfUser}</h1>:"Login or Create Account"}</p>
                                 <span><img className=" w-3 opacity-80" src="/img/downArrow.png" alt="" /></span>
                             </span>
                         </li>
@@ -70,19 +68,19 @@ const Header = () => {
                             {headerNavlist?.map((val) => {
                                 return (
                                     <li className="flex flex-col cursor-pointer h-full justify-between" onClick={() => {handleNav(val.id)}} key={val.id} id={val.id}>
-                                        <img className=" w-9" src={selectedNav === val.id ? val.imageOn : val.imageOff} alt="" />
-                                        {selectedNav === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
+                                        <img className=" w-9" src={currentTravelOption === val.id ? val.imageOn : val.imageOff} alt="" />
+                                        {currentTravelOption === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
                                             <p className=" text-xs text-gray-500">{val.name}</p>}
                                     </li>
                                 )
                             })}
                         </ul>
                     </div>
-                    <div className=" flex flex-row alignCenter p-3 rounded cursor-pointer loginGreenBtn">
+                    <div onClick={()=>{setIsLogin({...isLogin, status:true})}} className=" flex flex-row alignCenter p-3 rounded cursor-pointer loginGreenBtn">
                         <span className=" w-8 relative flex alignCenter justify-center mr-2"><img className=" absolute text-white" src="/img/mmtLoginLogoGreen.png" alt="" />
                         </span>
                         <span className="flex alignCenter justify-between w-full text-xs text-left">
-                            <p className=" font-bold">Login or Create Account</p>
+                            <p className=" font-bold">{token? <h1 className='text-lg'>{nameOfUser}</h1>:"Login or Create Account"}</p>
                             <span><img className=" w-3 opacity-80" src="/img/downArrow.png" alt="" /></span>
                         </span>
                     </div>

@@ -11,7 +11,6 @@ import BusModal from '../Modals/BusModal';
 function ShowAllBuses(props) {
     const { from, to, weekDay } = useParams();
     const navigate = useNavigate();
-    const [selectedNav, setSelectedNav] = useState("BUSES");
     const [fromCity, setFromCity] = useState(from);
     const [toCity, setToCity] = useState(to);
     const [listOfBuses, setListOfBuses] = useState([]);
@@ -27,7 +26,7 @@ function ShowAllBuses(props) {
     const [nonAc, setNonAc] = useState(false);
     const [lowHighPrice, setLowHighPrice] = useState("");
     const { hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource, fromOrTo, setFromOrTo, setFlightArray,
-        destination, setDestination, setCurrentTravelOption, flightdate, setFlightDate, } = useContext(AppContext);
+        destination, setDestination,currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate, } = useContext(AppContext);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
@@ -208,7 +207,6 @@ function ShowAllBuses(props) {
         }
     }
     const handleNav = (id) => {
-        setSelectedNav(id);
         setCurrentTravelOption(id);
         navigate("/");
         window.scrollTo(0, 0);
@@ -224,7 +222,7 @@ function ShowAllBuses(props) {
 
     return (
         <div className=" bg-gray-50 h-full" onClick={() => { setIsModalOpen(false); }}>
-            <header id="showHeader" className=" overflow-hidden bg-white headerTwo">
+            {/* <header id="showHeader" className=" overflow-hidden bg-white headerTwo">
                 <div className=" flex flex-row m-auto alignCenter justify-between py-3 headerBox">
                     <div className=" flex flex-row alignCenter">
                         <div className=" cursor-pointer mmtlogo">
@@ -234,8 +232,8 @@ function ShowAllBuses(props) {
                             {headerNavlist?.map((val) => {
                                 return (
                                     <li className="flex flex-col cursor-pointer h-full justify-between" onClick={() => { handleNav(val.id) }} key={val.id} id={val.id}>
-                                        <img className=" w-9" src={selectedNav === val.id ? val.imageOn : val.imageOff} alt="" />
-                                        {selectedNav === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
+                                        <img className=" w-9" src={currentTravelOption === val.id ? val.imageOn : val.imageOff} alt="" />
+                                        {currentTravelOption === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
                                             <p className=" text-xs text-gray-500">{val.name}</p>}
                                     </li>
                                 )
@@ -251,7 +249,7 @@ function ShowAllBuses(props) {
                         </span>
                     </div>
                 </div>
-            </header>
+            </header> */}
             <div className="gradientBackgroundBlue mb-6">
                 <div id="showBookingBar" className=" flex alignCenter justify-center gap-9  pt-2 pb-2 px-6 text-left">
                     <div className=" grid gap-2 rounded-lg cursor-pointer allFlightsBookingBox">

@@ -1,0 +1,20 @@
+.modalBox{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.406);
+}
+.logSignCancelBtn{
+    top: -1rem;
+    right: -2rem;
+}
+.loginsignInput{
+    width: 100%;
+    border: 1px solid rgb(146, 146, 146);
+}
+.signUpBox{
+    height: 85vh;
+    width: 60rem;
+}
+.inputBox:focus{
+    outline: none;
+}

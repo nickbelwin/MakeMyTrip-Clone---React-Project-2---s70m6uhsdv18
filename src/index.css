@@ -82,6 +82,10 @@ box-shadow: inset 0px -7px 26px 0px rgba(0,0,0,0.47);
 .blueBorderBottom{
   border-bottom: 4px solid #0088FF;
 }
+.gradientBlueBack{
+  background: rgb(77,171,253);
+background: linear-gradient(94deg, rgba(77,171,253,1) 0%, rgba(12,97,244,1) 65%);
+}
 .fullHeightInVh{
   min-height: 100vh;
 }
