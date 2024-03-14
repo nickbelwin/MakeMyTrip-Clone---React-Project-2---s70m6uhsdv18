@@ -44,7 +44,7 @@
     grid-template-rows: 1fr 1fr;
 }
 .offerCard{
-    width: 30vw;
+    width: 30rem;
     height: 11.5rem;
     -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
@@ -54,4 +54,11 @@
     width: 3rem;
     height: 1.5px;
     background-color:  red;
+}
+@media (max-width:520px){
+    .offerCard{
+        width: 20rem;
+        height: 11rem;
+        
+    }
 }

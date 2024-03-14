@@ -11,6 +11,9 @@
   -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.2);
 }
+.headerNavList{
+  width: 35vw;
+}
 .noSticky{
   position: absolute;
   z-index: 30;

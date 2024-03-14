@@ -1,6 +1,9 @@
 .home{
     background-color: #F2F2F2;
 }
+.homeBox{
+    height: fit-content;
+}
 .mainBannerImg{
     width: 100vw;
     min-height: 75vh;
@@ -11,7 +14,7 @@
 }
 @media (max-width:1030px){
     .mainBannerImg{
-        width: 100vw;
-        min-height: 65vh;
+        display: none;
     }
+    
 }

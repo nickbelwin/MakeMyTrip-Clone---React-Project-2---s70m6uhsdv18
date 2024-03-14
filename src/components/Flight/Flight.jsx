@@ -161,13 +161,13 @@ const Flight = (props) => {
                 </section>
             </BrowserView>
             <MobileView>
-                <section className=" absolute top-20 flex justify-center subNavbarBox">
+                <section className=" mt-6 m-auto flex justify-center subNavbarBox">
                     <div className=" relative flex justify-center subNavbarBoxCover">
                         <TravelOptions />
-                        <div className=" w-full bg-white  rounded-2xl pt-16 pb-12 px-6 text-left mt-12 ">
+                        <div className=" w-full bg-white pt-12 pb-6 px-2 text-left mt-12 rounded-2xl">
                             <p className=" w-full mb-2 text-center font-bold text-gray-700">Book International and Domestic Flights.</p>
-                            <div className=" relative  borderGray rounded-lg w-full cursor-pointer  ">
-                                <div onClick={handleFrom} className=" px-6 py-3 relative borderBottomGray  hoverLightBlue">
+                            <div className=" relative   w-full cursor-pointer  ">
+                                <div onClick={handleFrom} className=" px-3 py-1 mb-3 relative borderGray  hoverLightBlue">
                                     <span className="flex flex-row gap-1 alignCenter text-xs text-gray-800">From <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {!loading ? flightArray?.map((val) => {
                                         return (
@@ -184,7 +184,7 @@ const Flight = (props) => {
                                             <FlightModal />
                                         </div> : ""}
                                 </div>
-                                <div onClick={handleTo} className=" relative px-6 py-3 borderBottomGray hoverLightBlue">
+                                <div onClick={handleTo} className=" relative px-3 py-1 mb-3 borderGray hoverLightBlue">
                                     <span className="flex flex-row gap-1 alignCenter text-xs text-gray-800">To <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {!loading ? flightArray?.map((val) => {
                                         return (
@@ -201,10 +201,10 @@ const Flight = (props) => {
                                             <FlightModal />
                                         </div> : ""}
                                 </div>
-                                <div onClick={handleDateModal} className=" relative px-6 py-3 hoverLightBlue">
+                                <div onClick={handleDateModal} className=" relative px-3 py-1 mb-4 borderGray hoverLightBlue">
                                     <span className=" text-gray-800 text-xs">Departure</span>
                                     <p>
-                                        <span className=" font-extrabold text-base">{date}</span>
+                                        <span className=" font-extrabold text-xl">{date}</span>
                                         <span className=" font-semibold">{monthNames[month]}'{year}</span>
                                         <p className=" text-gray-800 text-xs">{weekName[day]}</p>
                                         {flightDateModal ?
@@ -221,7 +221,7 @@ const Flight = (props) => {
                                     </p>
                                 </div> */}
                             </div>
-                            <button onClick={() => { navigate(`/flights/${flightSourceCode}/${flightDestinationCode}/${weekName[day]}`) }} className=" absolute px-6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
+                            <button onClick={() => { navigate(`/flights/${flightSourceCode}/${flightDestinationCode}/${weekName[day]}`) }} className=" px-6 py-1 text-xl font-bold rounded-md text-white blueSearch w-full">SEARCH</button>
                         </div>
                     </div>
                 </section>

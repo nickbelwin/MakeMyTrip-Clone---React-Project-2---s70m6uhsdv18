@@ -117,13 +117,13 @@ const Hotel = (props) => {
                 </section>
             </BrowserView>
             <MobileView>
-            <section className=" absolute top-20 flex justify-center subNavbarBox">
+            <section className=" mt-6 flex justify-center m-auto subNavbarBox">
                     <div className=" relative flex justify-center subNavbarBoxCover">
                         <TravelOptions />
-                        <div className=" w-full ml-4 bg-white  rounded-2xl pt-16 pb-12 px-6 text-left mt-12 ">
+                        <div className=" w-full  bg-white  rounded-2xl pt-12 pb-12 px-2 text-left mt-12 ">
                             <p className=" w-full mb-2 text-center font-bold text-gray-700">Book Domestic and International Property Online.</p>
-                            <div className=" borderGray rounded-lg w-full cursor-pointer hotelBookingBox">
-                                <div onClick={handleHotel} className=" relative px-3 py-1  borderBottomGray hoverLightBlue">
+                            <div className=" rounded-lg w-full cursor-pointer hotelBookingBox">
+                                <div onClick={handleHotel} className=" relative px-3 py-1  borderGray mb-2 hoverLightBlue">
                                     <span className="flex flex-row gap-1 alignCenter text-gray-800 text-xs ">City, Property Name Or Location <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {!loading ?
                                         hotelName?.map((val) => {
@@ -142,23 +142,23 @@ const Hotel = (props) => {
                                         </div> : ""}
                                 </div>
 
-                                <div className=" px-3 py-1 borderBottomGray hoverLightBlue">
+                                <div className=" px-3 py-1 borderGray mb-2 hoverLightBlue">
                                     <span className=" text-gray-800 text-xs">Check-In</span>
                                     <p>
-                                        <span className=" font-extrabold text-base">{date + 1}</span>
+                                        <span className=" font-extrabold text-xl">{date + 1}</span>
                                         <span className=" font-semibold">{monthNames[month]}'{year}</span>
                                         <p className=" text-gray-800 text-xs">{weekName[day - 1]}</p>
                                     </p>
                                 </div>
-                                <div className=" px-3 py-1 borderBottomGray hoverLightBlue">
+                                <div className=" px-3 py-1 borderGray mb-2 hoverLightBlue">
                                     <span className=" text-gray-800 text-xs">Check-Out</span>
                                     <p>
-                                        <span className=" font-extrabold text-base">{date + 1}</span>
+                                        <span className=" font-extrabold text-xl">{date + 1}</span>
                                         <span className=" font-semibold ">{monthNames[month]}'{year}</span>
                                         <p className=" text-gray-800 text-xs">{weekName[day - 1]}</p>
                                     </p>
                                 </div>
-                                <div className=" px-3 py-1 borderBottomGray hoverLightBlue">
+                                <div className=" px-3 py-1 borderGray mb-2 hoverLightBlue">
                                     <span className=" text-gray-800 text-xs">Rooms & Guestes</span>
                                     <p>
                                         <span className=" font-extrabold text-xl">{rooms.room}</span>
@@ -167,7 +167,7 @@ const Hotel = (props) => {
                                         <span className=" font-semibold">Adults</span>
                                     </p>
                                 </div>
-                                <div className=" px-3 py-1  hoverLightBlue">
+                                <div className=" px-3 py-1 borderGray mb-2 hoverLightBlue">
                                     <span className=" text-gray-800 text-xs">Price Per Night</span>
                                     <div>
                                         {hotelPerNightPrice?.map((price, idx) => {
@@ -180,7 +180,7 @@ const Hotel = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            <button onClick={searchHotelsHandle} className=" absolute px-6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
+                            <button onClick={searchHotelsHandle} className=" w-full px-6 py-1 mt-4 text-lg font-bold text-white blueSearch rounded-lg">SEARCH</button>
                         </div>
                     </div>
                 </section>
