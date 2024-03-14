@@ -9,3 +9,9 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+@media (max-width:1030px){
+    .mainBannerImg{
+        width: 100vw;
+        min-height: 65vh;
+    }
+}

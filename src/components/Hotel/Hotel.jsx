@@ -2,7 +2,7 @@ import { memo, useContext, useEffect, useState } from "react";
 import "./hotel.css";
 import { AppContext } from "../ContextAPI/AppContext";
 import { HotelListArray, cityListArray, getHotelName, hotelPerNightPrice, monthNames, weekName } from "../Constant/constant";
-import { BrowserView } from "react-device-detect";
+import { BrowserView, MobileView } from "react-device-detect";
 import TravelOptions from "../TravelOptions/TravelOptions";
 import HotelModal from "../Modals/HotelModal";
 import ShimmerLocation from "../Loader/ShimmerLocation";
@@ -116,6 +116,75 @@ const Hotel = (props) => {
                     </div>
                 </section>
             </BrowserView>
+            <MobileView>
+            <section className=" absolute top-20 flex justify-center subNavbarBox">
+                    <div className=" relative flex justify-center subNavbarBoxCover">
+                        <TravelOptions />
+                        <div className=" w-full ml-4 bg-white  rounded-2xl pt-16 pb-12 px-6 text-left mt-12 ">
+                            <p className=" w-full mb-2 text-center font-bold text-gray-700">Book Domestic and International Property Online.</p>
+                            <div className=" borderGray rounded-lg w-full cursor-pointer hotelBookingBox">
+                                <div onClick={handleHotel} className=" relative px-3 py-1  borderBottomGray hoverLightBlue">
+                                    <span className="flex flex-row gap-1 alignCenter text-gray-800 text-xs ">City, Property Name Or Location <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
+                                    {!loading ?
+                                        hotelName?.map((val) => {
+                                            return (
+                                                <>
+                                                    {val?.name === hotelLocation ?
+                                                        <div key={val._id} className=" ">
+                                                            <h1 className=" font-extrabold text-base">{val.name}</h1>
+                                                            <p className=" text-gray-800 text-xs">{val.location}</p>
+                                                        </div> : ""}</>
+                                            )
+                                        }) : <ShimmerLocation />}
+                                    {sourceModal ?
+                                        <div className=" absolute w-full z-20 left-0 top-10 flightModal" >
+                                            <HotelModal />
+                                        </div> : ""}
+                                </div>
+
+                                <div className=" px-3 py-1 borderBottomGray hoverLightBlue">
+                                    <span className=" text-gray-800 text-xs">Check-In</span>
+                                    <p>
+                                        <span className=" font-extrabold text-base">{date + 1}</span>
+                                        <span className=" font-semibold">{monthNames[month]}'{year}</span>
+                                        <p className=" text-gray-800 text-xs">{weekName[day - 1]}</p>
+                                    </p>
+                                </div>
+                                <div className=" px-3 py-1 borderBottomGray hoverLightBlue">
+                                    <span className=" text-gray-800 text-xs">Check-Out</span>
+                                    <p>
+                                        <span className=" font-extrabold text-base">{date + 1}</span>
+                                        <span className=" font-semibold ">{monthNames[month]}'{year}</span>
+                                        <p className=" text-gray-800 text-xs">{weekName[day - 1]}</p>
+                                    </p>
+                                </div>
+                                <div className=" px-3 py-1 borderBottomGray hoverLightBlue">
+                                    <span className=" text-gray-800 text-xs">Rooms & Guestes</span>
+                                    <p>
+                                        <span className=" font-extrabold text-xl">{rooms.room}</span>
+                                        <span className=" font-semibold">Room</span>
+                                        <span className=" font-extrabold text-xl">{rooms.guest}</span>
+                                        <span className=" font-semibold">Adults</span>
+                                    </p>
+                                </div>
+                                <div className=" px-3 py-1  hoverLightBlue">
+                                    <span className=" text-gray-800 text-xs">Price Per Night</span>
+                                    <div>
+                                        {hotelPerNightPrice?.map((price, idx) => {
+                                            return (
+                                                <>{idx <= 2 ?
+                                                    idx <= 1 ? <span className="text-xs font-bold text-gray-700" >{price},</span> : "..." : ""}
+                                                </>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+                            <button onClick={searchHotelsHandle} className=" absolute px-6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
+                        </div>
+                    </div>
+                </section>
+            </MobileView>
         </>
     )
 }
