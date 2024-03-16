@@ -79,9 +79,9 @@ function Offers(props) {
                 </div>
             </BrowserView>
             <MobileView>
-                <div className='px-1 py-4 m-auto rounded-lg offerMainBox bg-white'>
+                <div className='px-1 m-auto rounded-lg offerMainBox bg-white'>
                     <nav className='flex alignCenter  justify-between'>
-                        <div className='flex gap-3 py-3 px-1 alignCenter'>
+                        <div className='flex gap-3 py-2 px-1 alignCenter'>
                             <h1 className=' text-2xl text-gray-800 font-bold'>Offers</h1>
                             <ul className='flex gap-1 justify-between navlist borderBottom'>
                                 {offerNavlist?.map((val) => {

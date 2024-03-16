@@ -117,10 +117,10 @@ const Hotel = (props) => {
                 </section>
             </BrowserView>
             <MobileView>
-            <section className=" mt-6 flex justify-center m-auto subNavbarBox">
+            <section className=" flex justify-center m-auto subNavbarBox">
                     <div className=" relative flex justify-center subNavbarBoxCover">
                         <TravelOptions />
-                        <div className=" w-full  bg-white  rounded-2xl pt-12 pb-12 px-2 text-left mt-12 ">
+                        <div className=" w-full  bg-white  rounded-2xl pt-3 pb-12 px-2 text-left mt-20 ">
                             <p className=" w-full mb-2 text-center font-bold text-gray-700">Book Domestic and International Property Online.</p>
                             <div className=" rounded-lg w-full cursor-pointer hotelBookingBox">
                                 <div onClick={handleHotel} className=" relative px-3 py-1  borderGray mb-2 hoverLightBlue">

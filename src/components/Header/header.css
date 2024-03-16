@@ -38,7 +38,7 @@
     background-image: var(--color-btn-primary-bg, linear-gradient(93deg, #53b2fe, #065af3));
 }
 .loginGreenBtn{
-  /* width: 12vw; */
+  width: fit-content;
 }
 .rotating {
     animation: rotation 2.5s infinite linear;

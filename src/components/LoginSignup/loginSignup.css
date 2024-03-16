@@ -12,9 +12,24 @@
     border: 1px solid rgb(146, 146, 146);
 }
 .signUpBox{
-    height: 85vh;
+    max-height: 87rem;
+    min-height: 42rem;
     width: 60rem;
 }
 .inputBox:focus{
     outline: none;
+}
+@media (max-width:820px){
+    .loginImg{
+        max-width: 35vw;
+    }
+}
+@media (max-width:520px){
+    .loginImg{
+        display: none;
+    }
+    .signUpBox{
+        max-height: 35rem;
+        min-height: auto;
+    }
 }

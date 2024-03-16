@@ -73,9 +73,9 @@ function LoginPage(props) {
     }
     console.log("setUserInfo", user);
     return (
-        <div className=' relative flex w-2/3  signUpBox'>
+        <div className=' relative flex w-2/3 mx-9 signUpBox'>
             <div onClick={() => { setIsLogin({ ...isLogin, status: false }) }} className=' absolute p-2 cursor-pointer bg-white rounded-full logSignCancelBtn'><img className=' w-3' src="/img/cancel.png" alt="" /></div>
-            <img className='my-3 rounded-s-xl' src="/img/loginPersuassionValley.avif" alt="" />
+            <img className='my-3 rounded-s-xl loginImg' src="/img/loginPersuassionValley.avif" alt="" />
             <div className=' bg-white rounded-xl w-full pt-10 px-3'>
                 <div className='grid grid-cols-2 gap-3 p-2 rounded-full mb-10 grayBlurShadow'>
                     <p className='cursor-pointer rounded-full py-1 font-bold text-white gradientBlueBack prevent-select'>LOGIN ACCOUNT</p>

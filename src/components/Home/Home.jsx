@@ -8,6 +8,7 @@ import Train from "../Train/Train";
 import Bus from "../Bus/Bus";
 import { getAirportName, getHotelName } from "../Constant/constant";
 import Offers from "../Offers/Offers";
+import { BrowserView, MobileView } from "react-device-detect";
 
 const Home = () => {
     const { currentTravelOption, setFlightArray, setHotelArray, setCurrentTravelOption, isModalOpen, setIsModalOpen } = useContext(AppContext);
@@ -40,7 +41,7 @@ const Home = () => {
     return (
         <>
             <section onClick={modals} className=" overflow-hidden no-scrollbar home">
-
+                <BrowserView>
                 <div className="homeBox">
                     <img className="mainBannerImg" src="https://imgak.mmtcdn.com/pwa_v3/pwa_commons_assets/desktop/bg6.jpg" alt="" />
                     {currentTravelOption === "FLIGHTS" ?
@@ -51,6 +52,18 @@ const Home = () => {
                                 <Train /> : <Bus />
                     }
                 </div>
+                </BrowserView>
+                <MobileView>
+                <div className="homeBox">
+                    {currentTravelOption === "FLIGHTS" ?
+                        <Flight loading={loading} /> :
+                        currentTravelOption === "HOTELS" ?
+                            <Hotel loading={loading} /> :
+                            currentTravelOption === "RAILS" ?
+                                <Train /> : <Bus />
+                    }
+                </div>
+                </MobileView>
                 <Offers />
             </section>
         </>

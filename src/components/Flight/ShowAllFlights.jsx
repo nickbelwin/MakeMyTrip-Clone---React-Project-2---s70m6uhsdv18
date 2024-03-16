@@ -11,13 +11,14 @@ import ShimmerLocation from "../Loader/ShimmerLocation";
 
 import FlightModal from "../Modals/FlightModal";
 import Calendar from "react-calendar";
+import { BrowserView, MobileView } from "react-device-detect";
 
 function ShowAllFlights(props) {
     const { from, to, weekDay } = useParams();
     const navigate = useNavigate();
-    const {currentTravelOption,setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, setFlightArray,
+    const { currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, setFlightArray,
         destination, setDestination, flightdate, setFlightDate, } = useContext(AppContext);
-    const [rooms, setRooms] = useState({ room: 1, guest: 2 });
+    const [editFlight, setEditFlight] = useState(false);
     const [fromCity, setFromCity] = useState(from);
     const [toCity, setToCity] = useState(to);
     const [week, setWeek] = useState(weekDay);
@@ -47,7 +48,6 @@ function ShowAllFlights(props) {
         setYear(chek.getFullYear());
         setDay(chek.getDay());
         setIsModalOpen(false);
-        // Add any additional logic you need when the date changes
     };
     const handleFrom = (e) => {
         e.stopPropagation();
@@ -137,9 +137,11 @@ function ShowAllFlights(props) {
     }, [source, destination])
     const isSticky = (e) => {
         const header = document.getElementById('showBookingBar');
+        const sortBox= document.getElementById('sortBox');
         const scrollTop = window.scrollY;
-        scrollTop >= 60 ? header?.classList.add('sticky') : header.classList.remove('sticky');
-        scrollTop >= 60 ? header?.classList?.add('gradientBackgroundBlue') : header.classList.remove('gradientBackgroundBlue');
+        scrollTop >= 60 ? header?.classList.add('sticky') : header?.classList.remove('sticky');
+        scrollTop >= 180 ? sortBox?.classList.add('sticky') : sortBox?.classList.remove('sticky');
+        // scrollTop >= 60 ? header?.classList?.add('gradientBackgroundBlue') : header.classList.remove('gradientBackgroundBlue');
         scrollTop >= 60 ? header?.classList.add('grayBlurShadow') : header.classList.remove('grayBlurShadow');
 
     };
@@ -205,8 +207,10 @@ function ShowAllFlights(props) {
         document.getElementById(navId2).classList.remove("flightDetailsNav");
     }
     return (
-        <div className=" bg-blue-50 fullHeightInVh" onClick={() => { setIsModalOpen(false); }}>
-            {/* <header id="showHeader" className=" overflow-hidden bg-white headerTwo">
+        <>
+            <BrowserView>
+                <div className=" bg-blue-50 fullHeightInVh" onClick={() => { setIsModalOpen(false); }}>
+                    {/* <header id="showHeader" className=" overflow-hidden bg-white headerTwo">
                 <div className=" flex flex-row m-auto alignCenter justify-between py-3 headerBox">
                     <div className=" flex flex-row alignCenter">
                         <div className=" cursor-pointer mmtlogo">
@@ -234,203 +238,448 @@ function ShowAllFlights(props) {
                     </div>
                 </div>
             </header> */}
-            <div className="gradientBackgroundBlue mb-6">
-                <div id="showBookingBar" className=" flex alignCenter justify-center gap-9  pt-2 pb-2 px-6 text-left">
-                    <div className=" grid gap-2 rounded-lg cursor-pointer allFlightsBookingBox">
-                        <div onClick={handleFrom} className=" relative px-3 py-1 rounded-lg borderRight lightWhite ">
-                            <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600">FROM <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
-                            {!loading ?
-                                flightCodeArray?.map((val) => {
-                                    return (
-                                        <>
-                                            {val?.city === source ?
-                                                <div key={val.code} className=" mt-2">
-                                                    <h1 className=" font-bold text-sm text-white">{val?.city}</h1>
-                                                </div> : ""}</>
-                                    )
-                                }) : <ShimmerLocation />}
-                            {sourceModal ?
-                                <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
-                                    <FlightModal />
-                                </div> : ""}
-                        </div>
-                        <div onClick={handleTo} className=" relative px-3 py-1 rounded-lg borderRight lightWhite ">
-                            <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600">TO <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
-                            {!loading ?
-                                flightCodeArray?.map((val) => {
-                                    return (
-                                        <>
-                                            {val?.city === destination ?
-                                                <div key={val.code} className=" mt-2">
-                                                    <h1 className=" font-bold text-sm text-white">{val?.city}</h1>
-                                                </div> : ""}</>
-                                    )
-                                }) : <ShimmerLocation />}
-                            {destinationModal ?
-                                <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
-                                    <FlightModal />
-                                </div> : ""}
-                        </div>
-                        <div onClick={handleDateModal} className=" relative px-3 py-0 rounded-lg borderRight lightWhite">
-                            <span className=" text-blue-600 text-xs">DEPART</span>
-                            <div className="text-white">
-                                <span className=" font-extrabold text-sm">{date} </span>
-                                <span className=" font-semibold">{monthNames[month]}'{year}, </span>
-                                <span className=" ">{weekName[day]}</span>
-                                {flightDateModal ?
-                                    <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-7 bg-white text-black p-2 grayBlurShadow rounded-lg calenderBox" >
-                                        <Calendar onChange={onChange} value={flightdate} />
-                                    </div> : ""}
-                            </div>
-                        </div>
-                    </div>
-                    <button onClick={handleSearch} className=" px-10 h-10 text-lg my-1 font-bold text-white blueSearch rounded-full">SEARCH</button>
-                </div>
-            </div>
-            <main className=" allCardMainBox">
-                {/* flight cards div */}
-                <div className="flex flex-col gap-3 mx-2 ">
-                    <div id="sortBox" className=" p-4 bg-white">
-                        <div className="grid grid-cols-3 gap-2 ">
-                            <div id="cheapest" onClick={() => { selectSortBy("cheapest") }} className="flex alignCenter p-3 rounded-md bg-gray-100 flightSort">
-                                <div id="cheapestIcon" className=" rounded-md mr-2 bg-gray-300 blueBack">
-                                    <img className=" w-10" src="/img/cheapest.png" alt="" />
+                    <div className="mb-6">
+                        <div id="showBookingBar" className=" flex alignCenter justify-center gap-9  pt-2 pb-2 px-6 text-left gradientBackgroundBlue">
+                            <div className=" grid gap-2 rounded-lg cursor-pointer allFlightsBookingBox">
+                                <div onClick={handleFrom} className=" relative px-3 py-1 rounded-lg borderRight lightWhite ">
+                                    <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600">FROM <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
+                                    {!loading ?
+                                        flightCodeArray?.map((val) => {
+                                            return (
+                                                <>
+                                                    {val?.city === source ?
+                                                        <div key={val.code} className=" mt-2">
+                                                            <h1 className=" font-bold text-sm text-white">{val?.city}</h1>
+                                                        </div> : ""}</>
+                                            )
+                                        }) : <ShimmerLocation />}
+                                    {sourceModal ?
+                                        <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
+                                            <FlightModal />
+                                        </div> : ""}
                                 </div>
-                                <div>
-                                    <h1 className=" font-bold text-left">CHEAPEST</h1>
-                                    <p className=" text-xs">₹ {lowPrice.price + 888} | 0{lowPrice.time}h 00m</p>
+                                <div onClick={handleTo} className=" relative px-3 py-1 rounded-lg borderRight lightWhite ">
+                                    <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600">TO <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
+                                    {!loading ?
+                                        flightCodeArray?.map((val) => {
+                                            return (
+                                                <>
+                                                    {val?.city === destination ?
+                                                        <div key={val.code} className=" mt-2">
+                                                            <h1 className=" font-bold text-sm text-white">{val?.city}</h1>
+                                                        </div> : ""}</>
+                                            )
+                                        }) : <ShimmerLocation />}
+                                    {destinationModal ?
+                                        <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
+                                            <FlightModal />
+                                        </div> : ""}
+                                </div>
+                                <div onClick={handleDateModal} className=" relative px-3 py-0 rounded-lg borderRight lightWhite">
+                                    <span className=" text-blue-600 text-xs">DEPART</span>
+                                    <div className="text-white">
+                                        <span className=" font-extrabold text-sm">{date} </span>
+                                        <span className=" font-semibold">{monthNames[month]}'{year}, </span>
+                                        <span className=" ">{weekName[day]}</span>
+                                        {flightDateModal ?
+                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-7 bg-white text-black p-2 grayBlurShadow rounded-lg calenderBox" >
+                                                <Calendar onChange={onChange} value={flightdate} />
+                                            </div> : ""}
+                                    </div>
                                 </div>
                             </div>
-                            <div id="nonStop" onClick={() => { selectSortBy("nonStop") }} className="flex alignCenter text-left  p-3 rounded-md bg-gray-100">
-                                <div id="nonStopIcon" className=" rounded-md mr-2 bg-gray-300">
-                                    <img className=" w-10" src="/img/fastest.png" alt="" />
-                                </div>
-                                <div>
-                                    <h1 className=" font-bold text-left">NON STOP FIRST</h1>
-                                    <p className=" text-xs">₹ {nonStopPrice.price + 888} | 0{nonStopPrice.time}h 00m</p>
-                                </div>
-                            </div>
-                            <div id="prefer" onClick={() => { selectSortBy("prefer") }} className="flex alignCenter text-left p-3 rounded-md bg-gray-100">
-                                <div id="preferIcon" className=" rounded-md mr-2 bg-gray-300">
-                                    <img className=" w-10" src="/img/populer.png" alt="" />
-                                </div>
-                                <div>
-                                    <h1 className=" font-bold text-left">YOU MAY PREFER</h1>
-                                    <p className=" text-xs">₹ {preferPrice.price + 888} | 0{preferPrice.time}h 00m</p>
-                                </div>
-                            </div>
+                            <button onClick={handleSearch} className=" px-10 h-10 text-lg my-1 font-bold text-white blueSearch rounded-full">SEARCH</button>
                         </div>
                     </div>
-                    {!cardLoading ?
-                        listOfFlights?.map((val) => {
-                            return (
-                                <div>
-                                    <div className=" bg-white pt-5 px-3">
-                                        <div className="flex alignCenter justify-around gap-3 p-4">
-                                            <div className="flex text-left">
-                                                <img className=" w-10 h-10 mr-1" src="/img/flightLogo.jpg" alt="" />
-                                                <div>
-                                                    <h1 className=" font-bold text-xl">IndiGo</h1>
-                                                    <p className=" flightIdText text-gray-400">{val.flightID}</p>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <h1 className=" font-bold text-xl">{val.departureTime}</h1>
-                                                <p className=" text-xs">{source}</p>
-                                            </div>
-                                            <div>
-                                                <p className=" text-xs mb-2">0{val.duration} h 00 m</p>
-                                                <div className=" w-full h-0.5 bg-green-500"></div>
-                                                <p className=" mt-1 text-xs text-gray-500 font-semibold">{val.stops != 0 ? val.stops + " stop" : "Non stop"}</p>
-                                            </div>
-                                            <div>
-                                                <h1 className=" font-bold text-xl">{val.arrivalTime}</h1>
-                                                <p className=" text-xs">{destination}</p>
-                                            </div>
-                                            <div>
-                                                <h1 className=" text-xl font-bold">₹ {val.ticketPrice + 888}</h1>
-                                                <p className=" text-xs text-gray-400">per person</p>
-                                            </div>
+                    <main className=" allCardMainBox">
+                        {/* flight cards div */}
+                        <div className="flex flex-col gap-3 mx-2 ">
+                            <div id="sortBox" className=" p-4 bg-white">
+                                <div className="grid grid-cols-3 gap-2 ">
+                                    <div id="cheapest" onClick={() => { selectSortBy("cheapest") }} className="flex alignCenter p-3 rounded-md bg-gray-100 flightSort">
+                                        <div id="cheapestIcon" className=" rounded-md mr-2 bg-gray-300 blueBack">
+                                            <img className=" w-10" src="/img/cheapest.png" alt="" />
                                         </div>
                                         <div>
-                                            <p className=" flex alignCenter justify-center bg-red-50 text-sm py-1"><div className=" w-2 h-2 rounded-full bg-red-400"></div> Get Rs 100 off using MMTBONUS</p>
+                                            <h1 className=" font-bold text-left">CHEAPEST</h1>
+                                            <p className=" text-xs">₹ {lowPrice.price + 888} | 0{lowPrice.time}h 00m</p>
                                         </div>
-                                        <p onClick={() => { showTicketBox === val._id ? setShowTicketBox("") : setShowTicketBox(val._id) }} className=" text-xs blueText text-right py-3 cursor-pointer">{showTicketBox === val._id ? "Hide" : "Show"} Flight Details</p>
                                     </div>
-                                    {showTicketBox === val._id ?
-                                        <>
-                                            <div className=" p-5 showFlightDetailsBox">
-                                                <div className="flex mb-4 bg-white cursor-pointer text-xs w-fit">
-                                                    <h1 id="flightDetails" onClick={() => { flightDetailsNavHandle("flightDetails", "fareSummary") }} className=" px-3 py-1 flightDetailsNav">FLIGHT DETAILS</h1>
-                                                    <h1 id="fareSummary" onClick={() => { flightDetailsNavHandle("fareSummary", "flightDetails") }} className=" px-3 py-1">FARE SUMMARY</h1>
-                                                </div>
-                                                {selectedFlightDetailsNav === "flightDetails" ?
-                                                    <div className="borderGray rounded-md">
-                                                        <h1 className=" text-left font-bold px-2 py-3 borderBottomGray">{source} to {destination} , {date} {monthNames[month]}</h1>
-                                                        <div className="flex text-sm alignCenter p-2">
-                                                            <img className=" w-7 h-7 mr-1" src="/img/flightLogo.jpg" alt="" />
-                                                            <h1 className=" font-bold mr-1">IndiGo</h1>
-                                                            <p className=" text-gray-400">{val.flightID}</p>
-                                                        </div>
-                                                        <div className="flex justify-between text-left p-2">
-                                                            <div>
-                                                                <h1 className=" font-bold text-xl">{val.arrivalTime}</h1>
-                                                                <p className=" text-xs font-bold mb-3">{weekDay}, {date} {monthNames[month]} {year}</p>
-                                                                <p className=" text-xs text-gray-600">Terminal 2</p>
-                                                                <p className=" text-xs">{source}, India</p>
-                                                            </div>
-                                                            <div>
-                                                                <p className=" text-xs mb-2">02 h 10 m</p>
-                                                                <div className=" w-full h-0.5 bg-green-500"></div>
-                                                            </div>
-                                                            <div>
-                                                                <h1 className=" font-bold text-xl">{val.departureTime}</h1>
-                                                                <p className=" text-xs font-bold mb-3">{weekDay}, {date} {monthNames[month]} {year}</p>
-                                                                <p className=" text-xs text-gray-600">Terminal 2</p>
-                                                                <p className=" text-xs">{destination}, India</p>
-                                                            </div>
-                                                            <div>
-                                                                <h1 className=" font-bold">BAGGAGE:</h1>
-                                                                <p className=" text-xs text-gray-600">ADULT</p>
-                                                            </div>
-                                                            <div>
-                                                                <h1 className=" font-bold">CHECK IN</h1>
-                                                                <p className=" text-xs text-gray-600">15 Kgs (1 piece only)</p>
-                                                            </div>
-                                                            <div>
-                                                                <h1 className=" font-bold">CABIN</h1>
-                                                                <p className=" text-xs text-gray-600">7 Kgs (1 piece only)</p>
-                                                            </div>
-                                                        </div>
-                                                    </div> :
-                                                    <div className="borderGray rounded-md pb-4">
-                                                        <h1 className=" text-left font-bold px-2 py-3 borderBottomGray">Fare breakup</h1>
-                                                        <div>
-                                                            <table className=" text-left">
-                                                                <tr>
-                                                                    <th className=" font-medium">TOTAL</th>
-                                                                    <th className=" font-medium">₹ {val.ticketPrice + 888}</th>
-                                                                </tr>
-                                                                <tr className=" text-xs text-gray-400">
-                                                                    <td>Base Fare</td>
-                                                                    <td>₹ {val.ticketPrice}</td>
-                                                                </tr>
-                                                                <tr className=" text-xs text-gray-400">
-                                                                    <td>Surcharges</td>
-                                                                    <td>₹ 888</td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                    </div>}
-                                            </div></>
-                                        : ""
-                                    }
+                                    <div id="nonStop" onClick={() => { selectSortBy("nonStop") }} className="flex alignCenter text-left  p-3 rounded-md bg-gray-100">
+                                        <div id="nonStopIcon" className=" rounded-md mr-2 bg-gray-300">
+                                            <img className=" w-10" src="/img/fastest.png" alt="" />
+                                        </div>
+                                        <div>
+                                            <h1 className=" font-bold text-left">NON STOP FIRST</h1>
+                                            <p className=" text-xs">₹ {nonStopPrice.price + 888} | 0{nonStopPrice.time}h 00m</p>
+                                        </div>
+                                    </div>
+                                    <div id="prefer" onClick={() => { selectSortBy("prefer") }} className="flex alignCenter text-left p-3 rounded-md bg-gray-100">
+                                        <div id="preferIcon" className=" rounded-md mr-2 bg-gray-300">
+                                            <img className=" w-10" src="/img/populer.png" alt="" />
+                                        </div>
+                                        <div>
+                                            <h1 className=" font-bold text-left">YOU MAY PREFER</h1>
+                                            <p className=" text-xs">₹ {preferPrice.price + 888} | 0{preferPrice.time}h 00m</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            );
-                        }) : <img className=' m-auto w-32 ' src="/img/mmtLoading.gif" alt="" />}
+                            </div>
+                            {!cardLoading ?
+                                listOfFlights?.map((val) => {
+                                    return (
+                                        <div>
+                                            <div className=" bg-white pt-5 px-3">
+                                                <div className="flex alignCenter justify-around gap-3 p-4">
+                                                    <div className="flex text-left">
+                                                        <img className=" w-10 h-10 mr-1" src="/img/flightLogo.jpg" alt="" />
+                                                        <div>
+                                                            <h1 className=" font-bold text-xl">IndiGo</h1>
+                                                            <p className=" flightIdText text-gray-400">{val.flightID}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h1 className=" font-bold text-xl">{val.departureTime}</h1>
+                                                        <p className=" text-xs">{source}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className=" text-xs mb-2">0{val.duration} h 00 m</p>
+                                                        <div className=" w-full h-0.5 bg-green-500"></div>
+                                                        <p className=" mt-1 text-xs text-gray-500 font-semibold">{val.stops != 0 ? val.stops + " stop" : "Non stop"}</p>
+                                                    </div>
+                                                    <div>
+                                                        <h1 className=" font-bold text-xl">{val.arrivalTime}</h1>
+                                                        <p className=" text-xs">{destination}</p>
+                                                    </div>
+                                                    <div>
+                                                        <h1 className=" text-xl font-bold">₹ {val.ticketPrice + 888}</h1>
+                                                        <p className=" text-xs text-gray-400">per person</p>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p className=" flex alignCenter justify-center bg-red-50 text-sm py-1"><div className=" w-2 h-2 rounded-full bg-red-400"></div> Get Rs 100 off using MMTBONUS</p>
+                                                </div>
+                                                <p onClick={() => { showTicketBox === val._id ? setShowTicketBox("") : setShowTicketBox(val._id) }} className=" text-xs blueText text-right py-3 cursor-pointer">{showTicketBox === val._id ? "Hide" : "Show"} Flight Details</p>
+                                            </div>
+                                            {showTicketBox === val._id ?
+                                                <>
+                                                    <div className=" p-5 showFlightDetailsBox">
+                                                        <div className="flex mb-4 bg-white cursor-pointer text-xs w-fit">
+                                                            <h1 id="flightDetails" onClick={() => { flightDetailsNavHandle("flightDetails", "fareSummary") }} className=" px-3 py-1 flightDetailsNav">FLIGHT DETAILS</h1>
+                                                            <h1 id="fareSummary" onClick={() => { flightDetailsNavHandle("fareSummary", "flightDetails") }} className=" px-3 py-1">FARE SUMMARY</h1>
+                                                        </div>
+                                                        {selectedFlightDetailsNav === "flightDetails" ?
+                                                            <div className="borderGray rounded-md">
+                                                                <h1 className=" text-left font-bold px-2 py-3 borderBottomGray">{source} to {destination} , {date} {monthNames[month]}</h1>
+                                                                <div className="flex text-sm alignCenter p-2">
+                                                                    <img className=" w-7 h-7 mr-1" src="/img/flightLogo.jpg" alt="" />
+                                                                    <h1 className=" font-bold mr-1">IndiGo</h1>
+                                                                    <p className=" text-gray-400">{val.flightID}</p>
+                                                                </div>
+                                                                <div className="flex justify-between text-left p-2">
+                                                                    <div>
+                                                                        <h1 className=" font-bold text-xl">{val.arrivalTime}</h1>
+                                                                        <p className=" text-xs font-bold mb-3">{weekDay}, {date} {monthNames[month]} {year}</p>
+                                                                        <p className=" text-xs text-gray-600">Terminal 2</p>
+                                                                        <p className=" text-xs">{source}, India</p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <p className=" text-xs mb-2">02 h 10 m</p>
+                                                                        <div className=" w-full h-0.5 bg-green-500"></div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <h1 className=" font-bold text-xl">{val.departureTime}</h1>
+                                                                        <p className=" text-xs font-bold mb-3">{weekDay}, {date} {monthNames[month]} {year}</p>
+                                                                        <p className=" text-xs text-gray-600">Terminal 2</p>
+                                                                        <p className=" text-xs">{destination}, India</p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <h1 className=" font-bold">BAGGAGE:</h1>
+                                                                        <p className=" text-xs text-gray-600">ADULT</p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <h1 className=" font-bold">CHECK IN</h1>
+                                                                        <p className=" text-xs text-gray-600">15 Kgs (1 piece only)</p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <h1 className=" font-bold">CABIN</h1>
+                                                                        <p className=" text-xs text-gray-600">7 Kgs (1 piece only)</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div> :
+                                                            <div className="borderGray rounded-md pb-4">
+                                                                <h1 className=" text-left font-bold px-2 py-3 borderBottomGray">Fare breakup</h1>
+                                                                <div>
+                                                                    <table className=" text-left">
+                                                                        <tr>
+                                                                            <th className=" font-medium">TOTAL</th>
+                                                                            <th className=" font-medium">₹ {val.ticketPrice + 888}</th>
+                                                                        </tr>
+                                                                        <tr className=" text-xs text-gray-400">
+                                                                            <td>Base Fare</td>
+                                                                            <td>₹ {val.ticketPrice}</td>
+                                                                        </tr>
+                                                                        <tr className=" text-xs text-gray-400">
+                                                                            <td>Surcharges</td>
+                                                                            <td>₹ 888</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>}
+                                                    </div></>
+                                                : ""
+                                            }
+                                        </div>
+                                    );
+                                }) : <img className=' m-auto w-32 ' src="/img/mmtLoading.gif" alt="" />}
+                        </div>
+                    </main>
                 </div>
-            </main>
-        </div>
+            </BrowserView>
+            <MobileView>
+                <div className=" relative bg-blue-50 fullHeightInVh" onClick={() => { setIsModalOpen(false); }}>
+                    {editFlight ?
+                        <div className="  absolute top-0 fullHeightInVh z-20 w-full">
+                            <div className=" mb-6">
+
+                                <div id="showBookingBar" className="bg-gray-100 fullHeightInVh py-4 px-6 text-left">
+                                    <p onClick={() => { setEditFlight(false); }} className=" text-right text-blue-600 py-2">Cancel</p>
+                                    <div className="  gap-2 rounded-lg cursor-pointer ">
+                                        <div onClick={(e) => { handleFrom(e) }} className=" relative bg-white px-3 py-2 mb-3 rounded-lg ">
+                                            <span className="flex flex-row gap-1 alignCenter text-sm text-blue-600">FROM <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
+                                            {!loading ?
+                                                flightCodeArray?.map((val) => {
+                                                    return (
+                                                        <>
+                                                            {val?.city === source ?
+                                                                <div key={val.code} className="">
+                                                                    <h1 className=" font-bold text-xl">{val?.city}</h1>
+                                                                </div> : ""}</>
+                                                    )
+                                                }) : <ShimmerLocation />}
+                                            {sourceModal ?
+                                                <div className=" absolute w-64 z-20 left-0 top-9 flightModal" >
+                                                    <FlightModal />
+                                                </div> : ""}
+                                        </div>
+                                        <div onClick={handleTo} className=" relative px-3 py-2 mb-3 rounded-lg borderRight bg-white ">
+                                            <span className="flex flex-row gap-1 alignCenter text-sm text-blue-600">TO <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
+                                            {!loading ?
+                                                flightCodeArray?.map((val) => {
+                                                    return (
+                                                        <>
+                                                            {val?.city === destination ?
+                                                                <div key={val.code} className=" ">
+                                                                    <h1 className=" font-bold text-xl ">{val?.city}</h1>
+                                                                </div> : ""}</>
+                                                    )
+                                                }) : <ShimmerLocation />}
+                                            {destinationModal ?
+                                                <div className=" absolute w-64 z-20 left-0 top-9 flightModal" >
+                                                    <FlightModal />
+                                                </div> : ""}
+                                        </div>
+                                        <div onClick={handleDateModal} className=" relative px-3 py-2 mb-3 rounded-lg borderRight bg-white">
+                                            <span className=" text-blue-600 text-sm">DEPART</span>
+                                            <div className="">
+                                                <span className=" font-extrabold text-xl">{date} </span>
+                                                <span className=" font-semibold">{monthNames[month]}'{year}, </span>
+                                                <span className=" ">{weekName[day]}</span>
+                                                {flightDateModal ?
+                                                    <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-7 bg-white text-black p-2 grayBlurShadow rounded-lg calenderBox" >
+                                                        <Calendar onChange={onChange} value={flightdate} />
+                                                    </div> : ""}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button onClick={(e) => { handleSearch(e); setEditFlight(false); }} className=" px-10 py-2 w-full text-lg my-1 font-bold text-white blueSearch rounded-lg">SEARCH</button>
+                                </div>
+                            </div>
+                        </div> :
+                        <>
+                            <div className=" bg-white px-2 py-2 mb-3">
+                                <div className="flex justify-between alignCenter bg-gray-100 rounded-md borderGray py-2 pl-2">
+                                    <div>
+                                        <h1 className="flex">
+                                            {flightCodeArray?.map((val) => {
+                                                return (
+                                                    <>
+                                                        {val?.city === source ?
+                                                            <div key={val.code} className="">
+                                                                <h1 className=" font-bold text-xl">{val?.city}-</h1>
+                                                            </div> : ""}</>
+                                                )
+                                            })}
+                                            {flightCodeArray?.map((val) => {
+                                                return (
+                                                    <>
+                                                        {val?.city === destination ?
+                                                            <div key={val.code} className=" ">
+                                                                <h1 className=" font-bold text-xl ">{val?.city}</h1>
+                                                            </div> : ""}</>
+                                                )
+                                            })}
+                                        </h1>
+                                        <div className=" text-left text-xs text-gray-400">
+                                            <span className=" font-semibold">{date} </span>
+                                            <span className=" font-semibold">{monthNames[month]}'{year}, </span>
+                                            <span className=" ">{weekName[day]}</span>
+                                        </div>
+                                    </div>
+                                    <div className="p-2" onClick={(e) => { e.stopPropagation(); setEditFlight(true); console.log("hello"); }}>
+                                        <img className=" w-3 ml-1" src="/img/editIcon.png" alt="" />
+                                        <h2 className=" text-xs text-blue-600">Edit</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className=" opacity-0 bg-gray-100 z-20">
+                                <div className="">
+                                    <div id="showBookingBar" className="bg-gray-100 w-2 text-left">
+                                        <div className="  gap-2 rounded-lg cursor-pointer ">
+                                            <div onClick={handleFrom} className=" relative bg-white rounded-lg ">
+                                                <span className="flex flex-row gap-1 alignCenter text-sm text-blue-600"><img id="fromArrow" className=" w-0 h-0 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
+                                            </div>
+                                            <div onClick={handleTo} className=" relativerounded-lg borderRight bg-white ">
+                                                <span className="flex flex-row gap-1 alignCenter text-sm text-blue-600"> <img id="toArrow" className=" w-0 h-0 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </>}
+                    <main className=" allCardMainBox">
+                        {/* flight cards div */}
+                        <div className="flex flex-col gap-3 mx-2 ">
+                            <div id="sortBox" className=" p-4 bg-white">
+                                <div className="grid grid-cols-3 gap-2 ">
+                                    <div id="cheapest" onClick={() => { selectSortBy("cheapest") }} className="flex flex-col alignCenter p-3 rounded-md bg-gray-100 flightSort">
+                                        <h1 className=" font-bold text-sm">CHEAPEST</h1>
+                                        <p className=" text-xs">₹ {lowPrice.price + 888} | 0{lowPrice.time}h 00m</p>
+                                    </div>
+                                    <div id="nonStop" onClick={() => { selectSortBy("nonStop") }} className="flex flex-col alignCenter text-left  p-3 rounded-md bg-gray-100">
+                                        <h1 className=" font-bold text-sm">NON STOP</h1>
+                                        <p className=" text-xs">₹ {nonStopPrice.price + 888} | 0{nonStopPrice.time}h 00m</p>
+                                    </div>
+                                    <div id="prefer" onClick={() => { selectSortBy("prefer") }} className="flex flex-col alignCenter text-left p-3 rounded-md bg-gray-100">
+                                        <h1 className=" font-bold text-sm">PREFER</h1>
+                                        <p className=" text-xs">₹ {preferPrice.price + 888} | 0{preferPrice.time}h 00m</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {!cardLoading ?
+                                listOfFlights?.map((val) => {
+                                    return (
+                                        <div key={val._id}>
+                                            <div className=" bg-white pt-5 px-3">
+                                                <div className="flex alignCenter justify-around gap-3 p-4">
+                                                    <div className="flex text-left">
+                                                        <img className=" w-10 h-10 mr-1" src="/img/flightLogo.jpg" alt="" />
+                                                        <div>
+                                                            <h1 className=" font-bold text-xl">IndiGo</h1>
+                                                            <p className=" flightIdText text-gray-400">{val.flightID}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h1 className=" font-bold text-xl">{val.departureTime}</h1>
+                                                        <p className=" text-xs">{source}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className=" text-xs mb-2">0{val.duration} h 00 m</p>
+                                                        <div className=" w-full h-0.5 bg-green-500"></div>
+                                                        <p className=" mt-1 text-xs text-gray-500 font-semibold">{val.stops != 0 ? val.stops + " stop" : "Non stop"}</p>
+                                                    </div>
+                                                    <div>
+                                                        <h1 className=" font-bold text-xl">{val.arrivalTime}</h1>
+                                                        <p className=" text-xs">{destination}</p>
+                                                    </div>
+                                                    <div>
+                                                        <h1 className=" text-xl font-bold">₹ {val.ticketPrice + 888}</h1>
+                                                        <p className=" text-xs text-gray-400">per person</p>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p className=" flex alignCenter justify-center bg-red-50 text-sm py-1"><div className=" w-2 h-2 rounded-full bg-red-400"></div> Get Rs 100 off using MMTBONUS</p>
+                                                </div>
+                                                <p onClick={() => { showTicketBox === val._id ? setShowTicketBox("") : setShowTicketBox(val._id) }} className=" text-xs blueText text-right py-3 cursor-pointer">{showTicketBox === val._id ? "Hide" : "Show"} Flight Details</p>
+                                            </div>
+                                            {showTicketBox === val._id ?
+                                                <>
+                                                    <div className=" p-5 showFlightDetailsBox">
+                                                        <div className="flex mb-4 bg-white cursor-pointer text-xs w-fit">
+                                                            <h1 id="flightDetails" onClick={() => { flightDetailsNavHandle("flightDetails", "fareSummary") }} className=" px-3 py-1 flightDetailsNav">FLIGHT DETAILS</h1>
+                                                            <h1 id="fareSummary" onClick={() => { flightDetailsNavHandle("fareSummary", "flightDetails") }} className=" px-3 py-1">FARE SUMMARY</h1>
+                                                        </div>
+                                                        {selectedFlightDetailsNav === "flightDetails" ?
+                                                            <div className="borderGray rounded-md">
+                                                                <h1 className=" text-left font-bold px-2 py-3 borderBottomGray">{source} to {destination} , {date} {monthNames[month]}</h1>
+                                                                <div className="flex text-sm alignCenter p-2">
+                                                                    <img className=" w-7 h-7 mr-1" src="/img/flightLogo.jpg" alt="" />
+                                                                    <h1 className=" font-bold mr-1">IndiGo</h1>
+                                                                    <p className=" text-gray-400">{val.flightID}</p>
+                                                                </div>
+                                                                <div className="flex justify-between text-left p-2">
+                                                                    <div>
+                                                                        <h1 className=" font-bold text-base">{val.arrivalTime}</h1>
+                                                                        <p className=" text-xs font-bold">{weekDay}, {date} {monthNames[month]}</p>
+                                                                        <p className=" text-xs font-bold mb-3">{year}</p>
+                                                                        <p className=" text-xs text-gray-600">Terminal 2</p>
+                                                                        <p className=" text-xs">{source}, India</p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <p className=" text-xs mb-2 mt-2">02 h 10 m</p>
+                                                                        <div className=" w-full h-0.5 bg-green-500"></div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <h1 className=" font-bold text-base">{val.departureTime}</h1>
+                                                                        <p className=" text-xs font-bold">{weekDay}, {date} {monthNames[month]}</p>
+                                                                        <p className=" text-xs font-bold mb-3">{year}</p>
+                                                                        <p className=" text-xs text-gray-600">Terminal 2</p>
+                                                                        <p className=" text-xs">{destination}, India</p>
+                                                                    </div>
+                                                                    {/* <div>
+                                                                        <h1 className=" font-bold">BAGGAGE:</h1>
+                                                                        <p className=" text-xs text-gray-600">ADULT</p>
+                                                                    </div> */}
+                                                                    {/* <div>
+                                                                        <h1 className=" font-bold">CHECK IN</h1>
+                                                                        <p className=" text-xs text-gray-600">15 Kgs (1 piece only)</p>
+                                                                    </div> */}
+                                                                    <div>
+                                                                        <h1 className=" font-bold text-sm">CABIN</h1>
+                                                                        <p className=" text-xs text-gray-600">7 Kgs (1 piece only)</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div> :
+                                                            <div className="borderGray rounded-md pb-4">
+                                                                <h1 className=" text-left font-bold px-2 py-3 borderBottomGray">Fare breakup</h1>
+                                                                <div>
+                                                                    <table className=" text-left">
+                                                                        <tr>
+                                                                            <th className=" font-medium">TOTAL</th>
+                                                                            <th className=" font-medium">₹ {val.ticketPrice + 888}</th>
+                                                                        </tr>
+                                                                        <tr className=" text-xs text-gray-400">
+                                                                            <td>Base Fare</td>
+                                                                            <td>₹ {val.ticketPrice}</td>
+                                                                        </tr>
+                                                                        <tr className=" text-xs text-gray-400">
+                                                                            <td>Surcharges</td>
+                                                                            <td>₹ 888</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>}
+                                                    </div></>
+                                                : ""
+                                            }
+                                        </div>
+                                    );
+                                }) : <img className=' m-auto w-32 ' src="/img/mmtLoading.gif" alt="" />}
+                        </div>
+                    </main>
+                </div>
+            </MobileView>
+        </>
     );
 }
 

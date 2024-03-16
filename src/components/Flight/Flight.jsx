@@ -161,10 +161,10 @@ const Flight = (props) => {
                 </section>
             </BrowserView>
             <MobileView>
-                <section className=" mt-6 m-auto flex justify-center subNavbarBox">
+                <section className=" m-auto flex justify-center subNavbarBox">
                     <div className=" relative flex justify-center subNavbarBoxCover">
                         <TravelOptions />
-                        <div className=" w-full bg-white pt-12 pb-6 px-2 text-left mt-12 rounded-2xl">
+                        <div className=" w-full bg-white pt-3 pb-6 px-2 text-left mt-20 rounded-2xl">
                             <p className=" w-full mb-2 text-center font-bold text-gray-700">Book International and Domestic Flights.</p>
                             <div className=" relative   w-full cursor-pointer  ">
                                 <div onClick={handleFrom} className=" px-3 py-1 mb-3 relative borderGray  hoverLightBlue">
@@ -205,11 +205,11 @@ const Flight = (props) => {
                                     <span className=" text-gray-800 text-xs">Departure</span>
                                     <p>
                                         <span className=" font-extrabold text-xl">{date}</span>
-                                        <span className=" font-semibold">{monthNames[month]}'{year}</span>
-                                        <p className=" text-gray-800 text-xs">{weekName[day]}</p>
+                                        <span className=" font-semibold text-sm">{monthNames[month]}'{year}</span>
+                                        <p className=" text-gray-800 text-sm">{weekName[day]}</p>
                                         {flightDateModal ?
-                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
-                                                <Calendar onChange={onChange} />
+                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute z-20 left-0 top-9 bg-white p-2 grayBlurShadow rounded-lg " >
+                                                <Calendar className={"m-auto"} onChange={onChange} />
                                             </div> : ""}
                                         <p>{ }</p>
                                     </p>
