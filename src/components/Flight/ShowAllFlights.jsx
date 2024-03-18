@@ -436,7 +436,7 @@ function ShowAllFlights(props) {
                     </main>
                 </div>
             </BrowserView>
-            <MobileView>
+            <MobileView> 
                 <div className=" relative bg-blue-50 fullHeightInVh" onClick={() => { setIsModalOpen(false); }}>
                     {editFlight ?
                         <div className="  absolute top-0 fullHeightInVh z-20 w-full">
