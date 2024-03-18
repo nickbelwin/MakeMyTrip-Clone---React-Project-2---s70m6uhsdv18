@@ -17,7 +17,7 @@ function HeaderWhite(props) {
         <>
             <BrowserView>
             <header id="showHeader" className=" overflow-hidden bg-white headerTwo">
-                <div className=" flex flex-row m-auto alignCenter justify-between py-3 headerBox">
+                <div className=" flex flex-row m-auto px-4 alignCenter justify-between py-3 headerBox">
                     <div className=" flex flex-row alignCenter">
                         <div className=" cursor-pointer mmtlogo">
                             <img className=" w-28 " src="/img/mmtBlueLogo.png" alt="" />

@@ -176,46 +176,18 @@ function HotelDetails(props) {
                     </section>
             </BrowserView>
             <MobileView>
-                <header id="showHeader" className=" mb-3 bg-white ">
-                    <div className=" flex flex-row m-auto alignCenter justify-between py-1 px-1 headerTwo">
-                        <div className=" flex flex-row alignCenter">
-                            <div className="  cursor-pointer mmtlogo">
-
-                                <img className=" w-20 " src="/img/mmtBlueLogo.png" alt="" />
-                            </div>
-                            <ul className=" flex flex-row alignCenter ml-8 gap-3">
-                                {headerNavlist?.map((val) => {
-                                    return (
-                                        <li className="flex flex-col cursor-pointer h-full justify-between" onClick={() => { handleNav(val.id) }} key={val.id} id={val.id}>
-                                            <img className=" w-7" src={currentTravelOption === val.id ? val.imageOn : val.imageOff} alt="" />
-                                            {currentTravelOption === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
-                                                <p className=" text-xs text-gray-500">{val.name}</p>}
-                                        </li>
-                                    )
-                                })}
-                            </ul>
-                        </div>
-                        <div className=" flex flex-row alignCenter p-1 rounded cursor-pointer mr-3 loginGreenBtn">
-                            <span className=" w-8 relative flex alignCenter justify-center mr-2"><img className=" absolute text-white" src="/img/mmtLoginLogoGreen.png" alt="" />
-                            </span>
-                            <span className="flex alignCenter justify-between w-full text-xs text-left">
-                                <p className=" font-bold">Login or Create Account</p>
-                                <span><img className=" w-3 opacity-80" src="/img/downArrow.png" alt="" /></span>
-                            </span>
-                        </div>
-                    </div>
-                </header>
+                
                 {!loading ?
                     hotelInfo?.map((val) => {
                         return (
                             <div className=' ' key={val._id}>
-                                <div className='flex alignCenter w-fit mainImage relative'>
-                                    <img onClick={prevImg} className=' cursor-pointer absolute left-1 top-1/2 w-7 transformLeftArrow grayBlurShadow' src="/img/downArrow.png" alt="" />
-                                    <img onClick={nextImg} className=' cursor-pointer absolute right-1 top-1/2 w-7 transformRightArrow grayBlurShadow' src="/img/downArrow.png" alt="" />
+                                <div className='flex justify-center alignCenter w-fit mainImage relative'>
+                                    <img onClick={prevImg} className=' cursor-pointer absolute left-1 top-1/2 w-7 transformLeftArrow grayBlurShadow lowOpacityGrayBack' src="/img/downArrow.png" alt="" />
+                                    <img onClick={nextImg} className=' cursor-pointer absolute right-1 top-1/2 w-7 transformRightArrow grayBlurShadow lowOpacityGrayBack' src="/img/downArrow.png" alt="" />
                                     {/* <img className=' grayBlurShadow rounded-md ' src={val?.images[currentIndex]} alt="" /> */}
-                                    <LazyLoadImage className=' mb-3 grayBlurShadow rounded-md ' src={val?.images[currentIndex]} placeholderSrc='/img/mmtLoading.gif"' />
+                                    <LazyLoadImage className=' mb-3 grayBlurShadow rounded-md hotelDetailMainImg ' src={val?.images[currentIndex]} placeholderSrc='/img/mmtLoading.gif"' />
                                 </div>
-                                <div className='flex  gap-2 no-scrollbar allHotelImageBox'>
+                                <div className='flex ml-4 gap-2 no-scrollbar allHotelImageBox'>
                                     {val?.images.map((image, idx) => {
                                         return (
                                             <div className=''>

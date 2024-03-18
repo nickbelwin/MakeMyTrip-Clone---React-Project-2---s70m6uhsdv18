@@ -7,39 +7,92 @@ import TravelOptions from "../TravelOptions/TravelOptions";
 import HotelModal from "../Modals/HotelModal";
 import ShimmerLocation from "../Loader/ShimmerLocation";
 import { useNavigate } from "react-router";
+import Calendar from "react-calendar";
 
 const Hotel = (props) => {
     const { loading, } = props;
     const { hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource,
-        destination, setDestination, } = useContext(AppContext);
+        destination, setDestination,hotelInDate,setHotelInDate,
+        hotelOutDate,setHotelOutDate, } = useContext(AppContext);
     const [rooms, setRooms] = useState({ room: 1, guest: 2 });
     const [sourceModal, setSourceModal] = useState(false);
     const [hotelName, setHotelName] = useState(hotelArray);
+    const [hotelDateInModal,setHotelDateInModal]=useState(false);
+    const [hotelDateOutModal,setHotelDateOutModal]=useState(false);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
     const [day, setDay] = useState("");
+    const [dateOut, setDateOut] = useState("");
+    const [monthOut, setMonthOut] = useState("");
+    const [yearOut, setYearOut] = useState("");
+    const [dayOut, setDayOut] = useState("");
     const navigate=useNavigate();
 
+    const onChange = (newDate) => {
+        let chek = newDate;
+        setHotelInDate(chek);
+        setDate(chek.getDate());
+        setMonth(chek.getMonth());
+        setYear(chek.getFullYear());
+        setDay(chek.getDay());
+        // Add any additional logic you need when the date changes
+    };
+    const onChangeOut = (newDate) => {
+        let chek = newDate;
+        setHotelOutDate(chek);
+        setDateOut(chek.getDate());
+        setMonthOut(chek.getMonth());
+        setYearOut(chek.getFullYear());
+        setDayOut(chek.getDay());
+        setIsModalOpen(false);
+        setHotelDateOutModal(false);
+        // Add any additional logic you need when the date changes
+    };
     const handleHotel = (e) => {
         e.stopPropagation();
         setSourceModal(true);
         setIsModalOpen(true);
+        setHotelDateInModal(false);
+        setHotelDateOutModal(false);
         document.getElementById("fromArrow").style.transform = "rotate(180deg)";
     }
     useEffect(() => {
         if (!isModalOpen) {
             setSourceModal(false);
+            setHotelDateInModal(false);
+            setHotelDateOutModal(false);
             document.getElementById("fromArrow").style.transform = "rotate(0deg)";
         }
     }, [isModalOpen]);
     useEffect(() => {
-        let date = new Date();
-        setDate(date.getDate());
-        setMonth(date.getMonth());
-        setYear(date.getFullYear());
-        setDay(date.getDay());
+        let dateIn = hotelInDate;
+        let dateOut = hotelOutDate;
+        setDate(dateIn.getDate());
+        setMonth(dateIn.getMonth());
+        setYear(dateIn.getFullYear());
+        setDay(dateIn.getDay());
+        setDateOut(dateOut.getDate());
+        setMonthOut(dateOut.getMonth());
+        setYearOut(dateOut.getFullYear());
+        setDayOut(dateOut.getDay());
     }, []);
+    const handleDateModal = (e) => {
+        e.stopPropagation();
+        setSourceModal(false);
+        setHotelDateOutModal(false);
+        setHotelDateInModal(true);
+        setIsModalOpen(true);
+        
+    }
+    const handleDateOutModal = (e) => {
+        e.stopPropagation();
+        setHotelDateOutModal(true);
+        setSourceModal(false);
+        setHotelDateInModal(false);
+        setIsModalOpen(true);
+        
+    }
     const searchHotelsHandle=()=>{
         navigate(`/hotels/${hotelLocation}`);
     }
@@ -72,22 +125,29 @@ const Hotel = (props) => {
                                             <HotelModal />
                                         </div> : ""}
                                 </div>
-
-                                <div className=" px-6 py-3 borderRight hoverLightBlue">
+                                <div onClick={handleDateModal}  className=" relative px-6 py-3 borderRight hoverLightBlue">
                                     <span className=" text-gray-800">Check-In</span>
                                     <p>
-                                        <span className=" font-extrabold text-3xl">{date + 1}</span>
+                                        <span className=" font-extrabold text-3xl">{date}</span>
                                         <span className=" font-semibold">{monthNames[month]}'{year}</span>
-                                        <p className=" text-gray-800">{weekName[day - 1]}</p>
+                                        <p className=" text-gray-800">{weekName[day]}</p>
                                     </p>
+                                    {hotelDateInModal ?
+                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                                <Calendar onChange={onChange} />
+                                            </div> : ""}
                                 </div>
-                                <div className=" px-6 py-3 borderRight hoverLightBlue">
+                                <div onClick={handleDateOutModal} className=" relative px-6 py-3 borderRight hoverLightBlue">
                                     <span className=" text-gray-800">Check-Out</span>
                                     <p>
-                                        <span className=" font-extrabold text-3xl">{date + 1}</span>
-                                        <span className=" font-semibold">{monthNames[month]}'{year}</span>
-                                        <p className=" text-gray-800">{weekName[day - 1]}</p>
+                                        <span className=" font-extrabold text-3xl">{dateOut}</span>
+                                        <span className=" font-semibold">{monthNames[monthOut]}'{yearOut}</span>
+                                        <p className=" text-gray-800">{weekName[dayOut]}</p>
                                     </p>
+                                    {hotelDateOutModal ?
+                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                                <Calendar onChange={onChangeOut} />
+                                            </div> : ""}
                                 </div>
                                 <div className=" px-6 py-3 borderRight hoverLightBlue">
                                     <span className=" text-gray-800">Rooms & Guestes</span>
@@ -142,12 +202,16 @@ const Hotel = (props) => {
                                         </div> : ""}
                                 </div>
 
-                                <div className=" px-3 py-1 borderGray mb-2 hoverLightBlue">
+                                <div onClick={handleDateModal} className=" relative px-3 py-1 borderGray mb-2 hoverLightBlue">
                                     <span className=" text-gray-800 text-xs">Check-In</span>
                                     <p>
                                         <span className=" font-extrabold text-xl">{date + 1}</span>
                                         <span className=" font-semibold">{monthNames[month]}'{year}</span>
                                         <p className=" text-gray-800 text-xs">{weekName[day - 1]}</p>
+                                        {hotelDateInModal ?
+                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                                <Calendar onChange={onChange} />
+                                            </div> : ""}
                                     </p>
                                 </div>
                                 <div className=" px-3 py-1 borderGray mb-2 hoverLightBlue">

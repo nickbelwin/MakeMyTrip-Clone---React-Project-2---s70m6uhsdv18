@@ -137,7 +137,7 @@ function ShowAllFlights(props) {
     }, [source, destination])
     const isSticky = (e) => {
         const header = document.getElementById('showBookingBar');
-        const sortBox= document.getElementById('sortBox');
+        const sortBox = document.getElementById('sortBox');
         const scrollTop = window.scrollY;
         scrollTop >= 60 ? header?.classList.add('sticky') : header?.classList.remove('sticky');
         scrollTop >= 180 ? sortBox?.classList.add('sticky') : sortBox?.classList.remove('sticky');
@@ -441,7 +441,6 @@ function ShowAllFlights(props) {
                     {editFlight ?
                         <div className="  absolute top-0 fullHeightInVh z-20 w-full">
                             <div className=" mb-6">
-
                                 <div id="showBookingBar" className="bg-gray-100 fullHeightInVh py-4 px-6 text-left">
                                     <p onClick={() => { setEditFlight(false); }} className=" text-right text-blue-600 py-2">Cancel</p>
                                     <div className="  gap-2 rounded-lg cursor-pointer ">
@@ -547,6 +546,7 @@ function ShowAllFlights(props) {
                                 </div>
                             </div>
                         </>}
+
                     <main className=" allCardMainBox">
                         {/* flight cards div */}
                         <div className="flex flex-col gap-3 mx-2 ">
