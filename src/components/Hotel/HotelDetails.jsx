@@ -15,15 +15,15 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { BrowserView, MobileView } from 'react-device-detect';
 
 function HotelDetails(props) {
-    const {hotelId}=useParams();
+    const { hotelId } = useParams();
     const [hotelInfo, sethotelInfo] = useState([]);
-    const { currentTravelOption, setCurrentTravelOption } = useContext(AppContext);
+    const { currentTravelOption, setCurrentTravelOption,token,isLogin,setIsLogin,bookingStatus, setBookingStatus } = useContext(AppContext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
-    useEffect(()=>{
+    useEffect(() => {
         setCurrentTravelOption("HOTELS");
-    },[]);
+    }, []);
     const handleNav = (id) => {
         setCurrentTravelOption(id);
         navigate("/");
@@ -33,7 +33,7 @@ function HotelDetails(props) {
         if (currentIndex < hotelInfo[0].images?.length - 1) {
             setCurrentIndex(currentIndex + 1);
         }
-        else if(currentIndex === hotelInfo[0].images?.length - 1){
+        else if (currentIndex === hotelInfo[0].images?.length - 1) {
             setCurrentIndex(0);
         }
     }
@@ -41,7 +41,7 @@ function HotelDetails(props) {
         if (currentIndex > 0) {
             setCurrentIndex(currentIndex - 1);
         }
-        else if(currentIndex===0){
+        else if (currentIndex === 0) {
             setCurrentIndex(hotelInfo[0].images?.length - 1)
         }
     }
@@ -55,7 +55,17 @@ function HotelDetails(props) {
     }
     useEffect(() => {
         getval();
-    }, [])
+    }, []);
+    const handleBook=(id1,id2)=>{
+        if(token){
+            setBookingStatus(false);
+            navigate( `/hotel-review/${id1}/${id2}`)
+        }
+        else{
+            setIsLogin({ ...isLogin, status: true });
+        }
+    }
+    
 
     return (
         <main>
@@ -92,7 +102,7 @@ function HotelDetails(props) {
                 {!loading ?
                     hotelInfo?.map((val) => {
                         return (
-                            <div className=' grid gap-4 hotelDetailBox' key={val._id}>
+                            <div className=' grid gap-4 pt-5 hotelDetailBox' key={val._id}>
                                 <div className=''>
                                     <div className=' grid gap-3 hotelImageBox  w-full'>
                                         <div className='flex alignCenter justify-center arrowBack rounded-md relative'>
@@ -116,16 +126,22 @@ function HotelDetails(props) {
                                 <div>
                                     <div className=' text-left p-3 mb-4 rounded-md grayBlurShadow borderGray'>
                                         <h1 className=' font-semibold'>Superior Room</h1>
-                                        <div className='flex justify-between'>
-                                            <div>
-                                                <p>For 2 Adults</p>
-                                                <p className=' text-red-600'>x Non-Refundable</p>
-                                                <p>✓ Rooms only</p>
+                                        <div>
+                                            <div className='flex justify-between'>
+                                                <div>
+                                                    <p>For 2 Adults</p>
+                                                    <p className=' text-red-600'>x Non-Refundable</p>
+                                                    <p>✓ Rooms only</p>
+                                                </div>
+                                                <div className=' text-right'>
+                                                    <p>Per Night</p>
+                                                    <h1>₹ {Math.floor(val?.avgCostPerNight)}</h1>
+                                                    <p className=' text-xs text-gray-500'>+{val?.childAndExtraBedPolicy.extraBedCharge} Taxes & fees</p>
+                                                </div>
+
                                             </div>
-                                            <div className=' text-right'>
-                                                <p>Per Night</p>
-                                                <h1>₹ {Math.floor(val?.avgCostPerNight)}</h1>
-                                                <p className=' text-xs text-gray-500'>+{val?.childAndExtraBedPolicy.extraBedCharge} Taxes & fees</p>
+                                            <div className='flex justify-end'>
+                                                <button onClick={()=>{window.scrollTo(500, 500);}} className=' text-center gradientBlueBack rounded-full text-white font-bold py-1 px-2 mt-2'>View Rooms</button>
                                             </div>
                                         </div>
                                     </div>
@@ -146,37 +162,37 @@ function HotelDetails(props) {
                             </div>
                         )
                     }) : <img className=' m-auto w-32 ' src="/img/mmtLoading.gif" alt="" />}
-                    <section className='fullWidth m-auto borderGray'>
-                        <div className=' bg-slate-200 borderGray font-bold grid grid-cols-3'>
-                            <p>ROOM</p>
-                            <p>ROOM INFO</p>
-                            <p>PRICE</p>
-                        </div>
-                        {hotelInfo[0]?.rooms?.map((val)=>{
-                            return(
-                                <div className='grid grid-cols-3 borderGray text-left'>
-                                    <div className=' p-5 '>
-                                        <LazyLoadImage src={hotelInfo[0]?.images[0]}  placeholderSrc='/img/mmtLoading.gif' />
-                                    </div>
-                                    <div className=' p-3 borderLeftGray'>
-                                        <h1 className='text-xl font-bold'>{val?.roomType} Room</h1>
-                                        <p>Area : {val?.roomSize}sq.ft</p>
-                                        <p>Bed Detail : {val?.bedDetail}</p>
-                                        
-                                    </div>
-                                    <div className='p-3 borderLeftGray'>
-                                        <p className=' text-xs text-slate-400'>Per Night</p>
-                                        <h1 className='text-2xl font-bold'>₹ {val.price}</h1>
-                                        <p className=' text-sm font-semibold'>+₹ {val.costDetails.taxesAndFees} taxes & fees</p>
-                                        <p className=' text-blue-400'>{val?.cancellationPolicy}</p>
-                                    </div>
+                <section id='showRooms' className='fullWidth m-auto mb-8 borderGray'>
+                    <div className=' bg-slate-200 borderGray font-bold grid grid-cols-3'>
+                        <p>ROOM</p>
+                        <p>ROOM INFO</p>
+                        <p>PRICE</p>
+                    </div>
+                    {hotelInfo[0]?.rooms?.map((val) => {
+                        return (
+                            <div className='grid grid-cols-3 borderGray text-left'>
+                                <div className=' p-5 '>
+                                    <LazyLoadImage src={hotelInfo[0]?.images[0]} placeholderSrc='/img/mmtLoading.gif' />
                                 </div>
-                            );
-                        })}
-                    </section>
+                                <div className=' p-3 borderLeftGray'>
+                                    <h1 className='text-xl font-bold'>{val?.roomType} Room</h1>
+                                    <p>Area : {val?.roomSize}sq.ft</p>
+                                    <p>Bed Detail : {val?.bedDetail}</p>
+
+                                </div>
+                                <div className='p-3 borderLeftGray'>
+                                    <p className=' text-xs text-slate-400'>Per Night</p>
+                                    <h1 className='text-2xl font-bold'>₹ {val.costPerNight}</h1>
+                                    <p className=' text-sm font-semibold'>+₹ {val.costDetails.taxesAndFees} taxes & fees</p>
+                                    <p className=' text-blue-400'>{val?.cancellationPolicy}</p>
+                                    <button onClick={()=>{handleBook(hotelInfo[0]?._id,val._id)}} className=' text-center gradientBlueBack rounded-full text-white font-bold py-1 px-2 mt-2'>Book Now</button>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </section>
             </BrowserView>
             <MobileView>
-                
                 {!loading ?
                     hotelInfo?.map((val) => {
                         return (
@@ -235,33 +251,34 @@ function HotelDetails(props) {
                         )
                     }) : <img className=' m-auto w-32 ' src="/img/mmtLoading.gif" alt="" />}
                 <section className='fullWidth m-auto borderGray'>
-                        <div className=' bg-slate-200 borderGray font-bold grid grid-cols-3'>
-                            <p>ROOM</p>
-                            <p className='borderLeftGray'>ROOM INFO</p>
-                            <p className='borderLeftGray'>PRICE</p>
-                        </div>
-                        {hotelInfo[0]?.rooms?.map((val)=>{
-                            return(
-                                <div className='grid grid-cols-3 borderGray text-left'>
-                                    <div className=' p-5 '>
-                                        <img className='' src={hotelInfo[0]?.images[0]} alt="" />
-                                    </div>
-                                    <div className=' p-3 borderLeftGray'>
-                                        <h1 className='text-xl font-bold'>{val?.roomType} Room</h1>
-                                        <p>Area : {val?.roomSize}</p>
-                                        <p>Bed Detail : {val?.bedDetail}</p>
-                                        
-                                    </div>
-                                    <div className='p-3 borderLeftGray'>
-                                        <p className=' text-xs text-slate-400'>Per Night</p>
-                                        <h1 className='text-2xl font-bold'>₹ {val.price}</h1>
-                                        <p className=' text-sm font-semibold'>+₹ {val.costDetails.taxesAndFees} taxes & fees</p>
-                                        <p className=' text-blue-400'>{val?.cancellationPolicy}</p>
-                                    </div>
+                    <div className=' bg-slate-200 borderGray font-bold grid grid-cols-3'>
+                        <p>ROOM</p>
+                        <p className='borderLeftGray'>ROOM INFO</p>
+                        <p className='borderLeftGray'>PRICE</p>
+                    </div>
+                    {hotelInfo[0]?.rooms?.map((val) => {
+                        return (
+                            <div className='grid grid-cols-3 borderGray text-left'>
+                                <div className=' p-5 '>
+                                    <img className='' src={hotelInfo[0]?.images[0]} alt="" />
                                 </div>
-                            );
-                        })}
-                    </section>
+                                <div className=' p-3 borderLeftGray'>
+                                    <h1 className='text-xl font-bold'>{val?.roomType} Room</h1>
+                                    <p>Area : {val?.roomSize}</p>
+                                    <p>Bed Detail : {val?.bedDetail}</p>
+
+                                </div>
+                                <div className='p-3 borderLeftGray'>
+                                    <p className=' text-xs text-slate-400'>Per Night</p>
+                                    <h1 className='text-2xl font-bold'>₹ {val.costPerNight}</h1>
+                                    <p className=' text-sm font-semibold'>+₹ {val.costDetails.taxesAndFees} taxes & fees</p>
+                                    <p className=' text-blue-400'>{val?.cancellationPolicy}</p>
+                                    <button onClick={()=>{handleBook(hotelInfo[0]?._id,val._id)}} className=' text-center w-full gradientBlueBack rounded-full text-white font-bold py-2'>Book Now</button>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </section>
             </MobileView>
         </main>
     );

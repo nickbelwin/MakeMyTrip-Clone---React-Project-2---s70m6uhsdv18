@@ -11,6 +11,7 @@ import ShowAllTrains from "./Train/ShowAllTrains";
 import ShowAllBuses from "./Bus/ShowAllBuses";
 import LogSignModal from "./LoginSignup/LogSignModal";
 import HeaderWhite from "./Header/HeaderWhite";
+import HotelReviewPage from "./Hotel/HotelReviewPage";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/flights/:from/:to/:weekDay" element={<ShowAllFlights />} />
             <Route path="/trains" element={<ShowAllTrains />} />
             <Route path="/buses/:from/:to/:weekDay" element={<ShowAllBuses />} />
+            <Route path="/hotel-review/:hotelId/:roomId" element={<HotelReviewPage/>} />
           </Route>
         </Routes>
       </div>

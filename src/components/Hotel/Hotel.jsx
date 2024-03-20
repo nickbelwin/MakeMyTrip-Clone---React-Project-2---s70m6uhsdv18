@@ -158,18 +158,7 @@ const Hotel = (props) => {
                                         <span className=" font-semibold">Adults</span>
                                     </p>
                                 </div>
-                                <div className=" px-6 py-3  hoverLightBlue">
-                                    <span className=" text-gray-800">Price Per Night</span>
-                                    <div>
-                                        {hotelPerNightPrice?.map((price, idx) => {
-                                            return (
-                                                <>{idx <= 2 ?
-                                                    idx <= 1 ? <span className=" text-sm font-bold text-gray-700" >{price},</span> : "..." : ""}
-                                                </>
-                                            )
-                                        })}
-                                    </div>
-                                </div>
+                                
                             </div>
                             <button onClick={searchHotelsHandle} className=" absolute px-6 w-1/6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
                         </div>
@@ -182,7 +171,7 @@ const Hotel = (props) => {
                         <TravelOptions />
                         <div className=" w-full  bg-white  rounded-2xl pt-3 pb-12 px-2 text-left mt-20 ">
                             <p className=" w-full mb-2 text-center font-bold text-gray-700">Book Domestic and International Property Online.</p>
-                            <div className=" rounded-lg w-full cursor-pointer hotelBookingBox">
+                            <div className=" rounded-lg w-full cursor-pointer ">
                                 <div onClick={handleHotel} className=" relative px-3 py-1  borderGray mb-2 hoverLightBlue">
                                     <span className="flex flex-row gap-1 alignCenter text-gray-800 text-xs ">City, Property Name Or Location <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {!loading ?
@@ -201,25 +190,28 @@ const Hotel = (props) => {
                                             <HotelModal />
                                         </div> : ""}
                                 </div>
-
                                 <div onClick={handleDateModal} className=" relative px-3 py-1 borderGray mb-2 hoverLightBlue">
                                     <span className=" text-gray-800 text-xs">Check-In</span>
                                     <p>
-                                        <span className=" font-extrabold text-xl">{date + 1}</span>
+                                        <span className=" font-extrabold text-xl">{date}</span>
                                         <span className=" font-semibold">{monthNames[month]}'{year}</span>
-                                        <p className=" text-gray-800 text-xs">{weekName[day - 1]}</p>
+                                        <p className=" text-gray-800 text-xs">{weekName[day]}</p>
                                         {hotelDateInModal ?
-                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-8 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
                                                 <Calendar onChange={onChange} />
                                             </div> : ""}
                                     </p>
                                 </div>
-                                <div className=" px-3 py-1 borderGray mb-2 hoverLightBlue">
+                                <div onClick={handleDateOutModal} className=" relative px-3 py-1 borderGray mb-2 hoverLightBlue">
                                     <span className=" text-gray-800 text-xs">Check-Out</span>
                                     <p>
-                                        <span className=" font-extrabold text-xl">{date + 1}</span>
-                                        <span className=" font-semibold ">{monthNames[month]}'{year}</span>
-                                        <p className=" text-gray-800 text-xs">{weekName[day - 1]}</p>
+                                        <span className=" font-extrabold text-xl">{dateOut}</span>
+                                        <span className=" font-semibold ">{monthNames[monthOut]}'{yearOut}</span>
+                                        <p className=" text-gray-800 text-xs">{weekName[dayOut]}</p>
+                                        {hotelDateOutModal ?
+                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-8 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                                <Calendar onChange={onChangeOut} />
+                                            </div> : ""}
                                     </p>
                                 </div>
                                 <div className=" px-3 py-1 borderGray mb-2 hoverLightBlue">

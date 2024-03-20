@@ -42,8 +42,18 @@ code {
 .borderTopGray{
   border-top: 1px solid rgba(128, 128, 128, 0.293);
 }
+.borderDottedTopGray{
+  border-top: 1px dotted rgba(128, 128, 128, 0.293);
+}
 .borderBottomGray{
   border-bottom: 1px solid rgba(128, 128, 128, 0.293);
+}
+.borderDottedBottomGray{
+  border-bottom: 1px dotted rgba(128, 128, 128, 0.293);
+}
+.borderDottedTopBottomRed{
+  border-top:1px dotted #FFC4C2 ;
+  border-bottom: 1px dotted #FFC4C2;
 }
 .lowOpacityGrayBack{
   background-color: rgba(128, 128, 128, 0.184);

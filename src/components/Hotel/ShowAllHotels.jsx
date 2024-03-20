@@ -145,7 +145,6 @@ function ShowAllHotels(props) {
         };
     });
     useEffect(() => {
-        console.log(hotelArray);
         let dateIn = hotelInDate;
         let dateOut = hotelOutDate;
         setDate(dateIn.getDate());
