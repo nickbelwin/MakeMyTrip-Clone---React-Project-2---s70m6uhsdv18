@@ -223,20 +223,8 @@ const Hotel = (props) => {
                                         <span className=" font-semibold">Adults</span>
                                     </p>
                                 </div>
-                                <div className=" px-3 py-1 borderGray mb-2 hoverLightBlue">
-                                    <span className=" text-gray-800 text-xs">Price Per Night</span>
-                                    <div>
-                                        {hotelPerNightPrice?.map((price, idx) => {
-                                            return (
-                                                <>{idx <= 2 ?
-                                                    idx <= 1 ? <span className="text-xs font-bold text-gray-700" >{price},</span> : "..." : ""}
-                                                </>
-                                            )
-                                        })}
-                                    </div>
-                                </div>
                             </div>
-                            <button onClick={searchHotelsHandle} className=" w-full px-6 py-1 mt-4 text-lg font-bold text-white blueSearch rounded-lg">SEARCH</button>
+                            <button onClick={searchHotelsHandle} className=" w-full px-6 py-2 mt-4 text-lg font-bold text-white blueSearch rounded-lg">SEARCH</button>
                         </div>
                     </div>
                 </section>

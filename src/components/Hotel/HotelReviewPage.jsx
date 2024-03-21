@@ -9,7 +9,7 @@ function HotelReviewPage(props) {
     console.log("room", roomId);
     const { token, setToken, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource,
         destination, setDestination, hotelInDate, setHotelInDate,
-        hotelOutDate, setHotelOutDate, bookingStatus, setBookingStatus } = useContext(AppContext);
+        hotelOutDate, setHotelOutDate, bookingStatus, setBookingStatus, hotelRoomId, setHotelRoomId,paymentOption, setPaymentOption } = useContext(AppContext);
     const navigate = useNavigate();
     const [hotelInfo, sethotelInfo] = useState([]);
     const [hotelRooms, setHotelRooms] = useState([]);
@@ -40,34 +40,9 @@ function HotelReviewPage(props) {
     }, []);
 
     const bookRoomHandle = async () => {
+        navigate(`/payment/HOTELS/${hotelId}/${roomId}`)
         setBookingStatus(false);
-        try {
-            let res = await fetch("https://academics.newtonschool.co/api/v1/bookingportals/booking",
-                {
-                    method: "POST",
-                    headers: { Authorization: `Bearer ${token}`, 'projectID': 'ywhyenbsclpi', "Content-Type": "application/json", },
-                    body: JSON.stringify(
-                        {
-                            "bookingType": "hotel",
-                            "bookingDetails": {
-                                "hotelId": hotelId,
-                                "startDate": hotelInDate,
-                                "endDate": hotelOutDate
-                            }
-                        })
-                });
-            let jsonRes = await res.json();
-            if (jsonRes.status === "success") {
-                setBookingDetails(jsonRes);
-                setBookingStatus(true);
-            }
-            else {
-                setBookingStatus(false);
-            }
-            console.log("json:", jsonRes);
-        } catch (err) {
-            console.log(err);
-        }
+        setPaymentOption(false);
     }
     const getHotelData = async () => {
         setLoading(true);
@@ -78,6 +53,7 @@ function HotelReviewPage(props) {
         console.log([res], res.rooms);
     }
     useEffect(() => {
+        setHotelRoomId(roomId);
         getHotelData();
     }, []);
 
@@ -100,11 +76,11 @@ function HotelReviewPage(props) {
                 {!bookingStatus ?
                     <div className='fullHeightInVh mb-20'>
                         <div className=' relative pt-5 pb-16 gradientBackgroundBlue'>
-                            <h1 className=' text-white font-bold mb-2 text-2xl w-3/4 m-auto text-left'>Review Your Booking</h1>
+                            <h1 className=' text-white font-bold mb-2 text-2xl payWidth m-auto text-left'>Review Your Booking</h1>
                             <div className=' absolute  top-16 w-full z-10 '>
                                 {hotelInfo?.map((val) => {
                                     return (
-                                        <div key={val._id} className=' w-3/4 m-auto reviewBox'>
+                                        <div key={val._id} className='payWidth m-auto reviewBox'>
                                             <div className=' bg-white grayBlurShadow rounded-lg overflow-hidden'>
                                                 <div className='flex justify-between p-5'>
                                                     <div className=' text-left '>
@@ -198,39 +174,7 @@ function HotelReviewPage(props) {
                                             <div></div>
                                         </div>
                                     )
-                                })}
-                                {/* <div className=' w-3/4 m-auto'>
-            <h1 className=' text-left font-bold text-xl mb-5'>Guest Details</h1>
-            <div>
-                <div className='flex gap-3 mb-5'>
-                    <div className='flex flex-col'>
-                        <label htmlFor="title" className=' text-xs text-left mb-1'>TITLE</label>
-                        <select className='borderGray rounded-lg p-3' id='titles' onChange={(e) => { setUserInfo({ ...userInfo, title: e.target.value }) }}>
-                            <option value="Mr">Mr</option>
-                            <option value="Mrs">Mrs</option>
-                            <option value="Ms">Ms</option>
-                        </select>
-                    </div>
-                    <div className=' w-2/4'>
-                        <h1 className=' text-xs text-left mb-1'>FULL NAME</h1>
-                        <div className='grid grid-cols-2'>
-                        <input className='borderGray rounded-md p-3 mr-3' type="text" placeholder='First Name' />
-                        <input className='borderGray rounded-md p-3' type="text" placeholder='Last Name' />
-                        </div>
-                    </div>
-                </div>
-                <div className='grid grid-cols-2 w-3/4 gap-3'>
-                    <div className='flex flex-col'>
-                        <label className=' text-xs text-left' htmlFor="email">EMAIL ADDRESS <span className=' text-gray-400'>(Booking voucher will be sent to this email ID)</span></label>
-                        <input className='borderGray rounded-md p-3' type="email" id="email" placeholder='Email ID' />
-                    </div>
-                    <div className='flex flex-col'>
-                        <label className=' text-xs text-left' htmlFor="number">MOBLIE NUMBER</label>
-                        <input className='borderGray rounded-md p-3' type="number" id="number" placeholder='Contact Number' />
-                    </div>
-                </div>
-            </div>
-        </div> */}
+                                })}        
                             </div>
                         </div>
                     </div> :
@@ -273,16 +217,16 @@ function HotelReviewPage(props) {
             </BrowserView>
             <MobileView>
                 {!bookingStatus ?
-                    <div className='fullHeightInVh'>
-                        <div className=' relative pt-5 pb-8 gradientBackgroundBlue'>
-                            <h1 className=' text-white font-bold mb-2 text-2xl w-3/4 m-auto text-left'>Review Your Booking</h1>
+                    <div className=' bg-gray-50'>
+                        <div className=' relative pt-2 pb-2 bg-white grayBlurShadow mb-5'>
+                            <h1 className=' font-bold mb-2 text-xl pl-5 text-left'>Review Your Booking</h1>
                         </div>
                         <div className='pb-14 '>
                             {hotelInfo?.map((val) => {
                                 return (
-                                    <div key={val._id} className=' m-auto reviewBox'>
+                                    <div key={val._id} className=' mx-3 blueBorder rounded-lg reviewBox'>
                                         <div className=' bg-white grayBlurShadow rounded-lg overflow-hidden'>
-                                            <div className='flex justify-between p-5'>
+                                            <div className='flex justify-between px-2 py-4'>
                                                 <div className=' text-left '>
                                                     <h1 className=' text-3xl font-bold'>{val.name}</h1>
                                                     <span>{val?.rating >= 4.5 ?
@@ -296,11 +240,11 @@ function HotelReviewPage(props) {
                                                     <h2 className=' text-gray-500'>{val.location}, India</h2>
                                                 </div>
                                                 <div>
-                                                    <img className=' w-32 h-28' src={val?.images[0]} alt="" />
+                                                    <img className=' w-24 h-20 rounded-md' src={val?.images[0]} alt="" />
                                                 </div>
                                             </div>
                                             <div className=' borderDottedTopGray borderDottedBottomGray'>
-                                                <div className='flex alignCenter justify-between text-left p-4'>
+                                                <div className='flex alignCenter justify-between text-left py-4 px-2'>
                                                     <div>
                                                         <h1 className=' text-gray-400 text-sm'>CHECK IN</h1>
                                                         <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
@@ -324,11 +268,11 @@ function HotelReviewPage(props) {
                                                     return (
                                                         <>{val._id === roomId ?
                                                             <div className='grid grid-cols-2 text-left'>
-                                                                <div className='p-4'>
-                                                                    <h1 className=' font-bold text-3xl'>{val.roomType}</h1>
+                                                                <div className='py-4 px-2'>
+                                                                    <h1 className=' font-bold text-xl'>{val.roomType}</h1>
                                                                     <h1 className=' text-gray-500'>2 Adults</h1>
                                                                 </div>
-                                                                <div className='p-4 text-gray-500'>
+                                                                <div className='py-4 px-2 text-gray-500'>
                                                                     <li>Room Only</li>
                                                                     <li>No meals included</li>
                                                                     <p className=' text-red-600'><span className='mr-3'>x</span> Non-Refundable</p>
@@ -342,22 +286,20 @@ function HotelReviewPage(props) {
                                                 {hotelRooms?.map((val) => {
                                                     return (
                                                         <>{val._id === roomId ?
-                                                            <div className=' p-5 borderDottedTopGray borderDottedBottomGray'>
-                                                                <h1 className=' text-left text-2xl font-bold'>Price Breakup</h1>
-                                                                <div className='grid grid-cols-2 text-xl font-semibold alignCenter text-gray-600'>
+                                                            <div className='py-4 px-4 borderDottedTopGray borderDottedBottomGray'>
+                                                                <h1 className=' text-left text-xl font-semibold'>Price Breakup</h1>
+                                                                <div className='grid grid-cols-2 text-sm font-semibold alignCenter text-gray-600'>
                                                                     <div>
                                                                         <h1 className=' text-left'>Price: </h1>
                                                                         <h1 className=' text-left text-green-500 borderBottomGray py-2'>Discount: </h1>
-                                                                        <h1 className=' text-left'>Total:</h1>
+                                                                        <h1 className=' text-left pt-2'>Total:</h1>
                                                                     </div>
                                                                     <div>
-                                                                        <h1 className=' text-left'>₹{Math.floor(val?.costPerNight)}</h1>
-                                                                        <h1 className=' text-left text-green-500 borderBottomGray py-2'>-₹749</h1>
-                                                                        <h1 className=' text-left'>₹{Math.floor(val?.costPerNight - 749)}</h1>
+                                                                        <h1 className=' text-right'>₹{Math.floor(val?.costPerNight)}</h1>
+                                                                        <h1 className=' text-right text-green-500 borderBottomGray py-2'>-₹749</h1>
+                                                                        <h1 className=' text-right pt-2'>₹{Math.floor(val?.costPerNight - 749)}</h1>
                                                                     </div>
-
                                                                 </div>
-                                                                <button onClick={bookRoomHandle} className=' text-center w-full gradientBlueBack rounded-full text-white font-bold py-2 mt-4'>Book Now</button>
                                                             </div> : ""}</>
                                                     )
                                                 })}
@@ -372,10 +314,14 @@ function HotelReviewPage(props) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div></div>
+                                        <div>
+                                        </div>
                                     </div>
                                 )
                             })}
+                            <div className=' mx-3 mt-4'>
+                                <button onClick={bookRoomHandle} className=' text-center w-full gradientBlueBack rounded-lg text-lg text-white font-bold py-3'>CONTINUE</button>
+                            </div>
                             {/* <div className=' w-3/4 m-auto'>
                 <h1 className=' text-left font-bold text-xl mb-5'>Guest Details</h1>
                 <div>

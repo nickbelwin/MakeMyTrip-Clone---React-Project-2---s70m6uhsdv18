@@ -157,7 +157,7 @@ function Bus(props) {
                                     </p>
                                 </div>
                             </div>
-                            <button onClick={() => { navigate(`/Buses/${source}/${destination}/${weekName[day]}`) }} className=" w-full px-6 py-1 text-lg font-bold text-white blueSearch rounded-lg mt-3">SEARCH</button>
+                            <button onClick={() => { navigate(`/Buses/${source}/${destination}/${weekName[day]}`) }} className=" w-full px-6 py-2 text-lg font-bold text-white blueSearch rounded-lg mt-3">SEARCH</button>
                         </div>
                     </div>
                 </section>

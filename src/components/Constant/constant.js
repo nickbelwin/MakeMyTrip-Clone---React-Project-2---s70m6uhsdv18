@@ -92,6 +92,17 @@ export const getAirports = async (from,to,weekDay) => {
 
   } catch (err) { console.log(err); }
 }
+export const getFLightTicket = async (id) => {
+  try {
+      let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/flight/${id}`,
+          {
+              headers: { "projectId": "ywhyenbsclpi" }
+          });
+      return res.data.data;
+  } catch (err) {
+      console.log(err);
+  }
+}
 //below API for getting hotels name 
 export const getHotelName = async () => {
   try {

@@ -1,4 +1,4 @@
-const { createContext, useState, useEffect } = require("react");
+const { createContext, useState, useEffect, memo } = require("react");
 
 
 export const AppContext= createContext();
@@ -12,6 +12,7 @@ const AppContextProvider=({children})=>{
     const [flightdate, setFlightDate] = useState(new Date());
     const [hotelInDate,setHotelInDate]=useState(new Date());
     const [hotelOutDate,setHotelOutDate]=useState(new Date());
+    const [hotelRoomId,setHotelRoomId]= useState("");
     const [bookingStatus, setBookingStatus] = useState(false);
     const [trainArray,setTrainArray]=useState([]);
     const [hotelArray,setHotelArray]=useState([]);
@@ -21,6 +22,7 @@ const AppContextProvider=({children})=>{
     const [trainClassCode,setTrainClassesCode]=useState("ALL");
     const [isModalOpen,setIsModalOpen]=useState(false);
     const [fromOrTo, setFromOrTo]=useState("");
+    const [paymentOption, setPaymentOption] = useState("");
 
     const closeHandler=()=>{
         setIsLogin({...isLogin, status:false});
@@ -42,6 +44,7 @@ const AppContextProvider=({children})=>{
             flightdate, setFlightDate,
             hotelInDate,setHotelInDate,
             hotelOutDate,setHotelOutDate,
+            hotelRoomId,setHotelRoomId,
             bookingStatus, setBookingStatus,
             trainArray,setTrainArray,
             hotelArray,setHotelArray,
@@ -51,10 +54,11 @@ const AppContextProvider=({children})=>{
             isModalOpen,setIsModalOpen,
             trainClassCode,setTrainClassesCode,
             fromOrTo, setFromOrTo,
+            paymentOption, setPaymentOption,
             }}>
             {children}
         </AppContext.Provider>
     )
 }
 
-export default AppContextProvider;
+export default memo(AppContextProvider);

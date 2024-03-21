@@ -1,0 +1,17 @@
+.paymentBox{
+    height: 60rem;
+}
+.bookFlightBlueBack{
+    background: linear-gradient(94deg, rgba(77,171,253,1) 0%, rgba(0,64,176,1) 65%);
+}
+.paymentBoxOption{
+    background-color: white;
+    color: black;
+    border-left: 5px solid blue;
+}
+.payRedBorder{
+    border: 3px solid rgb(228, 1, 1);
+}
+.payFareBox{
+    grid-template-columns: 2fr 1fr;
+}

@@ -210,34 +210,7 @@ function ShowAllFlights(props) {
         <>
             <BrowserView>
                 <div className=" bg-blue-50 fullHeightInVh" onClick={() => { setIsModalOpen(false); }}>
-                    {/* <header id="showHeader" className=" overflow-hidden bg-white headerTwo">
-                <div className=" flex flex-row m-auto alignCenter justify-between py-3 headerBox">
-                    <div className=" flex flex-row alignCenter">
-                        <div className=" cursor-pointer mmtlogo">
-                            <img className=" w-28 " src="/img/mmtBlueLogo.png" alt="" />
-                        </div>
-                        <ul className=" flex flex-row alignCenter ml-8 gap-10">
-                            {headerNavlist?.map((val) => {
-                                return (
-                                    <li className="flex flex-col cursor-pointer h-full justify-between" onClick={() => { handleNav(val.id) }} key={val.id} id={val.id}>
-                                        <img className=" w-9" src={currentTravelOption === val.id ? val.imageOn : val.imageOff} alt="" />
-                                        {currentTravelOption === val.id ? <p className=" text-xs blueText font-bold">{val.name}</p> :
-                                            <p className=" text-xs text-gray-500">{val.name}</p>}
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    </div>
-                    <div className=" flex flex-row alignCenter p-3 rounded cursor-pointer loginGreenBtn">
-                        <span className=" w-8 relative flex alignCenter justify-center mr-2"><img className=" absolute text-white" src="/img/mmtLoginLogoGreen.png" alt="" />
-                        </span>
-                        <span className="flex alignCenter justify-between w-full text-xs text-left">
-                            <p className=" font-bold">Login or Create Account</p>
-                            <span><img className=" w-3 opacity-80" src="/img/downArrow.png" alt="" /></span>
-                        </span>
-                    </div>
-                </div>
-            </header> */}
+
                     <div className="mb-6">
                         <div id="showBookingBar" className=" flex alignCenter justify-center gap-9  pt-2 pb-2 px-6 text-left gradientBackgroundBlue">
                             <div className=" grid gap-2 rounded-lg cursor-pointer allFlightsBookingBox">
@@ -292,7 +265,7 @@ function ShowAllFlights(props) {
                         </div>
                     </div>
                     <main className=" allCardMainBox">
-                        {/* flight cards div */}
+                        {/* sorting */}
                         <div className="flex flex-col gap-3 mx-2 ">
                             <div id="sortBox" className=" p-4 bg-white">
                                 <div className="grid grid-cols-3 gap-2 ">
@@ -325,11 +298,15 @@ function ShowAllFlights(props) {
                                     </div>
                                 </div>
                             </div>
+                            {/* flight cards div */}
                             {!cardLoading ?
                                 listOfFlights?.map((val) => {
                                     return (
                                         <div>
                                             <div className=" bg-white pt-5 px-3">
+                                                <div className=" text-right">
+                                                    <button onClick={() => { navigate(`/flight-review/${val._id}`) }} className=' w-1/6 text-center gradientBlueBack rounded-full text-white font-bold py-1 px-2'>Book Now</button>
+                                                </div>
                                                 <div className="flex alignCenter justify-around gap-3 p-4">
                                                     <div className="flex text-left">
                                                         <img className=" w-10 h-10 mr-1" src="/img/flightLogo.jpg" alt="" />
@@ -436,7 +413,7 @@ function ShowAllFlights(props) {
                     </main>
                 </div>
             </BrowserView>
-            <MobileView> 
+            <MobileView>
                 <div className=" relative bg-blue-50 fullHeightInVh" onClick={() => { setIsModalOpen(false); }}>
                     {editFlight ?
                         <div className="  absolute top-0 fullHeightInVh z-20 w-full">
@@ -548,8 +525,8 @@ function ShowAllFlights(props) {
                         </>}
 
                     <main className=" allCardMainBox">
-                        {/* flight cards div */}
                         <div className="flex flex-col gap-3 mx-2 ">
+                            {/* sorting */}
                             <div id="sortBox" className=" p-4 bg-white">
                                 <div className="grid grid-cols-3 gap-2 ">
                                     <div id="cheapest" onClick={() => { selectSortBy("cheapest") }} className="flex flex-col alignCenter p-3 rounded-md bg-gray-100 flightSort">
@@ -566,19 +543,27 @@ function ShowAllFlights(props) {
                                     </div>
                                 </div>
                             </div>
+                            {/* flight cards div */}
                             {!cardLoading ?
                                 listOfFlights?.map((val) => {
                                     return (
                                         <div key={val._id}>
-                                            <div className=" bg-white pt-5 px-3">
-                                                <div className="flex alignCenter justify-around gap-3 p-4">
-                                                    <div className="flex text-left">
-                                                        <img className=" w-10 h-10 mr-1" src="/img/flightLogo.jpg" alt="" />
+                                            <div className=" bg-white pt-2 px-3 rounded-lg">
+
+                                                <div className="flex justify-between alignCenter text-left">
+                                                    <div className="flex alignCenter">
+                                                        <img className=" w-8 h-8 mr-1" src="/img/flightLogo.jpg" alt="" />
                                                         <div>
-                                                            <h1 className=" font-bold text-xl">IndiGo</h1>
+                                                            <h1 className=" font-bold text-lg">IndiGo</h1>
                                                             <p className=" flightIdText text-gray-400">{val.flightID}</p>
                                                         </div>
                                                     </div>
+                                                    <div className=" text-right">
+                                                        <button onClick={() => { navigate(`/flight-review/${val._id}`) }} className=' text-center gradientBlueBack rounded-full text-white font-bold py-1 px-2'>Book Now</button>
+                                                    </div>
+                                                </div>
+                                                <div className="flex alignCenter justify-around gap-3 p-4">
+
                                                     <div>
                                                         <h1 className=" font-bold text-xl">{val.departureTime}</h1>
                                                         <p className=" text-xs">{source}</p>

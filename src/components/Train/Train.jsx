@@ -191,7 +191,7 @@ function Train(props) {
                                     </p>
                                 </div>
                             </div>
-                            <button className=" w-full py-1 mt-3 text-xl font-bold text-white blueSearch rounded-md">SEARCH</button>
+                            <button className=" w-full py-2 mt-3 text-xl font-bold text-white blueSearch rounded-md">SEARCH</button>
                         </div>
                     </div>
                 </section>

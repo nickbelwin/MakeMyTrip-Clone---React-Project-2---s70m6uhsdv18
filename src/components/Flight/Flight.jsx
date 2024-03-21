@@ -221,7 +221,7 @@ const Flight = (props) => {
                                     </p>
                                 </div> */}
                             </div>
-                            <button onClick={() => { navigate(`/flights/${flightSourceCode}/${flightDestinationCode}/${weekName[day]}`) }} className=" px-6 py-1 text-xl font-bold rounded-md text-white blueSearch w-full">SEARCH</button>
+                            <button onClick={() => { navigate(`/flights/${flightSourceCode}/${flightDestinationCode}/${weekName[day]}`) }} className=" px-6 py-2 text-xl font-bold rounded-md text-white blueSearch w-full">SEARCH</button>
                         </div>
                     </div>
                 </section>
