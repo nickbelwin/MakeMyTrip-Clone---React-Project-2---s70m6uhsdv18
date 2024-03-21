@@ -45,7 +45,7 @@ function FlightBooking(props) {
         )();
     }, []);
     return (
-        <div>
+        <>
             <BrowserView>
                 <section className='fullHeightInVh bg-blue-50 mb-20'>
                     <div className=' relative pt-5 pb-16 gradientBackgroundBlue'>
@@ -135,8 +135,8 @@ function FlightBooking(props) {
                 </section>
             </BrowserView>
             <MobileView>
-                <section className=' mb-14'>
-                    <div className=' relative pt-2 pb-16 gradientBackgroundBlue'>
+                <section className='fullHeightInVh gradientBackgroundBlue'>
+                    <div className=' relative pt-5 pb-16 '>
                         <img className=' mb-5 m-auto w-20' src="/img/mmt_logo_rt.png" alt="" />
                         <h3 className=' text-white text-xs'>Trip to</h3>
                         <h1 className=' text-white mb-5 font-bold m-auto text-3xl'>{flightCodeArray?.map((val) => {
@@ -226,7 +226,7 @@ function FlightBooking(props) {
 
                 </section>
             </MobileView>
-        </div>
+        </>
     );
 }
 
