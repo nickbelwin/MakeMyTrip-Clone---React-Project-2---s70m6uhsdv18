@@ -17,7 +17,7 @@ function ShowAllHotels(props) {
     const navigate = useNavigate();
     const { token, setToken, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource,
         destination, setDestination, hotelInDate, setHotelInDate,
-        hotelOutDate, setHotelOutDate, } = useContext(AppContext);
+        hotelOutDate, setHotelOutDate,roomAndGuest, setRoomAndGuest, } = useContext(AppContext);
     const [rooms, setRooms] = useState({ room: 1, guest: 2 });
     const [sourceModal, setSourceModal] = useState(false);
     const [hotelName, setHotelName] = useState(hotelArray);
@@ -307,9 +307,9 @@ function ShowAllHotels(props) {
                                 <div className=" px-3 py-0 rounded-lg borderRight lightWhite">
                                     <span className=" text-blue-600 text-xs">ROOMS_&_GUESTS</span>
                                     <div className=" text-white">
-                                        <span className=" font-extrabold text-sm">{rooms.room}</span>
+                                        <span className=" font-extrabold text-sm">{roomAndGuest.room}</span>
                                         <span className=" font-semibold">Room, </span>
-                                        <span className=" font-extrabold text-sm">{rooms.guest}</span>
+                                        <span className=" font-extrabold text-sm">{roomAndGuest.guest}</span>
                                         <span className=" font-semibold">Adults</span>
                                     </div>
                                 </div>
@@ -451,9 +451,9 @@ function ShowAllHotels(props) {
                                     <div className=" px-3 py-0 mb-2 rounded-lg borderGray lightWhite">
                                         <span className=" text-blue-600 text-xs">ROOMS_&_GUESTS</span>
                                         <div className=" ">
-                                            <span className=" font-extrabold text-sm">{rooms.room}</span>
+                                            <span className=" font-extrabold text-sm">{roomAndGuest.room}</span>
                                             <span className=" font-semibold">Room, </span>
-                                            <span className=" font-extrabold text-sm">{rooms.guest}</span>
+                                            <span className=" font-extrabold text-sm">{roomAndGuest.guest}</span>
                                             <span className=" font-semibold">Adults</span>
                                         </div>
                                     </div>

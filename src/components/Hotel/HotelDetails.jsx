@@ -17,7 +17,7 @@ import { BrowserView, MobileView } from 'react-device-detect';
 function HotelDetails(props) {
     const { hotelId } = useParams();
     const [hotelInfo, sethotelInfo] = useState([]);
-    const { currentTravelOption, setCurrentTravelOption,token,isLogin,setIsLogin,bookingStatus, setBookingStatus } = useContext(AppContext);
+    const { currentTravelOption, setCurrentTravelOption,token,isLogin,setIsLogin,bookingStatus, setBookingStatus,roomAndGuest, setRoomAndGuest,  } = useContext(AppContext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -129,7 +129,7 @@ function HotelDetails(props) {
                                         <div>
                                             <div className='flex justify-between'>
                                                 <div>
-                                                    <p>For 2 Adults</p>
+                                                    <p>For {roomAndGuest.guest} Adults</p>
                                                     <p className=' text-red-600'>x Non-Refundable</p>
                                                     <p>✓ Rooms only</p>
                                                 </div>
@@ -222,7 +222,7 @@ function HotelDetails(props) {
                                         <h1 className=' font-semibold'>Superior Room</h1>
                                         <div className='flex justify-between'>
                                             <div>
-                                                <p>For 2 Adults</p>
+                                                <p>For {roomAndGuest.guest} Adults</p>
                                                 <p className=' text-red-600'>x Non-Refundable</p>
                                                 <p>✓ Rooms only</p>
                                             </div>

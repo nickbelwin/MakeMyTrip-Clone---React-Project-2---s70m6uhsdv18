@@ -1,7 +1,7 @@
 import { memo, useContext, useEffect, useState } from "react";
 import "./hotel.css";
 import { AppContext } from "../ContextAPI/AppContext";
-import { HotelListArray, cityListArray, getHotelName, hotelPerNightPrice, monthNames, weekName } from "../Constant/constant";
+import { HotelListArray, cityListArray, getHotelName, hotelPerNightPrice, monthNames, roomAndGuestArr, weekName } from "../Constant/constant";
 import { BrowserView, MobileView } from "react-device-detect";
 import TravelOptions from "../TravelOptions/TravelOptions";
 import HotelModal from "../Modals/HotelModal";
@@ -12,13 +12,14 @@ import Calendar from "react-calendar";
 const Hotel = (props) => {
     const { loading, } = props;
     const { hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource,
-        destination, setDestination,hotelInDate,setHotelInDate,
-        hotelOutDate,setHotelOutDate, } = useContext(AppContext);
-    const [rooms, setRooms] = useState({ room: 1, guest: 2 });
+        destination, setDestination, hotelInDate, setHotelInDate,
+        hotelOutDate, setHotelOutDate, roomAndGuest, setRoomAndGuest, } = useContext(AppContext);
+
     const [sourceModal, setSourceModal] = useState(false);
     const [hotelName, setHotelName] = useState(hotelArray);
-    const [hotelDateInModal,setHotelDateInModal]=useState(false);
-    const [hotelDateOutModal,setHotelDateOutModal]=useState(false);
+    const [hotelDateInModal, setHotelDateInModal] = useState(false);
+    const [hotelDateOutModal, setHotelDateOutModal] = useState(false);
+    const [roomGuestModal, setRoomGuestModal] = useState(false);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
@@ -27,7 +28,7 @@ const Hotel = (props) => {
     const [monthOut, setMonthOut] = useState("");
     const [yearOut, setYearOut] = useState("");
     const [dayOut, setDayOut] = useState("");
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     const onChange = (newDate) => {
         let chek = newDate;
@@ -55,6 +56,7 @@ const Hotel = (props) => {
         setIsModalOpen(true);
         setHotelDateInModal(false);
         setHotelDateOutModal(false);
+        setRoomGuestModal(false);
         document.getElementById("fromArrow").style.transform = "rotate(180deg)";
     }
     useEffect(() => {
@@ -62,6 +64,7 @@ const Hotel = (props) => {
             setSourceModal(false);
             setHotelDateInModal(false);
             setHotelDateOutModal(false);
+            setRoomGuestModal(false);
             document.getElementById("fromArrow").style.transform = "rotate(0deg)";
         }
     }, [isModalOpen]);
@@ -81,19 +84,29 @@ const Hotel = (props) => {
         e.stopPropagation();
         setSourceModal(false);
         setHotelDateOutModal(false);
+        setRoomGuestModal(false);
         setHotelDateInModal(true);
         setIsModalOpen(true);
-        
+
     }
     const handleDateOutModal = (e) => {
         e.stopPropagation();
         setHotelDateOutModal(true);
         setSourceModal(false);
+        setRoomGuestModal(false);
         setHotelDateInModal(false);
         setIsModalOpen(true);
-        
+
     }
-    const searchHotelsHandle=()=>{
+    const handleRoomGuestModal = (e) => {
+        e.stopPropagation();
+        setHotelDateOutModal(false);
+        setSourceModal(false);
+        setHotelDateInModal(false);
+        setRoomGuestModal(true);
+        setIsModalOpen(true);
+    }
+    const searchHotelsHandle = () => {
         navigate(`/hotels/${hotelLocation}`);
     }
 
@@ -125,7 +138,7 @@ const Hotel = (props) => {
                                             <HotelModal />
                                         </div> : ""}
                                 </div>
-                                <div onClick={handleDateModal}  className=" relative px-6 py-3 borderRight hoverLightBlue">
+                                <div onClick={handleDateModal} className=" relative px-6 py-3 borderRight hoverLightBlue">
                                     <span className=" text-gray-800">Check-In</span>
                                     <p>
                                         <span className=" font-extrabold text-3xl">{date}</span>
@@ -133,9 +146,9 @@ const Hotel = (props) => {
                                         <p className=" text-gray-800">{weekName[day]}</p>
                                     </p>
                                     {hotelDateInModal ?
-                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
-                                                <Calendar onChange={onChange} />
-                                            </div> : ""}
+                                        <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                            <Calendar onChange={onChange} />
+                                        </div> : ""}
                                 </div>
                                 <div onClick={handleDateOutModal} className=" relative px-6 py-3 borderRight hoverLightBlue">
                                     <span className=" text-gray-800">Check-Out</span>
@@ -145,20 +158,45 @@ const Hotel = (props) => {
                                         <p className=" text-gray-800">{weekName[dayOut]}</p>
                                     </p>
                                     {hotelDateOutModal ?
-                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
-                                                <Calendar onChange={onChangeOut} />
-                                            </div> : ""}
+                                        <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                            <Calendar onChange={onChangeOut} />
+                                        </div> : ""}
                                 </div>
-                                <div className=" px-6 py-3 borderRight hoverLightBlue">
+                                <div onClick={handleRoomGuestModal} className=" relative px-6 py-3 borderRight hoverLightBlue">
                                     <span className=" text-gray-800">Rooms & Guestes</span>
                                     <p>
-                                        <span className=" font-extrabold text-3xl">{rooms.room}</span>
+                                        <span className=" font-extrabold text-3xl">{roomAndGuest.room}</span>
                                         <span className=" font-semibold">Room</span>
-                                        <span className=" font-extrabold text-3xl">{rooms.guest}</span>
+                                        <span className=" font-extrabold text-3xl">{roomAndGuest.guest}</span>
                                         <span className=" font-semibold">Adults</span>
                                     </p>
+                                    {roomGuestModal ?
+                                        <div className=" absolute w-full z-20 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                            <div className="p-5">
+                                                <div className="flex justify-between mb-5">
+                                                    <h1 className=" font-bold">Room</h1>
+                                                    <select onChange={(e)=>{setRoomAndGuest({...roomAndGuest, room:e.target.value});}} name="" id="">
+                                                        {roomAndGuestArr?.map((val, idx) => {
+                                                            return idx <= 20 ? <option value={val}>{val}</option> : "";
+                                                        })}
+                                                    </select>
+                                                </div>
+                                                <div className="flex justify-between mb-6">
+                                                    <h1 className=" font-bold">Guest</h1>
+                                                    <select onChange={(e)=>{setRoomAndGuest({...roomAndGuest, guest:e.target.value});}} name="" id="">
+                                                        {roomAndGuestArr?.map((val, idx) => {
+                                                            return <option value={val}>{val}</option>;
+                                                        })}
+                                                    </select>
+                                                </div>
+                                                <p className=" text-xs">Please provide right number of Guests for best options and prices.</p>
+                                                <div>
+                                                </div>
+                                            </div>
+                                        </div> : ""
+                                    }
                                 </div>
-                                
+
                             </div>
                             <button onClick={searchHotelsHandle} className=" absolute px-6 w-1/6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
                         </div>
@@ -166,7 +204,7 @@ const Hotel = (props) => {
                 </section>
             </BrowserView>
             <MobileView>
-            <section className=" flex justify-center m-auto subNavbarBox">
+                <section className=" flex justify-center m-auto subNavbarBox">
                     <div className=" relative flex justify-center subNavbarBoxCover">
                         <TravelOptions />
                         <div className=" w-full  bg-white  rounded-2xl pt-3 pb-12 px-2 text-left mt-20 ">
@@ -217,9 +255,9 @@ const Hotel = (props) => {
                                 <div className=" px-3 py-1 borderGray mb-2 hoverLightBlue">
                                     <span className=" text-gray-800 text-xs">Rooms & Guestes</span>
                                     <p>
-                                        <span className=" font-extrabold text-xl">{rooms.room}</span>
+                                        <span className=" font-extrabold text-xl">{roomAndGuest.room}</span>
                                         <span className=" font-semibold">Room</span>
-                                        <span className=" font-extrabold text-xl">{rooms.guest}</span>
+                                        <span className=" font-extrabold text-xl">{roomAndGuest.guest}</span>
                                         <span className=" font-semibold">Adults</span>
                                     </p>
                                 </div>

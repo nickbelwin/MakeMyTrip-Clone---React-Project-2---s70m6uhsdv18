@@ -13,6 +13,7 @@ const AppContextProvider=({children})=>{
     const [hotelInDate,setHotelInDate]=useState(new Date());
     const [hotelOutDate,setHotelOutDate]=useState(new Date());
     const [hotelRoomId,setHotelRoomId]= useState("");
+    const [roomAndGuest, setRoomAndGuest] = useState({ room: 1, guest: 2 });
     const [bookingStatus, setBookingStatus] = useState(false);
     const [trainArray,setTrainArray]=useState([]);
     const [hotelArray,setHotelArray]=useState([]);
@@ -45,6 +46,7 @@ const AppContextProvider=({children})=>{
             hotelInDate,setHotelInDate,
             hotelOutDate,setHotelOutDate,
             hotelRoomId,setHotelRoomId,
+            roomAndGuest, setRoomAndGuest,
             bookingStatus, setBookingStatus,
             trainArray,setTrainArray,
             hotelArray,setHotelArray,

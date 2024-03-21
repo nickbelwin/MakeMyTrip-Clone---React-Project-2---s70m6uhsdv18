@@ -319,7 +319,6 @@ function ShowAllBuses(props) {
         <>
             <BrowserView>
                 <div className=" bg-gray-50 h-full" onClick={() => { setIsModalOpen(false); }}>
-
                     <div className="gradientBackgroundBlue mb-6">
                         <div id="showBookingBar" className=" flex alignCenter justify-center gap-9  pt-2 pb-2 px-6 text-left">
                             <div className=" grid gap-2 rounded-lg cursor-pointer allFlightsBookingBox">
