@@ -16,7 +16,7 @@ function LogSignModal(props) {
         <>
             {!token?
             isLogin.status ?
-                <div className="flex justify-center alignCenter fixed left-0 top-0 modalBox z-50">
+                <div className="flex justify-center alignCenter fixed left-0 top-0 py-9 modalBox z-50">
                     {isLogin.page === "login" ? <LoginPage /> : <SignUpPage />}
                 </div>
              : "":

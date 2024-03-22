@@ -73,7 +73,7 @@ function LoginPage(props) {
     }
     console.log("setUserInfo", user);
     return (
-        <div className=' relative flex w-2/3 mx-9 signUpBox'>
+        <div className=' relative flex w-2/3 mx-9  signUpBox'>
             <div onClick={() => { setIsLogin({ ...isLogin, status: false }) }} className=' absolute p-2 cursor-pointer bg-white rounded-full logSignCancelBtn'><img className=' w-3' src="/img/cancel.png" alt="" /></div>
             <img className='my-3 rounded-s-xl loginImg' src="/img/loginPersuassionValley.avif" alt="" />
             <div className=' bg-white rounded-xl w-full pt-10 px-3'>
