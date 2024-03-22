@@ -40,7 +40,7 @@ function HotelReviewPage(props) {
     }, []);
 
     const bookRoomHandle = async () => {
-        navigate(`/payment/HOTELS/${hotelId}/${roomId}`)
+        navigate(`/payment/HOTELS/${hotelId}/${roomId}`);
         setBookingStatus(false);
         setPaymentOption(false);
     }

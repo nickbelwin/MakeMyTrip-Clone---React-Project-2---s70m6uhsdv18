@@ -6,8 +6,10 @@ import { BrowserView, MobileView } from "react-device-detect";
 import TravelOptions from "../TravelOptions/TravelOptions";
 import FlightModal from "../Modals/FlightModal";
 import TrainModal from "../Modals/TrainModal";
+import { useNavigate } from "react-router";
 
 function Train(props) {
+    const navigate=useNavigate();
     const { trainClassCode, setTrainClassesCode, source, setSource,
         destination, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, } = useContext(AppContext);
     const [sourceModal, setSourceModal] = useState(false);
@@ -119,7 +121,7 @@ function Train(props) {
                                     </p>
                                 </div>
                             </div>
-                            <button className=" absolute px-6 w-1/6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
+                            <button onClick={()=>{navigate("/trains")}} className=" absolute px-6 w-1/6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
                         </div>
                     </div>
                 </section>
@@ -191,7 +193,7 @@ function Train(props) {
                                     </p>
                                 </div>
                             </div>
-                            <button className=" w-full py-2 mt-3 text-xl font-bold text-white blueSearch rounded-md">SEARCH</button>
+                            <button onClick={()=>{navigate("/trains")}} className=" w-full py-2 mt-3 text-xl font-bold text-white blueSearch rounded-md">SEARCH</button>
                         </div>
                     </div>
                 </section>

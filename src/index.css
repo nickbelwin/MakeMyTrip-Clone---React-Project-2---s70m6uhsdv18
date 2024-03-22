@@ -120,6 +120,9 @@ background: linear-gradient(94deg, rgba(77,171,253,1) 0%, rgba(12,97,244,1) 65%)
 .fullHeightInVh{
   min-height: 100vh;
 }
+.fullWidthInVw{
+  width: 100vw;
+}
 .payWidth{
   min-width: 40rem;
   max-width: 70rem;

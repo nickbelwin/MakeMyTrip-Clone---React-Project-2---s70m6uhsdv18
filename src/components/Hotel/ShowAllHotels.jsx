@@ -17,7 +17,7 @@ function ShowAllHotels(props) {
     const navigate = useNavigate();
     const { token, setToken, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource,
         destination, setDestination, hotelInDate, setHotelInDate,
-        hotelOutDate, setHotelOutDate,roomAndGuest, setRoomAndGuest, } = useContext(AppContext);
+        hotelOutDate, setHotelOutDate, roomAndGuest, setRoomAndGuest, } = useContext(AppContext);
     const [rooms, setRooms] = useState({ room: 1, guest: 2 });
     const [sourceModal, setSourceModal] = useState(false);
     const [hotelName, setHotelName] = useState(hotelArray);
@@ -32,7 +32,7 @@ function ShowAllHotels(props) {
     const [mobileFilter, setMobileFilter] = useState(false);
     const [loading, setLoading] = useState(false);
     const [cardLoading, setCardLoading] = useState(false);
-    const [scrollUp,setScrollUp]=useState(false);
+    const [scrollUp, setScrollUp] = useState(false);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
@@ -132,9 +132,9 @@ function ShowAllHotels(props) {
         const sorting = document.getElementById("sortBox");
         const scrollTop = window.scrollY;
         scrollTop >= 60 ? header?.classList.add('sticky') : header.classList.remove('sticky');
-        if(screen.width <= 768){
+        if (screen.width <= 768) {
             scrollTop >= 60 ? sorting?.classList.add('sortSticky') : sorting.classList.remove('sortSticky');
-            scrollTop >= 1000 ? setScrollUp(true): setScrollUp(false);;
+            scrollTop >= 1000 ? setScrollUp(true) : setScrollUp(false);;
         }
         console.log("screen", screen.width);
     };
@@ -261,7 +261,7 @@ function ShowAllHotels(props) {
             <BrowserView>
                 <div onClick={() => { setIsModalOpen(false); }}>
                     <div id="showBookingBar" className="">
-                        <div  className=" flex justify-center alignCenter gap-9  pt-2 pb-2 px-6 text-left gradientBackgroundBlue">
+                        <div className=" flex justify-center alignCenter gap-9  pt-2 pb-2 px-6 text-left gradientBackgroundBlue">
                             <div className=" grid gap-2 rounded-lg cursor-pointer allHotelsBookingBox">
                                 <div onClick={handleHotel} className=" relative px-3 py-1 rounded-lg borderRight lightWhite ">
                                     <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600">CITY, AREA OR PROPERTY <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
@@ -317,7 +317,7 @@ function ShowAllHotels(props) {
                             </div>
                             <button onClick={() => { navigate(`/hotels/${hotelLocation}`) }} className=" px-10 py-3 text-lg my-1 h-fit font-bold text-white blueSearch rounded-full">SEARCH</button>
                         </div>
-                        <div  className=" sortByBoxCover">
+                        <div className=" sortByBoxCover">
                             <div className="flex sortByBox">
                                 <h1 className=" py-3">SORT BY:</h1>
                                 <p className="flex alignCenter justify-center"><span id="mostPrice" onClick={() => { selectSortBy("mostPrice", -1) }} className=" py-3 cursor-pointer">Price <span>(Highest First)</span></span></p>
@@ -401,6 +401,7 @@ function ShowAllHotels(props) {
                 </div>
             </BrowserView>
             <MobileView>
+                
                 <div className=" relative " onClick={() => { setIsModalOpen(false); }}>
                     {editHotel ?
                         <div className=" absolute w-full fullHeightInVh z-20 bg-gray-100">
@@ -508,10 +509,9 @@ function ShowAllHotels(props) {
                             <p className="flex alignCenter justify-center"><span id="lowPrice" onClick={() => { selectSortBy("lowPrice", 1) }} className=" py-3 cursor-pointer">Price <span>(Lowest First)</span></span></p>
                         </div>
                     </div>
-                    {scrollUp? <div onClick={()=>{window.scrollTo(0, 0);}} className="fixed w-full top-20"><p className="flex alignCenter blueText w-fit m-auto px-3 py-1 rounded-lg font-bold bg-white grayBlurShadow">Scroll Top <img className="arrowUp h-2 ml-1" src="/img/blueDownArrow.png" alt="" /></p></div>:""}
+                    {scrollUp ? <div onClick={() => { window.scrollTo(0, 0); }} className="fixed w-full top-20"><p className="flex alignCenter blueText w-fit m-auto px-3 py-1 rounded-lg font-bold bg-white grayBlurShadow">Scroll Top <img className="arrowUp h-2 ml-1" src="/img/blueDownArrow.png" alt="" /></p></div> : ""}
                     <main className="  gap-2 allCardMainBox">
                         {/* filter */}
-                        { }
                         <div onClick={() => { mobileFilterHandle("close"); }} id="mobFilter" className="fixed z-20 top-0 w-full fullHeightInVh lowOpacityGrayBack mobileFilterClose ">
                             <aside onClick={(e) => { e.stopPropagation(); }} className=" bg-white fullHeightInVh w-3/4 px-5 py-6 filterBox">
                                 <h1 className="  text-right " > <span className="grayBlurShadow px-2 py-1 rounded-md" onClick={() => { mobileFilterHandle("close"); }}>Close</span></h1>

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../ContextAPI/AppContext';
-import { flightCodeArray, getAirportName, getFLightTicket, getHotelDetails, monthNames, weekName } from '../Constant/constant';
+import { flightCodeArray, getAirportName, getFLightTicket, getHotelDetails, monthNames, trainTickets, weekName } from '../Constant/constant';
 import "./payment.css";
 import { useNavigate, useParams } from 'react-router';
 import HeaderWhite from '../Header/HeaderWhite';
@@ -9,14 +9,14 @@ import { BrowserView, MobileView } from 'react-device-detect';
 
 function Payment(props) {
     const { option, fareId, roomId } = useParams();
-    console.log(option, fareId, hotelRoomId);
+    console.log(option, fareId, roomId, hotelRoomId);
     const navigate = useNavigate();
     const { token, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, flightArray, setFlightArray,
         destination, setDestination, flightdate, setFlightDate, hotelInDate, setHotelInDate,
         hotelOutDate, setHotelOutDate, bookingStatus, setBookingStatus, hotelRoomId, setHotelRoomId, paymentOption, setPaymentOption } = useContext(AppContext);
     const [fare, setFare] = useState([]);
     const [bookingDetails, setBookingDetails] = useState([]);
-
+    const [ticketType, setTicketType] = useState("");
     const [payErrorMsg, setPayErrorMsg] = useState(false);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
@@ -27,6 +27,7 @@ function Payment(props) {
     const [yearOut, setYearOut] = useState("");
     const [dayOut, setDayOut] = useState("");
     const getTicket = async () => {
+        console.log("1");
         try {
             if ("FLIGHTS" === option) {
                 let res = await getFLightTicket(fareId);
@@ -36,6 +37,13 @@ function Payment(props) {
             else if ("HOTELS" === option) {
                 let res = await getHotelDetails(fareId);
                 setFare(res);
+            }
+            else if ("RAILS" === option) {
+                let getTicket = trainTickets?.filter((val) => {
+                    return val._id == fareId;
+                });
+                console.log(getTicket[0]);
+                setFare(getTicket[0]);
             }
         } catch (err) {
             console.log(err);
@@ -63,6 +71,13 @@ function Payment(props) {
             setDayOut(dateOut.getDay());
         }
         else if (option === "FLIGHTS") {
+            let date = flightdate;
+            setDate(date.getDate());
+            setMonth(date.getMonth());
+            setYear(date.getFullYear());
+            setDay(date.getDay());
+        }
+        else if (option === "RAILS") {
             let date = flightdate;
             setDate(date.getDate());
             setMonth(date.getMonth());
@@ -143,6 +158,16 @@ function Payment(props) {
             console.log("json:", jsonRes);
         } catch (err) {
             console.log(err);
+        }
+    }
+    const bookTrainHandle = () => {
+        if (paymentOption) {
+            setBookingStatus(true);
+        }
+        else {
+            setPayErrorMsg(true);
+            document.getElementById("allPayOption").classList.add("payRedBorder");
+            window.scroll(0, 0);
         }
     }
     console.log(bookingDetails);
@@ -325,7 +350,45 @@ function Payment(props) {
                                                         <img className=' w-1/2 pr-2 m-auto' src="/img/mmtbackWhiteImage.png" alt="" />
                                                     </div> :
                                                     option === "RAILS" ?
-                                                        <Train /> : <Bus />
+                                                        <div className='p-3 '>
+                                                            <h1 className='text-left text-xl font-bold'>Fare Summary</h1>
+                                                            <>
+                                                                <div className='flex alignCenter justify-between py-4 borderBottomGray'>
+                                                                    <div className='flex alignCenter'>
+                                                                        <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
+                                                                        <h2>Base fare per adult</h2>
+                                                                    </div>
+                                                                    <h2 className='text-gray-500'>₹ {roomId - 308 - 58 - 40}</h2>
+                                                                </div>
+                                                                <div className='flex alignCenter justify-between py-4 borderBottomGray'>
+                                                                    <div className='flex alignCenter'>
+                                                                        <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
+                                                                        <h2>Catering charge</h2>
+                                                                    </div>
+                                                                    <h2 className=' text-gray-500'>₹ 308</h2>
+                                                                </div>
+                                                                <div className='flex alignCenter justify-between py-4 borderBottomGray'>
+                                                                    <div className='flex alignCenter'>
+                                                                        <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
+                                                                        <h2>Tax</h2>
+                                                                    </div>
+                                                                    <h2 className=' text-gray-500'>₹ 58</h2>
+                                                                </div>
+                                                                <div className='flex alignCenter justify-between py-4 borderBottomBlack'>
+                                                                    <div className='flex alignCenter'>
+                                                                        <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
+                                                                        <h2>Reservation charge</h2>
+                                                                    </div>
+                                                                    <h2 className=' text-gray-500'>₹ 40</h2>
+                                                                </div>
+                                                                <div className='flex alignCenter justify-between py-4 '>
+                                                                    <h2 className=' font-bold'>Total Amount</h2>
+                                                                    <h2 className=' font-bold '>₹ {roomId}</h2>
+                                                                </div></>
+                                                            <button onClick={bookTrainHandle} className=' w-full text-center gradientBlueBack rounded-full text-white font-bold py-2'>Pay Now</button>
+
+                                                            <img className=' w-1/2 pr-2 m-auto' src="/img/mmtbackWhiteImage.png" alt="" />
+                                                        </div> : <Bus />
                                             }
                                         </div>
                                     </div>
@@ -333,87 +396,124 @@ function Payment(props) {
                             </div>
                         </section> :
                         option === "HOTELS" ?
-                    <><HeaderWhite />
-                        <div className='pb-5 pt-6 bookingSuccess'>
-                            <div className=' grayBlurShadow'>
-                                <div className='bookingBlueBack'>
-                                    <img className=' w-1/2 m-auto' src="/img/hotelImage.jpg" alt="" />
-                                </div>
-                                <h1 className=' text-3xl font-bold bg-green-100 text-green-500 py-4'>Booking Successful</h1>
-                                <div className='grid grid-cols-4 text-left borderDottedBottomGray borderDottedTopGray'>
-                                    <div className=' p-4'>
-                                        <h1 className=' text-gray-500 text-sm'>CHECK IN</h1>
-                                        <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
-                                        <h1 className=' font-medium'>12 AM</h1>
+                            <><HeaderWhite />
+                                <div className='pb-5 pt-6 bookingSuccess'>
+                                    <div className=' grayBlurShadow'>
+                                        <div className='bookingBlueBack'>
+                                            <img className=' w-1/2 m-auto' src="/img/hotelImage.jpg" alt="" />
+                                        </div>
+                                        <h1 className=' text-3xl font-bold bg-green-100 text-green-500 py-4'>Booking Successful</h1>
+                                        <div className='grid grid-cols-4 text-left borderDottedBottomGray borderDottedTopGray'>
+                                            <div className=' p-4'>
+                                                <h1 className=' text-gray-500 text-sm'>CHECK IN</h1>
+                                                <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
+                                                <h1 className=' font-medium'>12 AM</h1>
+                                            </div>
+                                            <div className='p-4 borderLeftGray'>
+                                                <h1 className=' text-gray-500 text-sm'>CHECK OUT</h1>
+                                                <h1 className=' text-gray-600'>{weekName[dayOut]}<span className=' text-xl font-bold text-black'>{dateOut}{monthNames[monthOut]}</span>{yearOut}</h1>
+                                                <h1 className=' font-medium'>12 AM</h1>
+                                            </div>
+
+                                            <div className=' p-3 borderLeftGray'>
+                                                <h1 className='text-gray-500 text-sm'>Hotel Name</h1>
+                                                <h2 className=' text-gray-500 text-xl font-semibold'>{bookingDetails?.booking?.hotel.name}</h2>
+                                            </div>
+                                            <div className=' p-3 borderBottomGray borderLeftGray'>
+                                                <h1 className='text-gray-500 text-sm'>Location</h1>
+                                                <h2 className=' text-gray-500 text-xl font-semibold'>{bookingDetails?.booking?.hotel.location}</h2>
+                                            </div>
+                                        </div>
+                                        <div className='p-3 borderBottomGray bg-green-200'>
+                                            <h1 className=' font-semibold'>Status:</h1>
+                                            <h2 className=' text-green-600 text-lg font-bold'>{bookingDetails?.booking?.status.toUpperCase()}</h2>
+                                        </div>
                                     </div>
-                                    <div className='p-4 borderLeftGray'>
-                                        <h1 className=' text-gray-500 text-sm'>CHECK OUT</h1>
-                                        <h1 className=' text-gray-600'>{weekName[dayOut]}<span className=' text-xl font-bold text-black'>{dateOut}{monthNames[monthOut]}</span>{yearOut}</h1>
-                                        <h1 className=' font-medium'>12 AM</h1>
+                                    <div className=' px-3'>
+                                        <button onClick={() => { navigate("/"); }} className=' py-3 bg-red-600 text-white font-bold w-1/4 px-10 rounded-lg mt-5'>Back to home</button>
                                     </div>
-                                
-                                    <div className=' p-3 borderLeftGray'>
-                                        <h1 className='text-gray-500 text-sm'>Hotel Name</h1>
-                                        <h2 className=' text-gray-500 text-xl font-semibold'>{bookingDetails?.booking?.hotel.name}</h2>
-                                    </div>
-                                    <div className=' p-3 borderBottomGray borderLeftGray'>
-                                        <h1 className='text-gray-500 text-sm'>Location</h1>
-                                        <h2 className=' text-gray-500 text-xl font-semibold'>{bookingDetails?.booking?.hotel.location}</h2>
-                                    </div>
-                                </div>
-                                <div className='p-3 borderBottomGray bg-green-200'>
-                                    <h1 className=' font-semibold'>Status:</h1>
-                                    <h2 className=' text-green-600 text-lg font-bold'>{bookingDetails?.booking?.status.toUpperCase()}</h2>
-                                </div>
-                            </div>
-                            <div className=' px-3'>
-                                    <button onClick={() => { navigate("/"); }} className=' py-3 bg-red-600 text-white font-bold w-1/4 px-10 rounded-lg mt-5'>Back to home</button>
-                                </div>
-                        </div></> :
-                    <><HeaderWhite />
-                        <div className='pb-5 pt-6 bookingSuccess '>
-                            <div className='grayBlurShadow'>
-                                <img className=' m-auto' src="/img/flightBanner.avif" alt="" />
-                                <h1 className=' text-3xl font-bold bg-green-100 text-green-500 py-4'>Booking Successful</h1>
-                                <div className='grid grid-cols-4 borderDottedBottomGray borderDottedTopGray text-left'>
-                                    <div className=' p-4'>
-                                        <h1 className=' text-gray-500 text-sm'>CHECK IN</h1>
-                                        <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
-                                        <h1 className=' font-medium'>{bookingDetails?.booking?.flight.arrivalTime}</h1>
-                                    </div>
-                                    <div className='p-4 borderLeftGray'>
-                                        <h1 className=' text-gray-500 text-sm'>CHECK OUT</h1>
-                                        <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
-                                        <h1 className=' font-medium'>{bookingDetails?.booking?.flight.departureTime}</h1>
-                                    </div>
-                                    <div className=' p-3 borderLeftGray'>
-                                        <h1 className='text-gray-500 font-semibold'>Source</h1>
-                                        <h2 className=' text-gray-700 font-bold'>{flightCodeArray?.map((val) => {
-                                            return bookingDetails?.booking?.flight?.source === val.code ? val.city : "";
-                                        })},</h2>
-                                        <h2 className=' text-gray-500 font-semibold'>{flightArray?.map((val) => {
-                                            return bookingDetails?.booking?.flight?.source === val.iata_code ? val.name : "";
-                                        })}</h2>
-                                    </div>
-                                    <div className=' p-3 borderBottomGray borderLeftGray'>
-                                        <h1 className='text-gray-500 font-semibold'>Destination</h1>
-                                        <h2 className=' text-gray-700 font-bold'>{flightCodeArray?.map((val) => {
-                                            return bookingDetails?.booking?.flight?.destination === val.code ? val.city : "";
-                                        })},</h2>
-                                        <h2 className=' text-gray-500 font-semibold'>{flightArray?.map((val) => {
-                                            return bookingDetails?.booking?.flight?.destination === val.iata_code ? val.name : "";
-                                        })}</h2>
-                                    </div>
-                                </div>
-                                <div className='p-3 borderBottomGray bg-green-200'>
-                                    <h1 className=' font-semibold'>Status:</h1>
-                                    <h2 className=' text-green-600 text-lg font-bold'>{bookingDetails?.booking?.status}</h2>
-                                </div>
-                            </div>
-                            <div className=' px-3'>
-                                <button onClick={() => { navigate("/") }} className=' py-3 bg-red-600 text-white font-bold w-1/4 px-10 rounded-lg mt-3'>Back to home</button>
-                            </div>
-                        </div></>}
+                                </div></> :
+                            option === "FLIGHTS" ?
+                                <><HeaderWhite />
+                                    <div className='pb-5 pt-6 bookingSuccess '>
+                                        <div className='grayBlurShadow'>
+                                            <img className=' m-auto' src="/img/flightBanner.avif" alt="" />
+                                            <h1 className=' text-3xl font-bold bg-green-100 text-green-500 py-4'>Booking Successful</h1>
+                                            <div className='grid grid-cols-4 borderDottedBottomGray borderDottedTopGray text-left'>
+                                                <div className=' p-4'>
+                                                    <h1 className=' text-gray-500 text-sm'>CHECK IN</h1>
+                                                    <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
+                                                    <h1 className=' font-medium'>{bookingDetails?.booking?.flight.arrivalTime}</h1>
+                                                </div>
+                                                <div className='p-4 borderLeftGray'>
+                                                    <h1 className=' text-gray-500 text-sm'>CHECK OUT</h1>
+                                                    <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
+                                                    <h1 className=' font-medium'>{bookingDetails?.booking?.flight.departureTime}</h1>
+                                                </div>
+                                                <div className=' p-3 borderLeftGray'>
+                                                    <h1 className='text-gray-500 font-semibold'>Source</h1>
+                                                    <h2 className=' text-gray-700 font-bold'>{flightCodeArray?.map((val) => {
+                                                        return bookingDetails?.booking?.flight?.source === val.code ? val.city : "";
+                                                    })},</h2>
+                                                    <h2 className=' text-gray-500 font-semibold'>{flightArray?.map((val) => {
+                                                        return bookingDetails?.booking?.flight?.source === val.iata_code ? val.name : "";
+                                                    })}</h2>
+                                                </div>
+                                                <div className=' p-3 borderBottomGray borderLeftGray'>
+                                                    <h1 className='text-gray-500 font-semibold'>Destination</h1>
+                                                    <h2 className=' text-gray-700 font-bold'>{flightCodeArray?.map((val) => {
+                                                        return bookingDetails?.booking?.flight?.destination === val.code ? val.city : "";
+                                                    })},</h2>
+                                                    <h2 className=' text-gray-500 font-semibold'>{flightArray?.map((val) => {
+                                                        return bookingDetails?.booking?.flight?.destination === val.iata_code ? val.name : "";
+                                                    })}</h2>
+                                                </div>
+                                            </div>
+                                            <div className='p-3 borderBottomGray bg-green-200'>
+                                                <h1 className=' font-semibold'>Status:</h1>
+                                                <h2 className=' text-green-600 text-lg font-bold'>{bookingDetails?.booking?.status}</h2>
+                                            </div>
+                                        </div>
+                                        <div className=' px-3'>
+                                            <button onClick={() => { navigate("/") }} className=' py-3 bg-red-600 text-white font-bold w-1/4 px-10 rounded-lg mt-3'>Back to home</button>
+                                        </div>
+                                    </div></> :
+                                <><HeaderWhite />
+                                    <div className='pb-5 pt-6 bookingSuccess '>
+                                        <div className='grayBlurShadow'>
+                                            <img className=' m-auto ' src="/img/trainBanner.avif" alt="" />
+                                            <h1 className=' text-3xl font-bold bg-green-100 text-green-500 py-4'>Booking Successful</h1>
+                                            <div className='grid grid-cols-4 borderDottedBottomGray borderDottedTopGray text-left'>
+                                                <div className=' p-4'>
+                                                    <h1 className=' text-gray-500 text-sm'>CHECK IN</h1>
+                                                    <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
+                                                    <h1 className=' font-medium'>{fare?.arrivalTime}</h1>
+                                                </div>
+                                                <div className='p-4 borderLeftGray'>
+                                                    <h1 className=' text-gray-500 text-sm'>CHECK OUT</h1>
+                                                    <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
+                                                    <h1 className=' font-medium'>{fare?.departureTime}</h1>
+                                                </div>
+                                                <div className=' p-3 borderLeftGray'>
+                                                    <h1 className='text-gray-500 ftext-sm'>Source</h1>
+                                                    <h2 className=' text-gray-700 font-bold'>{source}</h2>
+
+                                                </div>
+                                                <div className=' p-3 borderBottomGray borderLeftGray'>
+                                                    <h1 className='text-gray-500 text-sm'>Destination</h1>
+                                                    <h2 className=' text-gray-700 font-bold'>{destination}</h2>
+
+                                                </div>
+                                            </div>
+                                            <div className='p-3 borderBottomGray bg-green-200'>
+                                                <h1 className=' font-semibold'>Status:</h1>
+                                                <h2 className=' text-green-600 text-lg font-bold'>CONFIRMED</h2>
+                                            </div>
+                                        </div>
+                                        <div className=' px-3'>
+                                            <button onClick={() => { navigate("/") }} className=' py-3 bg-red-600 text-white font-bold w-1/4 px-10 rounded-lg mt-3'>Back to home</button>
+                                        </div>
+                                    </div></>}
                 </div>
             </BrowserView>
             <MobileView>
@@ -573,13 +673,54 @@ function Payment(props) {
                                                         <img className=' w-1/2 pr-2 m-auto' src="/img/mmtbackWhiteImage.png" alt="" />
                                                     </div> :
                                                     option === "RAILS" ?
-                                                        <Train /> : <Bus />
+                                                        <div className='p-3 '>
+                                                            <h1 className='text-left text-xl font-bold'>Fare Summary</h1>
+                                                            <>
+                                                                <div className='flex alignCenter justify-between py-4 borderBottomGray'>
+                                                                    <div className='flex alignCenter'>
+                                                                        <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
+                                                                        <h2>Base fare per adult</h2>
+                                                                    </div>
+                                                                    <h2 className='text-gray-500'>₹ {roomId - 308 - 58 - 40}</h2>
+                                                                </div>
+                                                                <div className='flex alignCenter justify-between py-4 borderBottomGray'>
+                                                                    <div className='flex alignCenter'>
+                                                                        <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
+                                                                        <h2>Catering charge</h2>
+                                                                    </div>
+                                                                    <h2 className=' text-gray-500'>₹ 308</h2>
+                                                                </div>
+                                                                <div className='flex alignCenter justify-between py-4 borderBottomGray'>
+                                                                    <div className='flex alignCenter'>
+                                                                        <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
+                                                                        <h2>Tax</h2>
+                                                                    </div>
+                                                                    <h2 className=' text-gray-500'>₹ 58</h2>
+                                                                </div>
+                                                                <div className='flex alignCenter justify-between py-4 borderBottomBlack'>
+                                                                    <div className='flex alignCenter'>
+                                                                        <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
+                                                                        <h2>Reservation charge</h2>
+                                                                    </div>
+                                                                    <h2 className=' text-gray-500'>₹ 40</h2>
+                                                                </div>
+                                                                <div className='flex alignCenter justify-between pt-4 '>
+                                                                    <h2 className=' font-bold'>Total Amount</h2>
+                                                                    <h2 className=' font-bold '>₹ {roomId}</h2>
+                                                                </div>
+                                                                <div className=' fixed flex justify-between alignCenter bottom-0 left-0 w-full bg-gray-900 p-4 z-20'>
+                                                                    <h2 className=' font-bold text-white text-3xl'>₹ {roomId}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
+                                                                    <button onClick={bookTrainHandle} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2 px-4'>Pay Now</button>
+                                                                </div></>
+                                                            <img className=' w-1/2 pr-2 m-auto' src="/img/mmtbackWhiteImage.png" alt="" />
+                                                        </div> : <Bus />
                                             }
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section> :
+                        // booking confirmed
                         option === "HOTELS" ?
                             <><HeaderWhite />
                                 <div className='mb-5'>
@@ -615,52 +756,91 @@ function Payment(props) {
                                         <button onClick={() => { navigate("/"); }} className=' py-3 bg-red-600 text-white font-bold w-full px-10 rounded-lg mt-3'>Back to home</button>
                                     </div>
                                 </div></> :
-                            <><HeaderWhite />
-                                <div className='pb-5 '>
-                                    <div className='grayBlurShadow'>
-                                        <img className=' m-auto' src="/img/flightBanner.avif" alt="" />
-                                        <h1 className=' text-3xl font-bold bg-green-100 text-green-500 py-4'>Booking Successful</h1>
-                                        <div className='grid grid-cols-2 borderDottedBottomGray borderDottedTopGray'>
-                                            <div className=' p-4'>
-                                                <h1 className=' text-gray-500 text-sm'>CHECK IN</h1>
-                                                <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
-                                                <h1 className=' font-medium'>{bookingDetails?.booking?.flight.arrivalTime}</h1>
+                            option === "FLIGHTS" ?
+                                <><HeaderWhite />
+                                    <div className='pb-5 '>
+                                        <div className='grayBlurShadow'>
+                                            <img className=' m-auto' src="/img/flightBanner.avif" alt="" />
+                                            <h1 className=' text-3xl font-bold bg-green-100 text-green-500 py-4'>Booking Successful</h1>
+                                            <div className='grid grid-cols-2 borderDottedBottomGray borderDottedTopGray'>
+                                                <div className=' p-4'>
+                                                    <h1 className=' text-gray-500 text-sm'>CHECK IN</h1>
+                                                    <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
+                                                    <h1 className=' font-medium'>{bookingDetails?.booking?.flight.arrivalTime}</h1>
+                                                </div>
+                                                <div className='p-4 borderLeftGray'>
+                                                    <h1 className=' text-gray-500 text-sm'>CHECK OUT</h1>
+                                                    <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
+                                                    <h1 className=' font-medium'>{bookingDetails?.booking?.flight.departureTime}</h1>
+                                                </div>
                                             </div>
-                                            <div className='p-4 borderLeftGray'>
-                                                <h1 className=' text-gray-500 text-sm'>CHECK OUT</h1>
-                                                <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
-                                                <h1 className=' font-medium'>{bookingDetails?.booking?.flight.departureTime}</h1>
+                                            <div className=''>
+                                                <div className=' p-3 borderBottomGray'>
+                                                    <h1 className=' font-semibold'>Source:</h1>
+                                                    <h2 className=' text-gray-700 font-bold'>{flightCodeArray?.map((val) => {
+                                                        return bookingDetails?.booking?.flight?.source === val.code ? val.city : "";
+                                                    })},</h2>
+                                                    <h2 className=' text-gray-500 font-semibold'>{flightArray?.map((val) => {
+                                                        return bookingDetails?.booking?.flight?.source === val.iata_code ? val.name : "";
+                                                    })}</h2>
+                                                </div>
+                                                <div className=' p-3 borderBottomGray '>
+                                                    <h1 className=' font-semibold'>Destination:</h1>
+                                                    <h2 className=' text-gray-700 font-bold'>{flightCodeArray?.map((val) => {
+                                                        return bookingDetails?.booking?.flight?.destination === val.code ? val.city : "";
+                                                    })},</h2>
+                                                    <h2 className=' text-gray-500 font-semibold'>{flightArray?.map((val) => {
+                                                        return bookingDetails?.booking?.flight?.destination === val.iata_code ? val.name : "";
+                                                    })}</h2>
+                                                </div>
+                                            </div>
+                                            <div className='p-3 borderBottomGray bg-green-200'>
+                                                <h1 className=' font-semibold'>Status:</h1>
+                                                <h2 className=' text-green-600 text-lg font-bold'>{bookingDetails?.booking?.status.toUpperCase()}</h2>
                                             </div>
                                         </div>
-                                        <div className=''>
-                                            <div className=' p-3 borderBottomGray'>
-                                                <h1 className=' font-semibold'>Source:</h1>
-                                                <h2 className=' text-gray-700 font-bold'>{flightCodeArray?.map((val) => {
-                                                    return bookingDetails?.booking?.flight?.source === val.code ? val.city : "";
-                                                })},</h2>
-                                                <h2 className=' text-gray-500 font-semibold'>{flightArray?.map((val) => {
-                                                    return bookingDetails?.booking?.flight?.source === val.iata_code ? val.name : "";
-                                                })}</h2>
+                                        <div className=' px-3'>
+                                            <button onClick={() => { navigate("/") }} className=' w-full py-3 bg-red-600 text-white font-bold px-10 rounded-lg mt-3'>Back to home</button>
+                                        </div>
+                                    </div></> :
+                                <><HeaderWhite />
+                                    <div className='pb-5 '>
+                                        <div className='grayBlurShadow'>
+                                            <img className=' m-auto' src="/img/trainBanner.avif" alt="" />
+                                            <h1 className=' text-3xl font-bold bg-green-100 text-green-500 py-4'>Booking Successful</h1>
+                                            <div className='grid grid-cols-2 borderDottedBottomGray borderDottedTopGray'>
+                                                <div className=' p-4'>
+                                                    <h1 className=' text-gray-500 text-sm'>CHECK IN</h1>
+                                                    <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
+                                                    <h1 className=' font-medium'>{fare?.arrivalTime}</h1>
+                                                </div>
+                                                <div className='p-4 borderLeftGray'>
+                                                    <h1 className=' text-gray-500 text-sm'>CHECK OUT</h1>
+                                                    <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
+                                                    <h1 className=' font-medium'>{fare?.departureTime}</h1>
+                                                </div>
                                             </div>
-                                            <div className=' p-3 borderBottomGray '>
-                                                <h1 className=' font-semibold'>Destination:</h1>
-                                                <h2 className=' text-gray-700 font-bold'>{flightCodeArray?.map((val) => {
-                                                    return bookingDetails?.booking?.flight?.destination === val.code ? val.city : "";
-                                                })},</h2>
-                                                <h2 className=' text-gray-500 font-semibold'>{flightArray?.map((val) => {
-                                                    return bookingDetails?.booking?.flight?.destination === val.iata_code ? val.name : "";
-                                                })}</h2>
+                                            <div className=''>
+                                                <div className=' p-3 borderBottomGray'>
+                                                    <h1 className=' font-semibold'>Source:</h1>
+                                                    <h2 className=' text-gray-700 font-bold'>{source}</h2>
+                                                    
+                                                </div>
+                                                <div className=' p-3 borderBottomGray '>
+                                                    <h1 className=' font-semibold'>Destination:</h1>
+                                                    <h2 className=' text-gray-700 font-bold'>{destination},</h2>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div className='p-3 borderBottomGray bg-green-200'>
+                                                <h1 className=' font-semibold'>Status:</h1>
+                                                <h2 className=' text-green-600 text-lg font-bold'>CONFIRMED</h2>
                                             </div>
                                         </div>
-                                        <div className='p-3 borderBottomGray bg-green-200'>
-                                            <h1 className=' font-semibold'>Status:</h1>
-                                            <h2 className=' text-green-600 text-lg font-bold'>{bookingDetails?.booking?.status.toUpperCase()}</h2>
+                                        <div className=' px-3'>
+                                            <button onClick={() => { navigate("/") }} className=' w-full py-3 bg-red-600 text-white font-bold px-10 rounded-lg mt-3'>Back to home</button>
                                         </div>
-                                    </div>
-                                    <div className=' px-3'>
-                                        <button onClick={() => { navigate("/") }} className=' w-full py-3 bg-red-600 text-white font-bold px-10 rounded-lg mt-3'>Back to home</button>
-                                    </div>
-                                </div></>}
+                                    </div></>}
                 </div>
             </MobileView>
         </>

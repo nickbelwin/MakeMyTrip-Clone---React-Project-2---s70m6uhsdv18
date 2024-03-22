@@ -15,6 +15,7 @@ import HotelReviewPage from "./Hotel/HotelReviewPage";
 import FlightBooking from "./Flight/FlightBooking";
 import Payment from "./Payment/Payment";
 import Demo from "./Demo";
+import TrainReview from "./Train/TrainReview";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
             <Route path="/flights/:from/:to/:weekDay" element={<ShowAllFlights />} />
             <Route path="/trains" element={<ShowAllTrains />} />
             <Route path="/buses/:from/:to/:weekDay" element={<ShowAllBuses />} />
+            <Route path="/train/review/:from/:to/:trainId/:trainClass" element={<TrainReview/>} />
           </Route>
           <Route path="/hotel-review/:hotelId/:roomId" element={<HotelReviewPage/>} />
           <Route path="/flight-review/:flightId" element={<FlightBooking/>} />
