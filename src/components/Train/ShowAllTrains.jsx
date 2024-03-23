@@ -75,9 +75,7 @@ function ShowAllTrains(props) {
     const isSticky = () => {
         const header = document.getElementById('showBookingBar');
         const scrollTop = window.scrollY;
-        console.log(scrollTop);
         scrollTop >= 60 ? header?.classList.add('sticky') : header.classList.remove('sticky');
-        scrollTop >= 60 ? header?.classList.add('grayBlurShadow') : header.classList.remove('grayBlurShadow');
 
     };
     useEffect(() => {
@@ -195,8 +193,8 @@ function ShowAllTrains(props) {
     return (
         <><BrowserView>
             <div className=" h-full" onClick={() => { setIsModalOpen(false); }}>
-                <div className="gradientBackgroundBlue mb-6">
-                    <div id="showBookingBar" className=" flex alignCenter justify-center gap-9  pt-2 pb-2 px-6 text-left">
+                <div className=" mb-6">
+                    <div id="showBookingBar" className=" flex alignCenter justify-center gap-9  pt-2 pb-2 px-6 text-left grayBlurShadow gradientBackgroundBlue">
                         <div className=" grid gap-2 rounded-lg cursor-pointer allFlightsBookingBox">
                             <div onClick={handleFrom} className=" relative px-3 py-1 rounded-lg borderRight lightWhite ">
                                 <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600">FROM <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
@@ -327,7 +325,7 @@ function ShowAllTrains(props) {
             </div>
         </BrowserView>
             <MobileView>
-                <div className=' fixed flex gap-2 px-3 text-xs font-medium justify-around text-white bottom-0 py-3 bg-black w-full'>
+                <div className=' fixed flex gap-2 px-3 text-xs font-medium justify-around text-white bottom-0 py-3 bg-black  rounded-t-lg  w-full'>
                     <div id='free' onClick={() => { handleTicketType("free") }} className='flex alignCenter justify-center filterblackBack cursor-pointer gap-3 rounded-lg py-1 px-2 '>
                         <h2 id='freeTag'>Free Cencellation</h2>
                     </div>
@@ -397,8 +395,8 @@ function ShowAllTrains(props) {
                             </div>
                         </div> :
                         <>
-                            <div className=" bg-white px-2 py-2 mb-3">
-                                <div className="flex justify-between alignCenter bg-gray-100 rounded-md borderGray py-2 pl-2">
+                            <div id="showBookingBar" className=" bg-white px-2 py-2 mb-3 rounded-b-lg">
+                                <div className="flex justify-between alignCenter bg-gray-100 rounded-md borderGray py-1 pl-2">
                                     <div>
                                         <h1 className="flex">
                                             {cityListArray?.map((val) => {
@@ -432,75 +430,10 @@ function ShowAllTrains(props) {
                                     </div>
                                 </div>
                             </div>
-                            <div className=" opacity-0 bg-gray-100 z-20">
-                                <div className="">
-                                    <div id="showBookingBar" className="bg-gray-100 w-2 text-left">
-                                        <div className="  gap-2 rounded-lg cursor-pointer ">
-                                            <div onClick={handleFrom} className=" relative bg-white rounded-lg ">
-                                                <span className="flex flex-row gap-1 alignCenter text-sm text-blue-600"><img id="fromArrow" className=" w-0 h-0 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
-                                            </div>
-                                            <div onClick={handleTo} className=" relativerounded-lg borderRight bg-white ">
-                                                <span className="flex flex-row gap-1 alignCenter text-sm text-blue-600"> <img id="toArrow" className=" w-0 h-0 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <span id="fromArrow"></span>
+                            <span id="toArrow" > </span>
                         </>
                     }
-                    {/* <div className="gradientBackgroundBlue mb-6">
-                        <div id="showBookingBar" className=" flex alignCenter justify-center gap-9  pt-2 pb-2 px-6 text-left">
-                            <div className=" grid gap-2 rounded-lg cursor-pointer allFlightsBookingBox">
-                                <div onClick={handleFrom} className=" relative px-3 py-1 rounded-lg borderRight lightWhite ">
-                                    <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600">FROM <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
-                                    {!loading ?
-                                        flightCodeArray?.map((val) => {
-                                            return (
-                                                <>
-                                                    {val?.city === source ?
-                                                        <div key={val.code} className=" mt-2">
-                                                            <h1 className=" font-bold text-sm text-white">{val?.city}</h1>
-                                                        </div> : ""}</>
-                                            )
-                                        }) : <ShimmerLocation />}
-                                    {sourceModal ?
-                                        <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
-                                            <TrainModal />
-                                        </div> : ""}
-                                </div>
-                                <div onClick={handleTo} className=" relative px-3 py-1 rounded-lg borderRight lightWhite ">
-                                    <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600">TO <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
-                                    {!loading ?
-                                        flightCodeArray?.map((val) => {
-                                            return (
-                                                <>
-                                                    {val?.city === destination ?
-                                                        <div key={val.code} className=" mt-2">
-                                                            <h1 className=" font-bold text-sm text-white">{val?.city}</h1>
-                                                        </div> : ""}</>
-                                            )
-                                        }) : <ShimmerLocation />}
-                                    {destinationModal ?
-                                        <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
-                                            <TrainModal />
-                                        </div> : ""}
-                                </div>
-                                <div onClick={handleDateModal} className=" relative px-3 py-0 rounded-lg borderRight lightWhite">
-                                    <span className=" text-blue-600 text-xs">DEPART</span>
-                                    <div className="text-white">
-                                        <span className=" font-extrabold text-sm">{date} </span>
-                                        <span className=" font-semibold">{monthNames[month]}'{year}, </span>
-                                        <span className=" ">{weekName[day]}</span>
-                                        {flightDateModal ?
-                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-7 bg-white text-black p-2 grayBlurShadow rounded-lg calenderBox" >
-                                                <Calendar onChange={onChange} value={flightdate} />
-                                            </div> : ""}
-                                    </div>
-                                </div>
-                            </div>
-                            <button onClick={handleSearch} className=" px-10 h-10 text-lg my-1 font-bold text-white blueSearch rounded-full">SEARCH</button>
-                        </div>
-                    </div> */}
                     <main className=" gap-2 allCardMainBox">
                         {/* filter */}
                         <div onClick={() => { mobileFilterHandle("close"); }} id="mobFilter" className="fixed z-20 top-0 w-full fullHeightInVh lowOpacityGrayBack mobileFilterClose ">
@@ -563,14 +496,14 @@ function ShowAllTrains(props) {
                                                     return (
                                                         <div>
                                                             <div onClick={() => { navigate(`/train/review/${fromTrain}/${toTrain}/${val._id}/${ticket.class}`) }} className=' cursor-pointer  p-3 rounded-md grayBlurShadow borderGray text-left mobTicketTypeCard'>
-                                                            <div className='flex justify-between alignCenter font-bold mb-1'>
-                                                                <h1 className='text-sm'>{ticket.class}</h1>
-                                                                <h1 className='text-sm'>₹{ticket.price}</h1>
+                                                                <div className='flex justify-between alignCenter font-bold mb-1'>
+                                                                    <h1 className='text-sm'>{ticket.class}</h1>
+                                                                    <h1 className='text-sm'>₹{ticket.price}</h1>
+                                                                </div>
+                                                                <h3 className=' text-xs text-green-500'>AVAILABLE {ticket.seats}</h3>
+                                                                <h3 className=' text-xs mt-1'>{ticket.extra}</h3>
+                                                                <h4 className=' text-xs mt-1 text-gray-300'>Updated {ticket.updated}</h4>
                                                             </div>
-                                                            <h3 className=' text-xs text-green-500'>AVAILABLE {ticket.seats}</h3>
-                                                            <h3 className=' text-xs mt-1'>{ticket.extra}</h3>
-                                                            <h4 className=' text-xs mt-1 text-gray-300'>Updated {ticket.updated}</h4>
-                                                        </div>
                                                         </div>
                                                     );
                                                 })}
