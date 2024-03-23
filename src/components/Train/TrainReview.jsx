@@ -9,11 +9,11 @@ function TrainReview(props) {
     const { from, to, trainId, trainClass } = useParams();
     const navigate = useNavigate();
     const { hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource, fromOrTo, setFromOrTo, setFlightArray,
-        destination, setDestination, currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate, } = useContext(AppContext);
+        destination, setDestination, currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate, setBookingStatus, setPaymentOption,trainPassangers, setTrainPassangers } = useContext(AppContext);
     const [loading, setLoading] = useState(false);
     const [ticket, setTicket] = useState([]);
     const [ticketType, setTicketType] = useState("");
-    const [persons, setPersons] = useState(1);
+    
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
@@ -42,7 +42,7 @@ function TrainReview(props) {
     }, []);
     console.log(ticket);
     const handlePay = () => {
-        navigate(`/payment/RAILS/${trainId}/${(ticketType?.price * persons) + 40 + 58 + 308}`);
+        navigate(`/payment/RAILS/${trainId}/${(ticketType?.price * trainPassangers) + 40 + 58 + 308}`);
         setBookingStatus(false);
         setPaymentOption(false);
     }
@@ -93,7 +93,7 @@ function TrainReview(props) {
                                         <h1>{from} - {ticket.arrivalTime}({date} {monthNames[month]}) </h1>
                                         <div className=' flex alignCenter'>
                                             <h1>Person</h1>
-                                            <select onChange={(e) => { setPersons(e.target.value); }} className='w-12 borderGray rounded-md ml-2' name="" id="">
+                                            <select onChange={(e) => { setTrainPassangers(e.target.value); }} className='w-12 borderGray rounded-md ml-2' name="" id="">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -131,17 +131,20 @@ function TrainReview(props) {
                             </div>
                             <div className='flex justify-between alignCenter p-4 bg-gray-50'>
                                 <h1>Total Price per adult</h1>
-                                <h1 className=' font-bold'>₹{(ticketType?.price * persons) + 40 + 58 + 308}</h1>
+                                <h1 className=' font-bold'>₹{(ticketType?.price * trainPassangers) + 40 + 58 + 308}</h1>
                             </div>
                         </div>
                     </div>
                 </div>
             </BrowserView>
-            <MobileView>
-                <div className=' pb-10 gradientBackgroundBlue text-white'>
-                    <div className=' relative pt-5 pb-5 '>
+            <MobileView className='gradientBackgroundBlue'>
+                <div className=' pb-20 pt-5  text-white'>
+                    <img className=' mb-3 m-auto w-20' src="/img/mmt_logo_rt.png" alt="" />
+                    <h3 className=' text-white text-xs'>Trip to</h3>
+                    <h1 className=' font-semibold text-xl mb-5'>{to}</h1>
+                    {/* <div className=' relative pt-5 pb-5 '>
                         <h1 className=' text-white font-bold mb-2 text-2xl payWidth m-auto text-left'>Review Your Booking</h1>
-                    </div>
+                    </div> */}
                     <div className=' justify-between mt-2 m-auto px-2 '>
                         <div className=' '>
                             <div className=' gap-6 mb-8'>
@@ -165,7 +168,7 @@ function TrainReview(props) {
                                     </div>
                                 </div>
                             </div>
-                            <div className=''>
+                            <>
                                 <div className='mb-5'>
                                     <h1 className=' text-left font-semibold mb-2'>Availability Status</h1>
                                     <div className=' py-1 px-5 rounded-md borderGray '>
@@ -178,11 +181,11 @@ function TrainReview(props) {
                                 </div>
                                 <div className=' mb-5'>
                                     <h1 className=' text-left mb-2 font-semibold'>Your Boarding Station</h1>
-                                    <div className='flex justify-between alignCenter p-2 rounded-md borderGray'>
+                                    <div className='flex justify-between alignCenter p-3 rounded-md borderGray'>
                                         <h1>{from} - {ticket.arrivalTime}({date} {monthNames[month]}) </h1>
                                         <div className=' flex alignCenter'>
                                             <h1>Person</h1>
-                                            <select onChange={(e) => { setPersons(e.target.value); }} className='w-12 borderGray text-black rounded-md ml-2' name="" id="">
+                                            <select onChange={(e) => { setTrainPassangers(e.target.value); }} className='w-12 borderGray bg-transparent text-gray-400 pl-1 rounded-md ml-2' name="" id="">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -192,12 +195,10 @@ function TrainReview(props) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </>
                         </div>
+                        {/* fare breakup */}
                         <div className=' rounded-md borderGray '>
-                            <div className=' p-4 borderBottomGray'>
-                                <button onClick={handlePay} className=' w-full text-center gradientBlueBack rounded-md text-white font-bold py-2'>PAY & BOOK NOW</button>
-                            </div>
                             <div className='flex flex-col gap-3 p-4'>
                                 <div className='flex justify-between alignCenter'>
                                     <h1>Base fare per adult</h1>
@@ -219,10 +220,14 @@ function TrainReview(props) {
 
                             </div>
                             <div className='flex justify-between alignCenter p-4 borderTopGray'>
-                                <h1>Total Price per adult</h1>
-                                <h1 className=' font-bold'>₹{(ticketType?.price * persons) + 40 + 58 + 308}</h1>
+                                <h1>Total Price</h1>
+                                <h1 className=' font-bold'>₹{(ticketType?.price * trainPassangers) + 40 + 58 + (ticketType?.price > 1000? 308:0)}</h1>
                             </div>
                         </div>
+                    </div>
+                    <div className=' fixed flex justify-between alignCenter bottom-0 w-full bg-gray-900 px-4 py-3 z-20'>
+                        <h2 className=' font-bold text-white text-3xl'>₹ {(ticketType?.price * trainPassangers) + 40 + 58 + (ticketType?.price > 1000? 308:0)}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
+                        <button onClick={() => { setBookingStatus(false); setPaymentOption(false); navigate(`/payment/RAILS/${trainId}/${trainClass}`) }} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2 px-4 '>CONTINUE</button>
                     </div>
                 </div>
             </MobileView>

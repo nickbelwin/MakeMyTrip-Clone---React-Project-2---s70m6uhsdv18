@@ -13,7 +13,7 @@ function Payment(props) {
     const navigate = useNavigate();
     const { token, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, flightArray, setFlightArray,
         destination, setDestination, flightdate, setFlightDate, hotelInDate, setHotelInDate,
-        hotelOutDate, setHotelOutDate, bookingStatus, setBookingStatus, hotelRoomId, setHotelRoomId, paymentOption, setPaymentOption,roomAndGuest, setRoomAndGuest, } = useContext(AppContext);
+        hotelOutDate, setHotelOutDate, bookingStatus, setBookingStatus, hotelRoomId, setHotelRoomId, paymentOption, setPaymentOption,roomAndGuest, setRoomAndGuest,trainPassangers, setTrainPassangers } = useContext(AppContext);
     const [fare, setFare] = useState([]);
     const [bookingDetails, setBookingDetails] = useState([]);
     const [ticketType, setTicketType] = useState("");
@@ -42,8 +42,11 @@ function Payment(props) {
                 let getTicket = trainTickets?.filter((val) => {
                     return val._id == fareId;
                 });
-                console.log(getTicket[0]);
                 setFare(getTicket[0]);
+                let getType = getTicket[0].availableTicket.filter((val) => {
+                    return val.class === roomId
+                });
+                setTicketType(getType[0]);
             }
         } catch (err) {
             console.log(err);
@@ -689,15 +692,23 @@ function Payment(props) {
                                                                         <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
                                                                         <h2>Base fare per adult</h2>
                                                                     </div>
-                                                                    <h2 className='text-gray-500'>₹ {roomId - 308 - 58 - 40}</h2>
+                                                                    <h2 className='text-gray-500'>₹ {ticketType?.price}</h2>
                                                                 </div>
+                                                                <div className='flex alignCenter justify-between py-4 borderBottomGray'>
+                                                                    <div className='flex alignCenter'>
+                                                                        <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
+                                                                        <h2>Passangers</h2>
+                                                                    </div>
+                                                                    <h2 className='text-gray-500'>{trainPassangers}</h2>
+                                                                </div>
+                                                                {ticketType?.price > 1000?
                                                                 <div className='flex alignCenter justify-between py-4 borderBottomGray'>
                                                                     <div className='flex alignCenter'>
                                                                         <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
                                                                         <h2>Catering charge</h2>
                                                                     </div>
                                                                     <h2 className=' text-gray-500'>₹ 308</h2>
-                                                                </div>
+                                                                </div>:""}
                                                                 <div className='flex alignCenter justify-between py-4 borderBottomGray'>
                                                                     <div className='flex alignCenter'>
                                                                         <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
@@ -714,10 +725,10 @@ function Payment(props) {
                                                                 </div>
                                                                 <div className='flex alignCenter justify-between pt-4 '>
                                                                     <h2 className=' font-bold'>Total Amount</h2>
-                                                                    <h2 className=' font-bold '>₹ {roomId}</h2>
+                                                                    <h2 className=' font-bold '>₹ {(ticketType?.price * trainPassangers) + 40 + 58 + (ticketType?.price > 1000? 308:0)}</h2>
                                                                 </div>
                                                                 <div className=' fixed flex justify-between alignCenter bottom-0 left-0 w-full bg-gray-900 p-4 z-20'>
-                                                                    <h2 className=' font-bold text-white text-3xl'>₹ {roomId}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
+                                                                    <h2 className=' font-bold text-white text-3xl'>₹ {(ticketType?.price * trainPassangers) + 40 + 58 + (ticketType?.price > 1000? 308:0)}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
                                                                     <button onClick={bookTrainHandle} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2 px-4'>Pay Now</button>
                                                                 </div></>
                                                             <img className=' w-1/2 pr-2 m-auto' src="/img/mmtbackWhiteImage.png" alt="" />

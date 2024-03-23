@@ -35,10 +35,10 @@ function App() {
             <Route path="/flights/:from/:to/:weekDay" element={<ShowAllFlights />} />
             <Route path="/trains" element={<ShowAllTrains />} />
             <Route path="/buses/:from/:to/:weekDay" element={<ShowAllBuses />} />
-            <Route path="/train/review/:from/:to/:trainId/:trainClass" element={<TrainReview/>} />
           </Route>
           <Route path="/hotel-review/:hotelId/:roomId" element={<HotelReviewPage/>} />
           <Route path="/flight-review/:flightId" element={<FlightBooking/>} />
+          <Route path="/train/review/:from/:to/:trainId/:trainClass" element={<TrainReview/>} />
           <Route path="/payment/:option/:fareId/:roomId" element={<Payment/>} />
           <Route path="/nik" element={<TrainReview/>}/>
         </Routes>

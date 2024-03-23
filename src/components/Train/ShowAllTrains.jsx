@@ -23,7 +23,8 @@ function ShowAllTrains(props) {
     const [destinationModal, setDestinationModal] = useState(false);
     const [flightDateModal, setFlightDateModal] = useState(false);
     const { hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource, fromOrTo, setFromOrTo, setFlightArray,
-        destination, setDestination, currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate, } = useContext(AppContext);
+        destination, setDestination, currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate,
+        trainPassangers, setTrainPassangers } = useContext(AppContext);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
@@ -304,7 +305,7 @@ function ShowAllTrains(props) {
                                         <div className='flex gap-5'>
                                             {val.availableTicket?.map((ticket) => {
                                                 return (
-                                                    <div onClick={() => { navigate(`/train/review/${fromTrain}/${toTrain}/${val._id}/${ticket.class}`) }} className=' cursor-pointer p-3 rounded-md grayBlurShadow borderGray text-left'>
+                                                    <div onClick={() => {  setTrainPassangers(1); navigate(`/train/review/${fromTrain}/${toTrain}/${val._id}/${ticket.class}`) }} className=' cursor-pointer p-3 rounded-md grayBlurShadow borderGray text-left'>
                                                         <div className='flex justify-between alignCenter font-bold mb-1'>
                                                             <h1>{ticket.class}</h1>
                                                             <h1>₹{ticket.price}</h1>
@@ -325,7 +326,7 @@ function ShowAllTrains(props) {
             </div>
         </BrowserView>
             <MobileView>
-                <div className=' fixed flex gap-2 px-3 text-xs font-medium justify-around text-white bottom-0 py-3 bg-black  rounded-t-lg  w-full'>
+                <div className=' fixed flex gap-2 px-3 text-xs font-medium justify-around text-white bottom-0 py-3 bg-black  rounded-t-xl  w-full'>
                     <div id='free' onClick={() => { handleTicketType("free") }} className='flex alignCenter justify-center filterblackBack cursor-pointer gap-3 rounded-lg py-1 px-2 '>
                         <h2 id='freeTag'>Free Cencellation</h2>
                     </div>
@@ -469,10 +470,10 @@ function ShowAllTrains(props) {
                             {!cardLoading ?
                                 allTrainTickets?.map((val) => {
                                     return (
-                                        <div key={val._id} className=' py-6 px-2 rounded-lg grayBlurShadow borderGray'>
-                                            <div className=' mb-8'>
+                                        <div key={val._id} className=' pt-2 pb-4 px-2 rounded-lg grayBlurShadow borderGray'>
+                                            <div className=' mb-3'>
                                                 <div className=' text-left mb-3'>
-                                                    <h1 className=' font-bold text-xl'>{val.name}</h1>
+                                                    <h1 className=' font-bold text-2xl'>{val.name}</h1>
                                                     <h3 className=' text-xs text-gray-400 '><span className=' mr-2'>{val.trainCode}</span> | <span className='ml-2'>Departs on:</span>{val.departOn?.map((val, idx) => {
                                                         return val != weekInitials[idx] ? <span className=' text-gray-300 font-semibold pl-1'>{weekInitials[idx]}</span> : <span className='greenText font-semibold pl-1'>{val}</span>
                                                     })}</h3>
@@ -491,18 +492,18 @@ function ShowAllTrains(props) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className='flex gap-5 overflow-x-scroll no-scrollbar'>
+                                            <div className='flex gap-2 overflow-x-scroll no-scrollbar'>
                                                 {val.availableTicket?.map((ticket) => {
                                                     return (
                                                         <div>
-                                                            <div onClick={() => { navigate(`/train/review/${fromTrain}/${toTrain}/${val._id}/${ticket.class}`) }} className=' cursor-pointer  p-3 rounded-md grayBlurShadow borderGray text-left mobTicketTypeCard'>
+                                                            <div onClick={() => { setTrainPassangers(1); navigate(`/train/review/${fromTrain}/${toTrain}/${val._id}/${ticket.class}`) }} className=' cursor-pointer  px-3 py-1 rounded-md grayBlurShadow borderGray text-left mobTicketTypeCard'>
                                                                 <div className='flex justify-between alignCenter font-bold mb-1'>
                                                                     <h1 className='text-sm'>{ticket.class}</h1>
                                                                     <h1 className='text-sm'>₹{ticket.price}</h1>
                                                                 </div>
                                                                 <h3 className=' text-xs text-green-500'>AVAILABLE {ticket.seats}</h3>
-                                                                <h3 className=' text-xs mt-1'>{ticket.extra}</h3>
-                                                                <h4 className=' text-xs mt-1 text-gray-300'>Updated {ticket.updated}</h4>
+                                                                <h3 className=' text-xs '>{ticket.extra}</h3>
+                                                                <h4 className=' text-xs text-gray-300'>Updated {ticket.updated}</h4>
                                                             </div>
                                                         </div>
                                                     );

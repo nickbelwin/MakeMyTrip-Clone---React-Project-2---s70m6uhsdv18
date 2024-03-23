@@ -21,6 +21,7 @@ const AppContextProvider=({children})=>{
     const [destination, setDestination]=useState("Mumbai");
     const [hotelLocation, setHotelLocation]=useState("Mumbai");
     const [trainClassCode,setTrainClassesCode]=useState("ALL");
+    const [trainPassangers, setTrainPassangers] = useState(1);
     const [isModalOpen,setIsModalOpen]=useState(false);
     const [fromOrTo, setFromOrTo]=useState("");
     const [paymentOption, setPaymentOption] = useState("");
@@ -55,6 +56,7 @@ const AppContextProvider=({children})=>{
             hotelLocation, setHotelLocation,
             isModalOpen,setIsModalOpen,
             trainClassCode,setTrainClassesCode,
+            trainPassangers, setTrainPassangers,
             fromOrTo, setFromOrTo,
             paymentOption, setPaymentOption,
             }}>

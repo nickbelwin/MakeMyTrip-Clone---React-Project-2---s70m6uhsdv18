@@ -223,7 +223,6 @@ function FlightBooking(props) {
                             <button onClick={() => { setBookingStatus(false); setPaymentOption(false); navigate(`/payment/FLIGHTS/${flightId}/""`) }} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2 px-4 '>CONTINUE</button>
                         </div>
                     </div>
-
                 </section>
             </MobileView>
         </>
