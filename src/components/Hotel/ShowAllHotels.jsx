@@ -49,6 +49,8 @@ function ShowAllHotels(props) {
         setMonth(chek.getMonth());
         setYear(chek.getFullYear());
         setDay(chek.getDay());
+        setIsModalOpen(false);
+        setHotelDateInModal(false);
         // Add any additional logic you need when the date changes
     };
     const onChangeOut = (newDate) => {
