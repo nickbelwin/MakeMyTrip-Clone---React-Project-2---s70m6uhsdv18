@@ -7,14 +7,17 @@ import { BrowserView, MobileView } from 'react-device-detect';
 function Offers(props) {
     const [currentTravelOption, setcurrentTravelOption] = useState("ALL");
     const [offersArray, setOffersArray] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const getOffers = async () => {
+        setLoading(true);
         let url = `https://academics.newtonschool.co/api/v1/bookingportals/offers?filter={"type":"${currentTravelOption}"}`;
         let res = await axios.get(url,
             {
                 headers: { "projectId": "ywhyenbsclpi" }
             });
         setOffersArray(res.data.data.offers);
+        setLoading(false);
     }
 
     const handleNext = () => {
@@ -45,14 +48,15 @@ function Offers(props) {
                             </ul>
                         </div>
                         <div className='flex gap-3 alignCenter'>
-                            <h2 className='flex gap-3 alignCenter cursor-pointer'>View All <img src="/img/blueRightArrow.png" alt="right arrow" /></h2>
+                            {/* <h2 className='flex gap-3 alignCenter cursor-pointer'>View All <img src="/img/blueRightArrow.png" alt="right arrow" /></h2> */}
                             <div className='flex alignCenter'>
                                 <div style={{ opacity: currentIndex === 0 ? ".4" : "1", cursor: currentIndex === 0 ? "no-drop" : "pointer" }} onClick={handlePrev} className='p-3 borderGray leftRadius prevent-select'><img className='transformLeftArrow' src="/img/blueDownArrow.png" alt="" /></div>
                                 <div style={{ opacity: currentIndex === offersArray?.length - 4 ? ".4" : "1", cursor: currentIndex === offersArray?.length - 3 ? "no-drop" : "pointer" }} onClick={handleNext} className=' p-3  borderGray rightRadius prevent-select'><img className='transformRightArrow' src="/img/blueDownArrow.png" alt="" /></div>
                             </div></div>
                     </nav>
                     <div className='grid gap-4 p-3 overflow-x-scroll overflow-y-hidden no-scrollbar allCards'>
-                        {offersArray?.map((val, idx) => {
+                        {!loading?
+                        offersArray?.map((val, idx) => {
                             return (
                                 <>
                                     {idx >= currentIndex ?
@@ -72,9 +76,7 @@ function Offers(props) {
                                         </div> : ""}
                                 </>
                             )
-                        })
-
-                        }
+                        }): <img className=' m-auto w-32 ' src="/img/mmtLoading.gif" alt="" /> }
                     </div>
                 </div>
             </BrowserView>
@@ -97,7 +99,8 @@ function Offers(props) {
                             </div></div>
                     </nav>
                     <div className='grid gap-4 p-3 overflow-x-scroll overflow-y-hidden no-scrollbar allCards'>
-                        {offersArray?.map((val, idx) => {
+                        {!loading? 
+                        offersArray?.map((val, idx) => {
                             return (
                                 <>
                                     {idx >= currentIndex ?
@@ -117,9 +120,7 @@ function Offers(props) {
                                         </div> : ""}
                                 </>
                             )
-                        })
-
-                        }
+                        }): <img className=' m-auto w-32 ' src="/img/mmtLoading.gif" alt="" /> }
                     </div>
                 </div>
             </MobileView>
