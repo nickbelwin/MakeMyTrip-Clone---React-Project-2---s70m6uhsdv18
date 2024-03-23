@@ -1,4 +1,18 @@
 
+.react-calendar__navigation{
+    display: flex;
+    justify-content: space-around;
+    padding: 0 .1rem;
+    font-weight: 600;
+
+}
+.react-calendar__navigation__arrow{
+    margin-right: 0.5rem;
+    font-size: 2rem;
+}
+.react-calendar__month-view__weekdays__weekday{
+    text-align: center;
+}
 .subNavbarBox{
     width: 98vw;
     -webkit-user-select: none; /* Safari */
@@ -15,7 +29,7 @@
 }
 .bookingBox{
     grid-template-columns: 2fr 2fr 1fr ;
-    width: 75vw;
+    width: 75rem;
 }
 .flightBookingBox{
     grid-template-columns: 2fr 1fr;
@@ -66,6 +80,11 @@ table tr td{
 .allFlightsBookingBox {
     width: 50%;
     grid-template-columns: 1fr 1fr 1fr;
+}
+@media (max-width:1300px){
+    .bookingBox{
+        width: 90vw;
+    }
 }
 @media (max-width:1030px){
     .blueSearch{

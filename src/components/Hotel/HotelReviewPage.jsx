@@ -9,7 +9,7 @@ function HotelReviewPage(props) {
     console.log("room", roomId);
     const { token, setToken, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource,
         destination, setDestination, hotelInDate, setHotelInDate,
-        hotelOutDate, setHotelOutDate, bookingStatus, setBookingStatus, hotelRoomId, setHotelRoomId,paymentOption, setPaymentOption,roomAndGuest, setRoomAndGuest, } = useContext(AppContext);
+        hotelOutDate, setHotelOutDate, bookingStatus, setBookingStatus, hotelRoomId, setHotelRoomId,paymentOption, setPaymentOption,roomAndGuest, setRoomAndGuest } = useContext(AppContext);
     const navigate = useNavigate();
     const [hotelInfo, sethotelInfo] = useState([]);
     const [hotelRooms, setHotelRooms] = useState([]);
@@ -259,8 +259,8 @@ function HotelReviewPage(props) {
                                                 </div>
                                                 <div className='flex alignCenter justify-center p-4  borderDottedTopGray'>
                                                     <h1 className=' font-semibold'>{dateOut - date <= 0 ? 1 + " NIGHT" : dateOut - date + " NIGHTS"} | </h1>
-                                                    <h1> 1 Adult |</h1>
-                                                    <h1>1 Room</h1>
+                                                    <h1> {roomAndGuest.guest} Adult |</h1>
+                                                    <h1>{roomAndGuest.room} Room</h1>
                                                 </div>
                                             </div>
                                             <div>
@@ -270,7 +270,7 @@ function HotelReviewPage(props) {
                                                             <div className='grid grid-cols-2 text-left'>
                                                                 <div className='py-4 px-2'>
                                                                     <h1 className=' font-bold text-xl'>{val.roomType}</h1>
-                                                                    <h1 className=' text-gray-500'>2 Adults</h1>
+                                                                    <h1 className=' text-gray-500'>{roomAndGuest.guest} Adults</h1>
                                                                 </div>
                                                                 <div className='py-4 px-2 text-gray-500'>
                                                                     <li>Room Only</li>

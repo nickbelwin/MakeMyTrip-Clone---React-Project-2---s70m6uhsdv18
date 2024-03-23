@@ -197,7 +197,7 @@ function HotelDetails(props) {
                     hotelInfo?.map((val) => {
                         return (
                             <div className=' ' key={val._id}>
-                                <div className='flex justify-center alignCenter w-fit mainImage relative'>
+                                <div className='flex justify-center alignCenter w-fit mainImage relative py-2'>
                                     <img onClick={prevImg} className=' cursor-pointer absolute left-1 top-1/2 w-7 transformLeftArrow grayBlurShadow lowOpacityGrayBack' src="/img/downArrow.png" alt="" />
                                     <img onClick={nextImg} className=' cursor-pointer absolute right-1 top-1/2 w-7 transformRightArrow grayBlurShadow lowOpacityGrayBack' src="/img/downArrow.png" alt="" />
                                     {/* <img className=' grayBlurShadow rounded-md ' src={val?.images[currentIndex]} alt="" /> */}

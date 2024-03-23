@@ -17,7 +17,7 @@ const Flight = (props) => {
     const [destinationModal, setDestinationModal] = useState(false);
     const [flightSourceCode, setFlightSourceCode] = useState("DEL");
     const [flightDestinationCode, setFlightDestinationCode] = useState("BOM");
-    const [flightDateModal, setFlightDateModal] = useState(false);
+    const [flightDateModal, setFlightDateModal] = useState(true);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
@@ -91,7 +91,7 @@ const Flight = (props) => {
         setYear(date.getFullYear());
         setDay(date.getDay());
     }, []);
-    console.log(day);
+    console.log(isModalOpen);
     return (
         <>
             <BrowserView>
@@ -142,10 +142,10 @@ const Flight = (props) => {
                                         <span className=" font-semibold">{monthNames[month]}'{year}</span>
                                         <p className=" text-gray-800">{weekName[day]}</p>
                                         {flightDateModal ?
-                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                            <div className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                                <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=' absolute p-2 cursor-pointer bg-white rounded-full top-0 right-0'><img className=' w-3' src="/img/cancel.png" alt="" /></div>
                                                 <Calendar onChange={onChange} />
                                             </div> : ""}
-                                        <p>{ }</p>
                                     </p>
                                 </div>
                                 {/* <div className=" px-6 py-3 hoverLightBlue">
@@ -162,11 +162,11 @@ const Flight = (props) => {
             </BrowserView>
             <MobileView>
                 <section className=" m-auto flex justify-center subNavbarBox">
-                    <div className=" relative flex justify-center subNavbarBoxCover">
+                    <div className="  flex justify-center subNavbarBoxCover">
                         <TravelOptions />
                         <div className=" w-full bg-white pt-3 pb-6 px-2 text-left mt-20 rounded-2xl">
                             <p className=" w-full mb-2 text-center font-bold text-gray-700">Book International and Domestic Flights.</p>
-                            <div className=" relative   w-full cursor-pointer  ">
+                            <div className="   w-full cursor-pointer  ">
                                 <div onClick={handleFrom} className=" px-3 py-1 mb-3 relative borderGray  hoverLightBlue">
                                     <span className="flex flex-row gap-1 alignCenter text-xs text-gray-800">From <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {!loading ? flightArray?.map((val) => {
@@ -180,11 +180,14 @@ const Flight = (props) => {
                                         )
                                     }) : <ShimmerLocation />}
                                     {sourceModal ?
-                                        <div className=" absolute w-full z-20 left-0 top-10 flightModal" >
-                                            <FlightModal />
+                                        <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
+                                            <div className='flex justify-end  p-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                            <div onClick={(e) => { e.stopPropagation() }}>
+                                                <FlightModal />
+                                            </div>
                                         </div> : ""}
                                 </div>
-                                <div onClick={handleTo} className=" relative px-3 py-1 mb-3 borderGray hoverLightBlue">
+                                <div onClick={handleTo} className=" px-3 py-1 mb-3 borderGray hoverLightBlue">
                                     <span className="flex flex-row gap-1 alignCenter text-xs text-gray-800">To <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {!loading ? flightArray?.map((val) => {
                                         return (
@@ -197,8 +200,11 @@ const Flight = (props) => {
                                         )
                                     }) : <ShimmerLocation />}
                                     {destinationModal ?
-                                        <div className=" absolute w-full z-20 left-0 top-10 flightModal" >
-                                            <FlightModal />
+                                        <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
+                                            <div className='flex justify-end  p-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                            <div onClick={(e) => { e.stopPropagation() }}>
+                                                <FlightModal />
+                                            </div>
                                         </div> : ""}
                                 </div>
                                 <div onClick={handleDateModal} className=" relative px-3 py-1 mb-4 borderGray hoverLightBlue">
@@ -208,8 +214,13 @@ const Flight = (props) => {
                                         <span className=" font-semibold text-sm">{monthNames[month]}'{year}</span>
                                         <p className=" text-gray-800 text-sm">{weekName[day]}</p>
                                         {flightDateModal ?
-                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute z-20 left-0 top-9 bg-white p-2 grayBlurShadow rounded-lg " >
-                                                <Calendar className={"m-auto"} onChange={onChange} />
+                                            <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
+                                                <div className='flex justify-end  pt-5 px-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                                <h1 className=" px-2 font-extrabold text-xl">Departure</h1>
+                                                <h1 className=" font-medium px-2 mb-2"><span className=" font-extrabold text-xl">{date}</span> {monthNames[month]} {year}, {weekName[day]}</h1>
+                                                <div className="ml-1 mr-2 rounded-md borderGray" onClick={(e) => { e.stopPropagation() }}>
+                                                    <Calendar className={"m-auto"} onChange={onChange} />
+                                                </div>
                                             </div> : ""}
                                         <p>{ }</p>
                                     </p>

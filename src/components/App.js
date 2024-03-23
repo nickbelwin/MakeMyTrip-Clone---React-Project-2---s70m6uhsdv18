@@ -18,6 +18,7 @@ import Demo from "./Demo";
 import TrainReview from "./Train/TrainReview";
 
 
+
 function App() {
   // https://make-my-trip-clone-react-project-2-s70m6uhsdv18.vercel.app/
   return (<div className="App">
@@ -39,7 +40,7 @@ function App() {
           <Route path="/hotel-review/:hotelId/:roomId" element={<HotelReviewPage/>} />
           <Route path="/flight-review/:flightId" element={<FlightBooking/>} />
           <Route path="/payment/:option/:fareId/:roomId" element={<Payment/>} />
-          <Route path="/nik" element={<Demo/>}/>
+          <Route path="/nik" element={<TrainReview/>}/>
         </Routes>
       </div>
     </AppContextProvider>

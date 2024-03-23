@@ -1,14 +1,15 @@
 import React, { memo, useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { monthNames, trainTickets, weekInitials, weekName } from '../Constant/constant';
-import AppContext from '../ContextAPI/AppContext';
+import { AppContext } from "../ContextAPI/AppContext";
 import "./train.css";
 import { BrowserView, MobileView } from 'react-device-detect';
 
 function TrainReview(props) {
     const { from, to, trainId, trainClass } = useParams();
     const navigate = useNavigate();
-    // const {setCurrentTravelOption}=useContext(AppContext);
+    const { hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource, fromOrTo, setFromOrTo, setFlightArray,
+        destination, setDestination, currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate, } = useContext(AppContext);
     const [loading, setLoading] = useState(false);
     const [ticket, setTicket] = useState([]);
     const [ticketType, setTicketType] = useState("");
@@ -32,7 +33,7 @@ function TrainReview(props) {
         });
         console.log(getType);
         setTicketType(getType[0]);
-        // setCurrentTravelOption("RAILS");
+        setCurrentTravelOption("RAILS");
         let date = new Date();
         setDate(date.getDate());
         setMonth(date.getMonth());
@@ -42,8 +43,8 @@ function TrainReview(props) {
     console.log(ticket);
     const handlePay = () => {
         navigate(`/payment/RAILS/${trainId}/${(ticketType?.price * persons) + 40 + 58 + 308}`);
-        // setBookingStatus(false);
-        // setPaymentOption(false);
+        setBookingStatus(false);
+        setPaymentOption(false);
     }
     return (
         <div>

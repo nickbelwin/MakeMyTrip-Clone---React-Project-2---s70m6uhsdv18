@@ -140,7 +140,7 @@ function ShowAllFlights(props) {
         const sortBox = document.getElementById('sortBox');
         const scrollTop = window.scrollY;
         scrollTop >= 60 ? header?.classList.add('sticky') : header?.classList.remove('sticky');
-        scrollTop >= 180 ? sortBox?.classList.add('sticky') : sortBox?.classList.remove('sticky');
+        // scrollTop >= 180 ? sortBox?.classList.add('sticky') : sortBox?.classList.remove('sticky');
         // scrollTop >= 60 ? header?.classList?.add('gradientBackgroundBlue') : header.classList.remove('gradientBackgroundBlue');
         scrollTop >= 60 ? header?.classList.add('grayBlurShadow') : header.classList.remove('grayBlurShadow');
 
@@ -422,48 +422,59 @@ function ShowAllFlights(props) {
                                     <p onClick={() => { setEditFlight(false); }} className=" text-right text-blue-600 py-2">Cancel</p>
                                     <div className="  gap-2 rounded-lg cursor-pointer ">
                                         <div onClick={(e) => { handleFrom(e) }} className=" relative bg-white px-3 py-2 mb-3 rounded-lg ">
-                                            <span className="flex flex-row gap-1 alignCenter text-sm text-blue-600">FROM <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
+                                            <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600">FROM <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                             {!loading ?
                                                 flightCodeArray?.map((val) => {
                                                     return (
                                                         <>
                                                             {val?.city === source ?
                                                                 <div key={val.code} className="">
-                                                                    <h1 className=" font-bold text-xl">{val?.city}</h1>
+                                                                    <h1 className=" font-bold">{val?.city}</h1>
                                                                 </div> : ""}</>
                                                     )
                                                 }) : <ShimmerLocation />}
                                             {sourceModal ?
-                                                <div className=" absolute w-64 z-20 left-0 top-9 flightModal" >
-                                                    <FlightModal />
+                                                <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
+                                                    <div className='flex justify-end  p-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                                    <div onClick={(e) => { e.stopPropagation() }}>
+                                                        <FlightModal />
+                                                    </div>
                                                 </div> : ""}
                                         </div>
                                         <div onClick={handleTo} className=" relative px-3 py-2 mb-3 rounded-lg borderRight bg-white ">
-                                            <span className="flex flex-row gap-1 alignCenter text-sm text-blue-600">TO <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
+                                            <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600">TO <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                             {!loading ?
                                                 flightCodeArray?.map((val) => {
                                                     return (
                                                         <>
                                                             {val?.city === destination ?
                                                                 <div key={val.code} className=" ">
-                                                                    <h1 className=" font-bold text-xl ">{val?.city}</h1>
+                                                                    <h1 className=" font-bold  ">{val?.city}</h1>
                                                                 </div> : ""}</>
                                                     )
                                                 }) : <ShimmerLocation />}
                                             {destinationModal ?
-                                                <div className=" absolute w-64 z-20 left-0 top-9 flightModal" >
-                                                    <FlightModal />
+                                                <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
+                                                    <div className='flex justify-end  p-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                                    <div onClick={(e) => { e.stopPropagation() }}>
+                                                        <FlightModal />
+                                                    </div>
                                                 </div> : ""}
                                         </div>
                                         <div onClick={handleDateModal} className=" relative px-3 py-2 mb-3 rounded-lg borderRight bg-white">
-                                            <span className=" text-blue-600 text-sm">DEPART</span>
+                                            <span className=" text-blue-600 text-xs">DEPART</span>
                                             <div className="">
                                                 <span className=" font-extrabold text-xl">{date} </span>
                                                 <span className=" font-semibold">{monthNames[month]}'{year}, </span>
                                                 <span className=" ">{weekName[day]}</span>
                                                 {flightDateModal ?
-                                                    <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-7 bg-white text-black p-2 grayBlurShadow rounded-lg calenderBox" >
-                                                        <Calendar onChange={onChange} value={flightdate} />
+                                                    <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
+                                                        <div className='flex justify-end  pt-5 px-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                                        <h1 className=" px-2 font-extrabold text-xl">Departure</h1>
+                                                        <h1 className=" font-medium px-2 mb-2"><span className=" font-extrabold text-xl">{date}</span> {monthNames[month]} {year}, {weekName[day]}</h1>
+                                                        <div className="ml-1 mr-2 rounded-md borderGray" onClick={(e) => { e.stopPropagation() }}>
+                                                            <Calendar onChange={onChange} value={flightdate} />
+                                                        </div>
                                                     </div> : ""}
                                             </div>
                                         </div>
@@ -473,8 +484,8 @@ function ShowAllFlights(props) {
                             </div>
                         </div> :
                         <>
-                            <div className=" bg-white px-2 py-2 mb-3">
-                                <div className="flex justify-between alignCenter bg-gray-100 rounded-md borderGray py-2 pl-2">
+                            <div id="showBookingBar" className=" bg-white px-2 py-2">
+                                <div className="flex justify-between alignCenter bg-gray-100 rounded-md borderGray py-1 pl-2">
                                     <div>
                                         <h1 className="flex">
                                             {flightCodeArray?.map((val) => {
@@ -482,7 +493,7 @@ function ShowAllFlights(props) {
                                                     <>
                                                         {val?.city === source ?
                                                             <div key={val.code} className="">
-                                                                <h1 className=" font-bold text-xl">{val?.city}-</h1>
+                                                                <h1 className=" font-bold text-base">{val?.city}-</h1>
                                                             </div> : ""}</>
                                                 )
                                             })}
@@ -491,7 +502,7 @@ function ShowAllFlights(props) {
                                                     <>
                                                         {val?.city === destination ?
                                                             <div key={val.code} className=" ">
-                                                                <h1 className=" font-bold text-xl ">{val?.city}</h1>
+                                                                <h1 className=" font-bold text-base ">{val?.city}</h1>
                                                             </div> : ""}</>
                                                 )
                                             })}
@@ -510,7 +521,7 @@ function ShowAllFlights(props) {
                             </div>
                             <div className=" opacity-0 bg-gray-100 z-20">
                                 <div className="">
-                                    <div id="showBookingBar" className="bg-gray-100 w-2 text-left">
+                                    <div  className="bg-gray-100 w-2 text-left">
                                         <div className="  gap-2 rounded-lg cursor-pointer ">
                                             <div onClick={handleFrom} className=" relative bg-white rounded-lg ">
                                                 <span className="flex flex-row gap-1 alignCenter text-sm text-blue-600"><img id="fromArrow" className=" w-0 h-0 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
@@ -523,26 +534,26 @@ function ShowAllFlights(props) {
                                 </div>
                             </div>
                         </>}
-
+                    {/* sorting */}
+                    <div id="sortBox" className=" p-1 mb-2 bg-white">
+                        <div className="grid grid-cols-3 gap-2 ">
+                            <div id="cheapest" onClick={() => { selectSortBy("cheapest") }} className="flex flex-col alignCenter p-1 rounded-md bg-gray-100 flightSort">
+                                <h1 className=" font-bold text-sm">CHEAPEST</h1>
+                                <p className=" text-xs">₹ {lowPrice.price + 888} | 0{lowPrice.time}h 00m</p>
+                            </div>
+                            <div id="nonStop" onClick={() => { selectSortBy("nonStop") }} className="flex flex-col alignCenter text-left  p-1 rounded-md bg-gray-100">
+                                <h1 className=" font-bold text-sm">NON STOP</h1>
+                                <p className=" text-xs">₹ {nonStopPrice.price + 888} | 0{nonStopPrice.time}h 00m</p>
+                            </div>
+                            <div id="prefer" onClick={() => { selectSortBy("prefer") }} className="flex flex-col alignCenter text-left p-1 rounded-md bg-gray-100">
+                                <h1 className=" font-bold text-sm">PREFER</h1>
+                                <p className=" text-xs">₹ {preferPrice.price + 888} | 0{preferPrice.time}h 00m</p>
+                            </div>
+                        </div>
+                    </div>
                     <main className=" allCardMainBox">
                         <div className="flex flex-col gap-3 mx-2 ">
-                            {/* sorting */}
-                            <div id="sortBox" className=" p-4 bg-white">
-                                <div className="grid grid-cols-3 gap-2 ">
-                                    <div id="cheapest" onClick={() => { selectSortBy("cheapest") }} className="flex flex-col alignCenter p-3 rounded-md bg-gray-100 flightSort">
-                                        <h1 className=" font-bold text-sm">CHEAPEST</h1>
-                                        <p className=" text-xs">₹ {lowPrice.price + 888} | 0{lowPrice.time}h 00m</p>
-                                    </div>
-                                    <div id="nonStop" onClick={() => { selectSortBy("nonStop") }} className="flex flex-col alignCenter text-left  p-3 rounded-md bg-gray-100">
-                                        <h1 className=" font-bold text-sm">NON STOP</h1>
-                                        <p className=" text-xs">₹ {nonStopPrice.price + 888} | 0{nonStopPrice.time}h 00m</p>
-                                    </div>
-                                    <div id="prefer" onClick={() => { selectSortBy("prefer") }} className="flex flex-col alignCenter text-left p-3 rounded-md bg-gray-100">
-                                        <h1 className=" font-bold text-sm">PREFER</h1>
-                                        <p className=" text-xs">₹ {preferPrice.price + 888} | 0{preferPrice.time}h 00m</p>
-                                    </div>
-                                </div>
-                            </div>
+
                             {/* flight cards div */}
                             {!cardLoading ?
                                 listOfFlights?.map((val) => {
@@ -562,7 +573,7 @@ function ShowAllFlights(props) {
                                                         <button onClick={() => { navigate(`/flight-review/${val._id}`) }} className=' text-center gradientBlueBack rounded-full text-white font-bold py-1 px-2'>Book Now</button>
                                                     </div>
                                                 </div>
-                                                <div className="flex alignCenter justify-around gap-3 p-4">
+                                                <div className="flex alignCenter justify-between gap-3 py-5">
 
                                                     <div>
                                                         <h1 className=" font-bold text-xl">{val.departureTime}</h1>

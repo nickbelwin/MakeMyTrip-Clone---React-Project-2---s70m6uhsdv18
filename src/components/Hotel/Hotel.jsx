@@ -175,7 +175,7 @@ const Hotel = (props) => {
                                             <div className="p-5">
                                                 <div className="flex justify-between mb-5">
                                                     <h1 className=" font-bold">Room</h1>
-                                                    <select onChange={(e)=>{setRoomAndGuest({...roomAndGuest, room:e.target.value});}} name="" id="">
+                                                    <select onChange={(e) => { setRoomAndGuest({ ...roomAndGuest, room: e.target.value }); }} name="" id="">
                                                         {roomAndGuestArr?.map((val, idx) => {
                                                             return idx <= 20 ? <option value={val}>{val}</option> : "";
                                                         })}
@@ -183,7 +183,7 @@ const Hotel = (props) => {
                                                 </div>
                                                 <div className="flex justify-between mb-6">
                                                     <h1 className=" font-bold">Guest</h1>
-                                                    <select onChange={(e)=>{setRoomAndGuest({...roomAndGuest, guest:e.target.value});}} name="" id="">
+                                                    <select onChange={(e) => { setRoomAndGuest({ ...roomAndGuest, guest: e.target.value }); }} name="" id="">
                                                         {roomAndGuestArr?.map((val, idx) => {
                                                             return <option value={val}>{val}</option>;
                                                         })}
@@ -205,12 +205,12 @@ const Hotel = (props) => {
             </BrowserView>
             <MobileView>
                 <section className=" flex justify-center m-auto subNavbarBox">
-                    <div className=" relative flex justify-center subNavbarBoxCover">
+                    <div className="  flex justify-center subNavbarBoxCover">
                         <TravelOptions />
                         <div className=" w-full  bg-white  rounded-2xl pt-3 pb-12 px-2 text-left mt-20 ">
                             <p className=" w-full mb-2 text-center font-bold text-gray-700">Book Domestic and International Property Online.</p>
                             <div className=" rounded-lg w-full cursor-pointer ">
-                                <div onClick={handleHotel} className=" relative px-3 py-1  borderGray mb-2 hoverLightBlue">
+                                <div onClick={handleHotel} className="  px-3 py-1  borderGray mb-2 hoverLightBlue">
                                     <span className="flex flex-row gap-1 alignCenter text-gray-800 text-xs ">City, Property Name Or Location <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {!loading ?
                                         hotelName?.map((val) => {
@@ -224,8 +224,11 @@ const Hotel = (props) => {
                                             )
                                         }) : <ShimmerLocation />}
                                     {sourceModal ?
-                                        <div className=" absolute w-full z-20 left-0 top-10 flightModal" >
-                                            <HotelModal />
+                                        <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
+                                            <div className='flex justify-end  p-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                            <div onClick={(e) => { e.stopPropagation() }}>
+                                                <HotelModal />
+                                            </div>
                                         </div> : ""}
                                 </div>
                                 <div onClick={handleDateModal} className=" relative px-3 py-1 borderGray mb-2 hoverLightBlue">
@@ -235,8 +238,13 @@ const Hotel = (props) => {
                                         <span className=" font-semibold">{monthNames[month]}'{year}</span>
                                         <p className=" text-gray-800 text-xs">{weekName[day]}</p>
                                         {hotelDateInModal ?
-                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-8 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
-                                                <Calendar onChange={onChange} />
+                                            <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
+                                                <div className='flex justify-end  pt-5 px-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                                <h1 className=" px-2 font-extrabold text-xl">Check-In Date</h1>
+                                                <h1 className=" font-medium px-2 mb-2"><span className=" font-extrabold text-xl">{date}</span> {monthNames[month]} {year}, {weekName[day]}</h1>
+                                                <div className="ml-1 mr-2 rounded-md borderGray" onClick={(e) => { e.stopPropagation() }}>
+                                                    <Calendar onChange={onChange} />
+                                                </div>
                                             </div> : ""}
                                     </p>
                                 </div>
@@ -247,12 +255,17 @@ const Hotel = (props) => {
                                         <span className=" font-semibold ">{monthNames[monthOut]}'{yearOut}</span>
                                         <p className=" text-gray-800 text-xs">{weekName[dayOut]}</p>
                                         {hotelDateOutModal ?
-                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-8 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
-                                                <Calendar onChange={onChangeOut} />
+                                            <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
+                                                <div className='flex justify-end  pt-5 px-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                                <h1 className=" px-2 font-extrabold text-xl">Check-Out Date</h1>
+                                                <h1 className=" font-medium px-2 mb-2"><span className=" font-extrabold text-xl">{date}</span> {monthNames[month]} {year}, {weekName[day]}</h1>
+                                                <div className="ml-1 mr-2 rounded-md borderGray" onClick={(e) => { e.stopPropagation() }}>
+                                                    <Calendar onChange={onChangeOut} />
+                                                </div>
                                             </div> : ""}
                                     </p>
                                 </div>
-                                <div className=" px-3 py-1 borderGray mb-2 hoverLightBlue">
+                                <div onClick={handleRoomGuestModal} className=" px-3 py-1 borderGray mb-2 hoverLightBlue">
                                     <span className=" text-gray-800 text-xs">Rooms & Guestes</span>
                                     <p>
                                         <span className=" font-extrabold text-xl">{roomAndGuest.room}</span>
@@ -260,6 +273,36 @@ const Hotel = (props) => {
                                         <span className=" font-extrabold text-xl">{roomAndGuest.guest}</span>
                                         <span className=" font-semibold">Adults</span>
                                     </p>
+                                    {roomGuestModal ?
+                                        <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
+                                            <div className='flex justify-end  p-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                            <div className=" borderblack rounded-md" onClick={(e) => { e.stopPropagation() }}>
+                                                <div className="p-5">
+                                                    <div className="flex justify-between mb-5">
+                                                        <h1 className=" font-bold">Room</h1>
+                                                        
+                                                        <select onChange={(e) => { setRoomAndGuest({ ...roomAndGuest, room: e.target.value }); }} className="w-20 rounded-md py-1 pl-3 borderblack" name="" id="">
+                                                            {roomAndGuestArr?.map((val, idx) => {
+                                                                return idx <= 20 ? <option value={val}>{val}</option> : "";
+                                                            })}
+                                                        </select>
+
+                                                    </div>
+                                                    <div className="flex justify-between mb-6">
+                                                        <h1 className=" font-bold">Guest</h1>
+                                                        <select onChange={(e) => { setRoomAndGuest({ ...roomAndGuest, guest: e.target.value }); }} className="w-20 rounded-md py-1 pl-3 borderblack" name="" id="">
+                                                            {roomAndGuestArr?.map((val, idx) => {
+                                                                return <option value={val}>{val}</option>;
+                                                            })}
+                                                        </select>
+                                                    </div>
+                                                    <p className=" text-xs">Please provide right number of Guests for best options and prices.</p>
+                                                    <div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> : ""
+                                    }
                                 </div>
                             </div>
                             <button onClick={searchHotelsHandle} className=" w-full px-6 py-2 mt-4 text-lg font-bold text-white blueSearch rounded-lg">SEARCH</button>

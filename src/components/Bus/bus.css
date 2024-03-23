@@ -1,5 +1,6 @@
 .busBookingBox{
-    grid-template-columns: 3fr 3fr 1fr;
+    grid-template-columns: 2fr 2fr 1fr;
+    width: 75rem;
 }
 .ratingBack{
     background-color: #23A596;
@@ -34,4 +35,9 @@
 }
 .filterblackBack{
     background-color: #1A1A1A;
+}
+@media (max-width:1300px){
+    .busBookingBox{
+        width: 90vw;
+    }
 }
