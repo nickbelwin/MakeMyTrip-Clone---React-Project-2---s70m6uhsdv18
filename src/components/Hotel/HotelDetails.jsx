@@ -222,7 +222,7 @@ function HotelDetails(props) {
                                         <h1 className=' font-semibold'>Superior Room</h1>
                                         <div className='flex justify-between'>
                                             <div>
-                                                <p>For {roomAndGuest.guest} Adults</p>
+                                                <p>{roomAndGuest.room} {roomAndGuest.room<2? "Room":"Rooms"} | {roomAndGuest.guest} {roomAndGuest.guest<2? "Adult":"Adults"}</p>
                                                 <p className=' text-red-600'>x Non-Refundable</p>
                                                 <p>✓ Rooms only</p>
                                             </div>

@@ -291,13 +291,15 @@ function HotelReviewPage(props) {
                                                                 <div className='grid grid-cols-2 text-sm font-semibold alignCenter text-gray-600'>
                                                                     <div>
                                                                         <h1 className=' text-left'>Price: </h1>
+                                                                        <h1 className=' text-left pt-2'>{roomAndGuest.room<2? "Room":"Rooms"}: </h1>
                                                                         <h1 className=' text-left text-green-500 borderBottomGray py-2'>Discount: </h1>
-                                                                        <h1 className=' text-left pt-2'>Total:</h1>
+                                                                        <h1 className=' text-left text-xl pt-2'>Total:</h1>
                                                                     </div>
                                                                     <div>
                                                                         <h1 className=' text-right'>₹{Math.floor(val?.costPerNight)}</h1>
+                                                                        <h1 className=' text-right pt-2'>{roomAndGuest.room}</h1>
                                                                         <h1 className=' text-right text-green-500 borderBottomGray py-2'>-₹749</h1>
-                                                                        <h1 className=' text-right pt-2'>₹{Math.floor(val?.costPerNight - 749)}</h1>
+                                                                        <h1 className=' text-right text-xl pt-2'>₹{Math.floor(val?.costPerNight - 749)*roomAndGuest.room}</h1>
                                                                     </div>
                                                                 </div>
                                                             </div> : ""}</>

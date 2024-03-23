@@ -25,7 +25,31 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+@media (max-width:768px){
+  .react-calendar{
+    background-color: #f6f9fc;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .react-calendar__month-view__days{
+    height: 16rem;
+  }
+}
 
+.react-calendar__navigation{
+  display: flex;
+  justify-content: space-around;
+  padding: 0 .3rem;
+  font-weight: 600;
+  background-color: #33a1fb;
+}
+.react-calendar__navigation__arrow{
+  margin: 0 0.7rem;
+  font-size: 2rem;
+}
+.react-calendar__month-view__weekdays__weekday{
+  text-align: center;
+}
 .prevent-select {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
@@ -120,6 +144,9 @@ background: linear-gradient(94deg, rgba(77,171,253,1) 0%, rgba(12,97,244,1) 65%)
 }
 .fullHeightInVh{
   min-height: 100vh;
+}
+.mobReviewBox{
+  min-height: 120vh;
 }
 .fullWidthInVw{
   width: 100vw;

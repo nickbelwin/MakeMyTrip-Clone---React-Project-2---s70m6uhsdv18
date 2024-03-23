@@ -18,7 +18,7 @@ function ShowAllHotels(props) {
     const { token, setToken, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource,
         destination, setDestination, hotelInDate, setHotelInDate,
         hotelOutDate, setHotelOutDate, roomAndGuest, setRoomAndGuest, } = useContext(AppContext);
-        const [roomGuestModal, setRoomGuestModal] = useState(false);
+    const [roomGuestModal, setRoomGuestModal] = useState(false);
     const [sourceModal, setSourceModal] = useState(false);
     const [hotelName, setHotelName] = useState(hotelArray);
     const [hotelDateInModal, setHotelDateInModal] = useState(false);
@@ -140,10 +140,10 @@ function ShowAllHotels(props) {
         const sorting = document.getElementById("sortBox");
         const scrollTop = window.scrollY;
         scrollTop >= 60 ? header?.classList.add('sticky') : header.classList.remove('sticky');
-        if (screen.width <= 768) {
-            scrollTop >= 60 ? sorting?.classList.add('sortSticky') : sorting.classList.remove('sortSticky');
-            scrollTop >= 1000 ? setScrollUp(true) : setScrollUp(false);;
-        }
+        // if (screen.width <= 768) {
+        //     scrollTop >= 60 ? sorting?.classList.add('sortSticky') : sorting.classList.remove('sortSticky');
+        //     scrollTop >= 500 ? setScrollUp(true) : setScrollUp(false);;
+        // }
         console.log("screen", screen.width);
     };
     useEffect(() => {
@@ -479,35 +479,35 @@ function ShowAllHotels(props) {
                                             <span className=" font-semibold">Adults</span>
                                         </div>
                                         {roomGuestModal ?
-                                        <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
-                                            <div className='flex justify-end  p-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
-                                            <div className=" borderblack rounded-md" onClick={(e) => { e.stopPropagation() }}>
-                                                <div className="p-5">
-                                                    <div className="flex justify-between mb-5">
-                                                        <h1 className=" font-bold">Room</h1>
-                                                        
-                                                        <select onChange={(e) => { setRoomAndGuest({ ...roomAndGuest, room: e.target.value }); }} className="w-20 rounded-md py-1 pl-3 borderblack" name="" id="">
-                                                            {roomAndGuestArr?.map((val, idx) => {
-                                                                return idx <= 20 ? <option value={val}>{val}</option> : "";
-                                                            })}
-                                                        </select>
+                                            <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
+                                                <div className='flex justify-end  p-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                                <div className=" borderblack rounded-md" onClick={(e) => { e.stopPropagation() }}>
+                                                    <div className="p-5">
+                                                        <div className="flex justify-between mb-5">
+                                                            <h1 className=" font-bold">Room</h1>
 
-                                                    </div>
-                                                    <div className="flex justify-between mb-6">
-                                                        <h1 className=" font-bold">Guest</h1>
-                                                        <select onChange={(e) => { setRoomAndGuest({ ...roomAndGuest, guest: e.target.value }); }} className="w-20 rounded-md py-1 pl-3 borderblack" name="" id="">
-                                                            {roomAndGuestArr?.map((val, idx) => {
-                                                                return <option value={val}>{val}</option>;
-                                                            })}
-                                                        </select>
-                                                    </div>
-                                                    <p className=" text-xs">Please provide right number of Guests for best options and prices.</p>
-                                                    <div>
+                                                            <select onChange={(e) => { setRoomAndGuest({ ...roomAndGuest, room: e.target.value }); }} className="w-20 rounded-md py-1 pl-3 borderblack" name="" id="">
+                                                                {roomAndGuestArr?.map((val, idx) => {
+                                                                    return idx <= 20 ? <option value={val}>{val}</option> : "";
+                                                                })}
+                                                            </select>
+
+                                                        </div>
+                                                        <div className="flex justify-between mb-6">
+                                                            <h1 className=" font-bold">Guest</h1>
+                                                            <select onChange={(e) => { setRoomAndGuest({ ...roomAndGuest, guest: e.target.value }); }} className="w-20 rounded-md py-1 pl-3 borderblack" name="" id="">
+                                                                {roomAndGuestArr?.map((val, idx) => {
+                                                                    return <option value={val}>{val}</option>;
+                                                                })}
+                                                            </select>
+                                                        </div>
+                                                        <p className=" text-xs">Please provide right number of Guests for best options and prices.</p>
+                                                        <div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div> : ""
-                                    }
+                                            </div> : ""
+                                        }
                                     </div>
 
                                 </div>
@@ -515,7 +515,7 @@ function ShowAllHotels(props) {
                             </div>
                         </div> :
                         <>
-                            <div className=" bg-white px-2 py-2">
+                            <div id="showBookingBar" className=" bg-white px-2 py-2">
                                 <div className="flex justify-between alignCenter bg-gray-100 rounded-md borderGray py-2 pl-2">
                                     <div>
                                         <h1 className="flex">
@@ -542,7 +542,7 @@ function ShowAllHotels(props) {
                                 </div>
                             </div>
                             <div className="">
-                                <div id="showBookingBar" className=" text-left">
+                                <div className=" text-left">
                                     <div className="  gap-2 rounded-lg cursor-pointer ">
                                         <div onClick={handleHotel} className=" relative rounded-lg borderRight lightWhite ">
                                             <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600"><img id="fromArrow" className=" w-0 h-0 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
@@ -552,12 +552,14 @@ function ShowAllHotels(props) {
                                 </div>
                             </div>
                         </>}
-                    <div id="sortBox" className="flex alignCenter z-10 pl-4 mb-4 top-0 py-3 grayBlurShadow bg-white">
-                        <div onClick={() => { mobileFilterHandle("open"); }}><img className=" w-8" src="/img/filterIcon.png" alt="" /></div>
-                        <div className="grid sortByBox  text-xs">
-                            <h1 className=" py-3">SORT BY:</h1>
-                            <p className="flex alignCenter justify-center"><span id="mostPrice" onClick={() => { selectSortBy("mostPrice", -1) }} className=" py-3 cursor-pointer">Price <span>(Highest First)</span></span></p>
-                            <p className="flex alignCenter justify-center"><span id="lowPrice" onClick={() => { selectSortBy("lowPrice", 1) }} className=" py-3 cursor-pointer">Price <span>(Lowest First)</span></span></p>
+                    <div className=" fixed bottom-0 w-full">
+                        <div className=" flex alignCenter z-10 pl-4 py-3 borderTopGray grayBlurShadow bg-white">
+                            <div onClick={() => { mobileFilterHandle("open"); }}><img className=" w-8" src="/img/filterIcon.png" alt="" /></div>
+                            <div className="flex justify-around w-full text-xs">
+                                {/* <h1 className=" py-3">SORT BY:</h1> */}
+                                <p className="flex alignCenter justify-center"><span id="mostPrice" onClick={() => { selectSortBy("mostPrice", -1) }} className=" py-3 cursor-pointer">Price <span>(Highest First)</span></span></p>
+                                <p className="flex alignCenter justify-center"><span id="lowPrice" onClick={() => { selectSortBy("lowPrice", 1) }} className=" py-3 cursor-pointer">Price <span>(Lowest First)</span></span></p>
+                            </div>
                         </div>
                     </div>
                     {scrollUp ? <div onClick={() => { window.scrollTo(0, 0); }} className="fixed w-full top-20"><p className="flex alignCenter blueText w-fit m-auto px-3 py-1 rounded-lg font-bold bg-white grayBlurShadow">Scroll Top <img className="arrowUp h-2 ml-1" src="/img/blueDownArrow.png" alt="" /></p></div> : ""}

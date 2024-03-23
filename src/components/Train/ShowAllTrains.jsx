@@ -327,7 +327,7 @@ function ShowAllTrains(props) {
             </div>
         </BrowserView>
             <MobileView>
-                <div className=' fixed flex gap-2 px-3 text-xs font-medium justify-around text-white bottom-0 py-2 bg-black w-full'>
+                <div className=' fixed flex gap-2 px-3 text-xs font-medium justify-around text-white bottom-0 py-3 bg-black w-full'>
                     <div id='free' onClick={() => { handleTicketType("free") }} className='flex alignCenter justify-center filterblackBack cursor-pointer gap-3 rounded-lg py-1 px-2 '>
                         <h2 id='freeTag'>Free Cencellation</h2>
                     </div>
@@ -338,7 +338,7 @@ function ShowAllTrains(props) {
                         <img src="/img/busFilter.png" alt="" />
                     </div>
                 </div>
-                <div className=" h-full" onClick={() => { setIsModalOpen(false); }}>
+                <div className=" h-full pb-8" onClick={() => { setIsModalOpen(false); }}>
                     {editTrain ?
                         <div className="  absolute top-0 fullHeightInVh z-20 w-full">
                             <div className=" mb-6">
@@ -518,7 +518,7 @@ function ShowAllTrains(props) {
                                     </div>
 
                                 </div>
-                                <div className=" text-left mt-6">
+                                {/* <div className=" text-left mt-6">
                                     <h1 className=" font-semibold mb-2">Ticket Type</h1>
                                     <div onClick={() => { handleTicketType("free") }} className="flex alignCenter text-left mb-4 checkbox">
                                         <input id='free' type="checkbox" />
@@ -528,7 +528,7 @@ function ShowAllTrains(props) {
                                         <input id='trip' type="checkbox" />
                                         <label className=" ml-3">Trip Guarantee</label>
                                     </div>
-                                </div>
+                                </div> */}
                             </aside>
                         </div>
                         {/* flight cards div */}

@@ -135,7 +135,7 @@ function FlightBooking(props) {
                 </section>
             </BrowserView>
             <MobileView>
-                <section className='fullHeightInVh gradientBackgroundBlue'>
+                <section className='pb-6 gradientBackgroundBlue'>
                     <div className=' relative pt-5 pb-16 '>
                         <img className=' mb-5 m-auto w-20' src="/img/mmt_logo_rt.png" alt="" />
                         <h3 className=' text-white text-xs'>Trip to</h3>
@@ -153,7 +153,7 @@ function FlightBooking(props) {
                                 <div className=''>
                                     <div className=' grid grid-cols-3 mt-3 px-5'>
                                         <div className='  text-left'>
-                                            <h1 className='text-2xl font-bold'>{flightTicket?.arrivalTime}</h1>
+                                            <h1 className='text-2xl font-bold'>{flightTicket?.departureTime}</h1>
                                             <h3 className=' text-xs mb-3'>{weekName[day]},{date}{monthNames[month]}{year}</h3>
                                             <h1 className='text-sm font-bold'>{flightCodeArray?.map((val) => {
                                                 return flightTicket?.source === val.code ? val.city : "";
@@ -167,7 +167,7 @@ function FlightBooking(props) {
                                             <img className=' m-auto w-10' src="/img/stop_info_icon.png" alt="" />
                                         </div>
                                         <div className=' text-right'>
-                                            <h1 className='text-2xl font-bold'>{flightTicket?.departureTime}</h1>
+                                            <h1 className='text-2xl font-bold'>{flightTicket?.arrivalTime}</h1>
                                             <h3 className=' text-xs mb-3'>{weekName[day]},{date}{monthNames[month]}{year}</h3>
                                             <h1 className=' text-sm font-bold'>{flightCodeArray?.map((val) => {
                                                 return flightTicket?.destination === val.code ? val.city : "";
@@ -218,8 +218,8 @@ function FlightBooking(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className=' fixed flex justify-between alignCenter bottom-0 w-full bg-gray-900 p-4 z-20'>
-                            <h2 className=' font-bold text-white text-3xl'>₹ {flightTicket?.ticketPrice + 369}</h2>
+                        <div className=' fixed flex justify-between alignCenter bottom-0 w-full bg-gray-900 px-4 py-3 z-20'>
+                            <h2 className=' font-bold text-white text-3xl'>₹ {flightTicket?.ticketPrice + 369}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
                             <button onClick={() => { setBookingStatus(false); setPaymentOption(false); navigate(`/payment/FLIGHTS/${flightId}/""`) }} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2 px-4 '>CONTINUE</button>
                         </div>
                     </div>

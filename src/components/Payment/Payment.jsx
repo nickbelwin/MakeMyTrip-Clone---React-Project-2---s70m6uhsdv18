@@ -13,7 +13,7 @@ function Payment(props) {
     const navigate = useNavigate();
     const { token, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, flightArray, setFlightArray,
         destination, setDestination, flightdate, setFlightDate, hotelInDate, setHotelInDate,
-        hotelOutDate, setHotelOutDate, bookingStatus, setBookingStatus, hotelRoomId, setHotelRoomId, paymentOption, setPaymentOption } = useContext(AppContext);
+        hotelOutDate, setHotelOutDate, bookingStatus, setBookingStatus, hotelRoomId, setHotelRoomId, paymentOption, setPaymentOption,roomAndGuest, setRoomAndGuest, } = useContext(AppContext);
     const [fare, setFare] = useState([]);
     const [bookingDetails, setBookingDetails] = useState([]);
     const [ticketType, setTicketType] = useState("");
@@ -614,6 +614,7 @@ function Payment(props) {
                                                         </div>
                                                         <h2 className='text-gray-500'>₹ {fare?.ticketPrice}</h2>
                                                     </div>
+                                                    
                                                     <div className='flex alignCenter justify-between py-4 borderBottomBlack'>
                                                         <div className='flex alignCenter'>
                                                             <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
@@ -625,7 +626,7 @@ function Payment(props) {
                                                         <h2 className=' font-bold'>Total Amount</h2>
                                                         <h2 className=' font-bold '>₹ {fare?.ticketPrice + 369}</h2>
                                                     </div>
-                                                    <div className=' fixed flex justify-between alignCenter bottom-0 left-0 w-full bg-gray-900 p-4 z-20'>
+                                                    <div className=' fixed flex justify-between alignCenter bottom-0 left-0 w-full bg-gray-900 px-4 py-3 z-20'>
                                                         <h2 className=' font-bold text-white text-3xl'>₹ {fare?.ticketPrice + 369}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
                                                         <button onClick={bookFlightHandle} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2 px-4'>Pay Now</button>
                                                     </div>
@@ -649,6 +650,13 @@ function Payment(props) {
                                                                         <div className='flex alignCenter justify-between py-4 borderBottomGray'>
                                                                             <div className='flex alignCenter'>
                                                                                 <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
+                                                                                <h2>{roomAndGuest.room<2? "Room":"Rooms"}</h2>
+                                                                            </div>
+                                                                            <h2 className='text-gray-500'>{roomAndGuest.room}</h2>
+                                                                        </div>
+                                                                        <div className='flex alignCenter justify-between py-4 borderBottomGray'>
+                                                                            <div className='flex alignCenter'>
+                                                                                <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
                                                                                 <h2>Discount</h2>
                                                                             </div>
                                                                             <h2 className=' text-green-500'>+₹ 749</h2>
@@ -662,10 +670,10 @@ function Payment(props) {
                                                                         </div>
                                                                         <div className='flex alignCenter justify-between pt-4 '>
                                                                             <h2 className=' font-bold'>Total Amount</h2>
-                                                                            <h2 className=' font-bold '>₹ {val?.costPerNight - 749 + 369}</h2>
+                                                                            <h2 className=' font-bold '>₹ {(val?.costPerNight - 749 + 369)*roomAndGuest.room}</h2>
                                                                         </div>
                                                                         <div className=' fixed flex justify-between alignCenter bottom-0 left-0 w-full bg-gray-900 p-4 z-20'>
-                                                                            <h2 className=' font-bold text-white text-3xl'>₹ {val?.costPerNight - 749 + 369}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
+                                                                            <h2 className=' font-bold text-white text-3xl'>₹ {(val?.costPerNight - 749 + 369)*roomAndGuest.room}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
                                                                             <button onClick={bookRoomHandle} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2 px-4'>Pay Now</button>
                                                                         </div></> : ""
                                                             );
@@ -766,12 +774,12 @@ function Payment(props) {
                                                 <div className=' p-4'>
                                                     <h1 className=' text-gray-500 text-sm'>CHECK IN</h1>
                                                     <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
-                                                    <h1 className=' font-medium'>{bookingDetails?.booking?.flight.arrivalTime}</h1>
+                                                    <h1 className=' font-medium'>{bookingDetails?.booking?.flight.departureTime}</h1>
                                                 </div>
                                                 <div className='p-4 borderLeftGray'>
                                                     <h1 className=' text-gray-500 text-sm'>CHECK OUT</h1>
                                                     <h1 className=' text-gray-600'>{weekName[day]}<span className=' text-xl font-bold text-black'>{date}{monthNames[month]}</span>{year}</h1>
-                                                    <h1 className=' font-medium'>{bookingDetails?.booking?.flight.departureTime}</h1>
+                                                    <h1 className=' font-medium'>{bookingDetails?.booking?.flight.arrivalTime}</h1>
                                                 </div>
                                             </div>
                                             <div className=''>

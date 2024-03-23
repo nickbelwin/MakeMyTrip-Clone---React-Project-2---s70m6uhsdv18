@@ -135,7 +135,7 @@
     }
     .sortSticky{
         position: fixed;
-        top: 0;
+        top: 3rem;
         width: 100%;
     }
     /* .hotelDetailBox{

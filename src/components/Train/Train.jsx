@@ -27,6 +27,8 @@ function Train(props) {
         setMonth(chek.getMonth());
         setYear(chek.getFullYear());
         setDay(chek.getDay());
+        setIsModalOpen(false);
+        setTrainDateModal(false);
         // Add any additional logic you need when the date changes
     };
 
@@ -205,9 +207,9 @@ function Train(props) {
                                 <div onClick={handleDate} className=" rounded-lg mb-2 px-3 py-1 borderGray hoverLightBlue">
                                     <span className=" text-gray-800 text-xs ">Travel Date</span>
                                     <p>
-                                        <span className=" font-extrabold text-xl">{date + 1}</span>
+                                        <span className=" font-extrabold text-xl">{date}</span>
                                         <span className=" font-semibold text-sm">{monthNames[month]}'{year}</span>
-                                        <p className=" text-gray-800 text-sm">{weekName[day - 1]}</p>
+                                        <p className=" text-gray-800 text-sm">{weekName[day]}</p>
                                     </p>
                                     {trainDateModal ?
                                         <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >

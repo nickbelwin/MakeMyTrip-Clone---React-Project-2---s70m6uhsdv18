@@ -1,18 +1,4 @@
 
-.react-calendar__navigation{
-    display: flex;
-    justify-content: space-around;
-    padding: 0 .1rem;
-    font-weight: 600;
-
-}
-.react-calendar__navigation__arrow{
-    margin-right: 0.5rem;
-    font-size: 2rem;
-}
-.react-calendar__month-view__weekdays__weekday{
-    text-align: center;
-}
 .subNavbarBox{
     width: 98vw;
     -webkit-user-select: none; /* Safari */

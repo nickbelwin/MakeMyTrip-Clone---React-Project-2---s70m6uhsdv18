@@ -46,6 +46,8 @@ const Flight = (props) => {
         setMonth(chek.getMonth());
         setYear(chek.getFullYear());
         setDay(chek.getDay());
+        setIsModalOpen(false);
+        setFlightDateModal(false);
         // Add any additional logic you need when the date changes
     };
     const handleFrom = (e) => {
@@ -218,8 +220,8 @@ const Flight = (props) => {
                                                 <div className='flex justify-end  pt-5 px-5 cursor-pointer bg-white rounded-full '><img className=' w-3' src="/img/cancel.png" alt="" /></div>
                                                 <h1 className=" px-2 font-extrabold text-xl">Departure</h1>
                                                 <h1 className=" font-medium px-2 mb-2"><span className=" font-extrabold text-xl">{date}</span> {monthNames[month]} {year}, {weekName[day]}</h1>
-                                                <div className="ml-1 mr-2 rounded-md borderGray" onClick={(e) => { e.stopPropagation() }}>
-                                                    <Calendar className={"m-auto"} onChange={onChange} />
+                                                <div className="ml-1 mr-2 rounded-md " onClick={(e) => { e.stopPropagation() }}>
+                                                    <Calendar onChange={onChange} />
                                                 </div>
                                             </div> : ""}
                                         <p>{ }</p>

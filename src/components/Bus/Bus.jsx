@@ -184,9 +184,9 @@ function Bus(props) {
                                 <div onClick={handleDate} className=" px-3 py-1  borderGray mb-2  hoverLightBlue">
                                     <span className=" text-gray-800 text-xs">Travel Date</span>
                                     <p>
-                                        <span className=" font-extrabold text-xl">{date + 1}</span>
+                                        <span className=" font-extrabold text-xl">{date}</span>
                                         <span className=" font-semibold">{monthNames[month]}'{year}</span>
-                                        <p className=" text-gray-800 text-xs">{weekName[day - 1]}</p>
+                                        <p className=" text-gray-800 text-xs">{weekName[day]}</p>
                                     </p>
                                     {busDateModal ?
                                         <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" fixed fullHeightInVh w-full z-40 left-0 top-0 bg-white flightModal" >
