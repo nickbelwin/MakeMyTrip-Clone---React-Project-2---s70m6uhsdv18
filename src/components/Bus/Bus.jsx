@@ -26,6 +26,8 @@ function Bus(props) {
         setMonth(chek.getMonth());
         setYear(chek.getFullYear());
         setDay(chek.getDay());
+        setIsModalOpen(false);
+        setBusDateModal(false);
         // Add any additional logic you need when the date changes
     };
     const handleFrom = (e) => {

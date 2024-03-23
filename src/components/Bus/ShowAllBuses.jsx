@@ -47,8 +47,6 @@ function ShowAllBuses(props) {
         const header = document.getElementById('showBookingBar');
         const scrollTop = window.scrollY;
         scrollTop >= 60 ? header?.classList.add('sticky') : header.classList.remove('sticky');
-        scrollTop >= 60 ? header?.classList.add('grayBlurShadow') : header.classList.remove('grayBlurShadow');
-
     };
     useEffect(() => {
         window.addEventListener('scroll', isSticky);
@@ -465,14 +463,14 @@ function ShowAllBuses(props) {
                 </div>
             </BrowserView>
             <MobileView>
-                <div className=' fixed flex gap-2 px-3 rounded-md justify-around text-white bottom-0 py-2 bg-black mb-2 w-full'>
-                    <div id='lowPrice' onClick={() => { mobSortBox("lowPrice") }} className='flex alignCenter justify-center filterblackBack cursor-pointer gap-3 rounded-lg py-1 px-2 '>
+                <div className=' fixed flex gap-2 px-3 rounded-t-lg justify-around text-sm text-white bottom-0 py-2 bg-black w-full'>
+                    <div id='lowPrice' onClick={() => { mobSortBox("lowPrice") }} className='flex alignCenter justify-center filterblackBack cursor-pointer gap-3 rounded-lg px-2 '>
                         <h2>Lowest First</h2>
                     </div>
-                    <div id='highPrice' onClick={() => { mobSortBox("highPrice") }} className='flex alignCenter justify-center filterblackBack gap-3 cursor-pointer rounded-lg py-1 px-2 '>
+                    <div id='highPrice' onClick={() => { mobSortBox("highPrice") }} className='flex alignCenter justify-center filterblackBack gap-3 cursor-pointer rounded-lg px-2 '>
                         <h2>Highest First</h2>
                     </div>
-                    <div className='filterblackBack px-2 rounded-md' onClick={()=>{ mobileFilterHandle("open")}}>
+                    <div className='filterblackBack px-2 rounded-md' onClick={() => { mobileFilterHandle("open") }}>
                         <img src="/img/busFilter.png" alt="" />
                     </div>
                 </div>
@@ -535,8 +533,8 @@ function ShowAllBuses(props) {
                             </div>
                         </div> :
                         <>
-                            <div className=" bg-white px-2 py-2 mb-3">
-                                <div className="flex justify-between alignCenter bg-gray-100 rounded-md borderGray py-2 pl-2">
+                            <div id="showBookingBar" className=" bg-white px-2 rounded-b-md py-2 mb-3">
+                                <div className="flex justify-between alignCenter bg-gray-100 rounded-md borderGray py-0 pl-2">
                                     <div>
                                         <h1 className="flex">
                                             {cityListArray?.map((val) => {
@@ -544,7 +542,7 @@ function ShowAllBuses(props) {
                                                     <>
                                                         {val?.name === source ?
                                                             <div key={val.name} className="">
-                                                                <h1 className=" font-bold text-xl">{val?.name}-</h1>
+                                                                <h1 className=" font-bold">{val?.name}-</h1>
                                                             </div> : ""}</>
                                                 )
                                             })}
@@ -553,7 +551,7 @@ function ShowAllBuses(props) {
                                                     <>
                                                         {val?.name === destination ?
                                                             <div key={val.name} className=" ">
-                                                                <h1 className=" font-bold text-xl ">{val?.name}</h1>
+                                                                <h1 className=" font-bold  ">{val?.name}</h1>
                                                             </div> : ""}</>
                                                 )
                                             })}
@@ -570,20 +568,8 @@ function ShowAllBuses(props) {
                                     </div>
                                 </div>
                             </div>
-                            <div className=" opacity-0 bg-gray-100 z-20">
-                                <div className="">
-                                    <div id="showBookingBar" className="bg-gray-100 w-2 text-left">
-                                        <div className="  gap-2 rounded-lg cursor-pointer ">
-                                            <div onClick={handleFrom} className=" relative bg-white rounded-lg ">
-                                                <span className="flex flex-row gap-1 alignCenter text-sm text-blue-600"><img id="fromArrow" className=" w-0 h-0 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
-                                            </div>
-                                            <div onClick={handleTo} className=" relativerounded-lg borderRight bg-white ">
-                                                <span className="flex flex-row gap-1 alignCenter text-sm text-blue-600"> <img id="toArrow" className=" w-0 h-0 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <span id="fromArrow"></span>
+                            <span id="toArrow" > </span>
                         </>
                     }
                     {/* <div className=" mb-6">
@@ -639,7 +625,7 @@ function ShowAllBuses(props) {
                             <button onClick={handleSearch} className=" px-10 h-10 text-lg my-1 font-bold text-white blueSearch rounded-full">SEARCH</button>
                         </div>
                     </div> */}
-                    <main className=" gap-2 allBusCardMainBox">
+                    <main className=" gap-2 px-2">
                         {/* filter */}
                         <div onClick={() => { mobileFilterHandle("close"); }} id="mobFilter" className="fixed z-20 top-0 w-full fullHeightInVh lowOpacityGrayBack mobileFilterClose ">
                             <aside className=" filterBox bg-white p-4 fullHeightInVh w-3/4 rounded-lg grayBlurShadow">
@@ -661,7 +647,7 @@ function ShowAllBuses(props) {
                                         </>
 
                                     </div>
-                                    <h1 className=" font-semibold mb-2 mt-2 text-xl">Sort by price</h1>
+                                    {/* <h1 className=" font-semibold mb-2 mt-2 text-xl">Sort by price</h1>
                                     <div className='grid grid-cols-2 gap-3 pb-4 borderBottomGray'>
                                         <>
                                             <div id='lowPrice' onClick={() => { sortPrice("lowPrice") }} className='flex alignCenter justify-center cursor-pointer gap-3 rounded-lg py-1 borderGray hoverLightBlue'>
@@ -674,21 +660,25 @@ function ShowAllBuses(props) {
                                             </div>
                                         </>
 
-                                    </div>
-                                    <div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </aside>
                         </div>
                         {/* flight cards div */}
-                        <div className="flex w-full flex-col gap-3 ">
+                        <div className="flex w-full flex-col gap-3 pb-20">
                             {!cardLoading ?
                                 listOfBuses?.map((val) => {
                                     return (
                                         <div key={val._id} id={val._id} className=' bg-white w-full rounded-2xl overflow-hidden grayBlurShadow borderGray'>
-                                            <div id={val._id + 1} className='flex flex-col gap-2 py-3 px-5'>
-                                                <div className='grid grid-cols-5 text-left alignCenter'>
-                                                    <h1 className=' font-bold text-lg'>{val.name}</h1>
+                                            <div id={val._id + 1} className='flex flex-col gap-2 py-3 px-2'>
+                                                <div className='flex justify-between alignCenter'>
+                                                <h1 className=' font-bold text-lg text-left'>{val.name}</h1>
+                                                <div className=' text-right font-bold text-lg'>
+                                                    <h1>₹ {val.fare}</h1>
+                                                </div>
+                                                </div>
+                                                <div className='flex justify-between text-left alignCenter'>
+
                                                     <div className=' text-right font-bold text-lg'>
                                                         <h1>{val.departureTime} <span className=' text-sm font-normal text-gray-500'>{fromCity}</span></h1>
 
@@ -701,9 +691,7 @@ function ShowAllBuses(props) {
                                                     <div className=' text-left font-bold text-lg'>
                                                         <h1>{val.arrivalTime} <span className=' text-sm font-normal text-gray-500'>{toCity}</span></h1>
                                                     </div>
-                                                    <div className=' text-right font-bold text-lg'>
-                                                        <h1>₹ {val.fare}</h1>
-                                                    </div>
+
                                                 </div>
                                                 <div className=' text-left'>
                                                     <h1>{val.type}</h1>
@@ -716,7 +704,7 @@ function ShowAllBuses(props) {
                                                 </div>
 
                                             </div>
-                                            <div className='flex gap-3 px-5 py-3 borderTopGray prevent-select'>
+                                            <div className='flex gap-3 px-4 py-1 borderTopGray prevent-select'>
                                                 <h1 id={val._id + 2} onClick={() => { amenityHandle(val._id) }} className='flex alignCenter px-3 py-1 text-sm cursor-pointer rounded-lg'>Amenities <img id="busAmenitiesArrow" className=" w-3 h-2 mt-1 ml-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></h1>
                                             </div>
                                             {amenity === val._id ?
