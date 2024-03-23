@@ -10,8 +10,8 @@ import Calendar from "react-calendar";
 
 function Train(props) {
     const navigate = useNavigate();
-    const { trainClassCode, setTrainClassesCode, source, setSource,
-        destination, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, flightdate, setFlightDate } = useContext(AppContext);
+    const { trainClassCode, setTrainClassesCode,  sourceBusTrain,
+        destinationBusTrain, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, flightdate, setFlightDate } = useContext(AppContext);
     const [sourceModal, setSourceModal] = useState(false);
     const [destinationModal, setDestinationModal] = useState(false);
     const [trainDateModal, setTrainDateModal] = useState(false);
@@ -91,7 +91,7 @@ function Train(props) {
                                     {cityListArray?.map((val) => {
                                         return (
                                             <>
-                                                {val?.name === source ?
+                                                {val?.name === sourceBusTrain ?
                                                     <p className=" mt-2">
                                                         <h1 className=" font-extrabold text-3xl">{val.name}</h1>
                                                         <p className=" text-gray-800">{val.location}</p>
@@ -108,7 +108,7 @@ function Train(props) {
                                     {cityListArray?.map((val) => {
                                         return (
                                             <>
-                                                {val?.name === destination ?
+                                                {val?.name === destinationBusTrain ?
                                                     <p className=" mt-2">
                                                         <h1 className=" font-extrabold text-3xl">{val.name}</h1>
                                                         <p className=" text-gray-800">{val.location}</p>
@@ -169,7 +169,7 @@ function Train(props) {
                                     {cityListArray?.map((val) => {
                                         return (
                                             <>
-                                                {val?.name === source ?
+                                                {val?.name === sourceBusTrain ?
                                                     <p className="">
                                                         <h1 className=" font-extrabold text-base">{val.name}</h1>
                                                         <p className=" text-gray-800 text-sm ">{val.location}</p>
@@ -189,7 +189,7 @@ function Train(props) {
                                     {cityListArray?.map((val) => {
                                         return (
                                             <>
-                                                {val?.name === destination ?
+                                                {val?.name === destinationBusTrain ?
                                                     <p className="">
                                                         <h1 className=" font-extrabold text-base">{val.name}</h1>
                                                         <p className=" text-gray-800 text-sm">{val.location}</p>

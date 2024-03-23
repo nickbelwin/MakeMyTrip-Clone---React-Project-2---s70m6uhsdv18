@@ -16,6 +16,7 @@ import FlightBooking from "./Flight/FlightBooking";
 import Payment from "./Payment/Payment";
 import Demo from "./Demo";
 import TrainReview from "./Train/TrainReview";
+import BusReview from "./Bus/BusReview";
 
 
 
@@ -40,7 +41,7 @@ function App() {
           <Route path="/flight-review/:flightId" element={<FlightBooking/>} />
           <Route path="/train/review/:from/:to/:trainId/:trainClass" element={<TrainReview/>} />
           <Route path="/payment/:option/:fareId/:roomId" element={<Payment/>} />
-          <Route path="/nik" element={<TrainReview/>}/>
+          <Route path="/Bus-review/:busId" element={<BusReview/>}/>
         </Routes>
       </div>
     </AppContextProvider>

@@ -8,8 +8,8 @@ import BusModal from "../Modals/BusModal";
 import { useNavigate } from "react-router";
 import Calendar from "react-calendar";
 function Bus(props) {
-    const { isModalOpen, setIsModalOpen, source,
-        destination, fromOrTo, setFromOrTo,flightDate, setFlightDate} = useContext(AppContext);
+    const { isModalOpen, setIsModalOpen, sourceBusTrain,
+        destinationBusTrain, fromOrTo, setFromOrTo,flightDate, setFlightDate} = useContext(AppContext);
     const [sourceModal, setSourceModal] = useState(false);
     const navigate = useNavigate();
     const [destinationModal, setDestinationModal] = useState(false);
@@ -88,7 +88,7 @@ function Bus(props) {
                                     {cityListArray?.map((val) => {
                                         return (
                                             <>
-                                                {val?.name === source ?
+                                                {val?.name === sourceBusTrain ?
                                                     <p key={val.name} className=" mt-2">
                                                         <h1 className=" font-extrabold text-3xl">{val.name}</h1>
                                                         <p className=" text-gray-800">{val.location}</p>
@@ -105,7 +105,7 @@ function Bus(props) {
                                     {cityListArray?.map((val) => {
                                         return (
                                             <>
-                                                {val?.name === destination ?
+                                                {val?.name === destinationBusTrain ?
                                                     <p className=" mt-2">
                                                         <h1 className=" font-extrabold text-3xl">{val.name}</h1>
                                                         <p className=" text-gray-800">{val.location}</p>
@@ -131,7 +131,7 @@ function Bus(props) {
                                         </div> : ""}
                                 </div>
                             </div>
-                            <button onClick={() => { navigate(`/Buses/${source}/${destination}/${weekName[day]}`) }} className=" absolute px-6 w-1/6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
+                            <button onClick={() => { navigate(`/Buses/${sourceBusTrain}/${destinationBusTrain}/${weekName[day]}`) }} className=" absolute px-6 w-1/6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
                         </div>
                     </div>
                 </section>
@@ -148,7 +148,7 @@ function Bus(props) {
                                     {cityListArray?.map((val) => {
                                         return (
                                             <>
-                                                {val?.name === source ?
+                                                {val?.name === sourceBusTrain ?
                                                     <p key={val.name} className="">
                                                         <h1 className=" font-extrabold text-base">{val.name}</h1>
                                                         <p className=" text-gray-800 text-xs">{val.location}</p>
@@ -168,7 +168,7 @@ function Bus(props) {
                                     {cityListArray?.map((val) => {
                                         return (
                                             <>
-                                                {val?.name === destination ?
+                                                {val?.name === destinationBusTrain ?
                                                     <p className="">
                                                         <h1 className=" font-extrabold text-base">{val.name}</h1>
                                                         <p className=" text-gray-800 text-xs">{val.location}</p>
@@ -201,7 +201,7 @@ function Bus(props) {
                                         </div> : ""}
                                 </div>
                             </div>
-                            <button onClick={() => { navigate(`/Buses/${source}/${destination}/${weekName[day]}`) }} className=" w-full px-6 py-2 text-lg font-bold text-white blueSearch rounded-lg mt-3">SEARCH</button>
+                            <button onClick={() => { navigate(`/Buses/${sourceBusTrain}/${destinationBusTrain}/${weekName[day]}`) }} className=" w-full px-6 py-2 text-lg font-bold text-white blueSearch rounded-lg mt-3">SEARCH</button>
                         </div>
                     </div>
                 </section>

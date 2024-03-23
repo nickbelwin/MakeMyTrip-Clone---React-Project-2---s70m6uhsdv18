@@ -134,8 +134,8 @@ function FlightBooking(props) {
                     </div>
                 </section>
             </BrowserView>
-            <MobileView className='gradientBackgroundBlue'>
-                <section className='pb-6'>
+            <MobileView >
+                <section className='pb-6 fullHeightInVh gradientBackgroundBlue'>
                     <div className=' relative pt-5 pb-16 '>
                         <img className=' mb-5 m-auto w-20' src="/img/mmt_logo_rt.png" alt="" />
                         <h3 className=' text-white text-xs'>Trip to</h3>

@@ -27,8 +27,9 @@ function ShowAllBuses(props) {
     const [ac, setAc] = useState(false);
     const [nonAc, setNonAc] = useState(false);
     const [lowHighPrice, setLowHighPrice] = useState("");
-    const { hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource, fromOrTo, setFromOrTo, setFlightArray,
-        destination, setDestination, currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate, } = useContext(AppContext);
+    const { hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation,  sourceBusTrain,
+        destinationBusTrain, fromOrTo, setFromOrTo, setFlightArray,
+         currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate, trainPassangers, setTrainPassangers } = useContext(AppContext);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
@@ -99,8 +100,8 @@ function ShowAllBuses(props) {
     }, [isModalOpen]);
 
     const handleSearch = () => {
-        setFromCity(source);
-        setToCity(destination);
+        setFromCity(sourceBusTrain);
+        setToCity(destinationBusTrain);
     }
     const amenityHandle = (id) => {
         if (prevAmenity !== id) {
@@ -317,8 +318,8 @@ function ShowAllBuses(props) {
         <>
             <BrowserView>
                 <div className=" bg-gray-50 h-full" onClick={() => { setIsModalOpen(false); }}>
-                    <div className="gradientBackgroundBlue mb-6">
-                        <div id="showBookingBar" className=" flex alignCenter justify-center gap-9  pt-2 pb-2 px-6 text-left">
+                    <div className="  mb-6">
+                        <div id="showBookingBar" className=" flex alignCenter justify-center gap-9  pt-2 pb-2 px-6 text-left gradientBackgroundBlue">
                             <div className=" grid gap-2 rounded-lg cursor-pointer allFlightsBookingBox">
                                 <div onClick={handleFrom} className=" relative px-3 py-1 rounded-lg borderRight lightWhite ">
                                     <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600">FROM <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
@@ -326,7 +327,7 @@ function ShowAllBuses(props) {
                                         cityListArray?.map((val) => {
                                             return (
                                                 <>
-                                                    {val?.name === source ?
+                                                    {val?.name === sourceBusTrain ?
                                                         <div key={val.name} className=" mt-2">
                                                             <h1 className=" font-bold text-sm text-white">{val?.name}</h1>
                                                         </div> : ""}</>
@@ -343,7 +344,7 @@ function ShowAllBuses(props) {
                                         cityListArray?.map((val) => {
                                             return (
                                                 <>
-                                                    {val?.name === destination ?
+                                                    {val?.name === destinationBusTrain ?
                                                         <div key={val.name} className=" mt-2">
                                                             <h1 className=" font-bold text-sm text-white">{val?.name}</h1>
                                                         </div> : ""}</>
@@ -415,7 +416,7 @@ function ShowAllBuses(props) {
                                 listOfBuses?.map((val) => {
                                     return (
                                         <div key={val._id} id={val._id} className=' bg-white rounded-2xl overflow-hidden grayBlurShadow borderGray'>
-                                            <div id={val._id + 1} className='flex flex-col gap-2 py-3 px-5'>
+                                            <div id={val._id + 1} onClick={()=>{ setTrainPassangers(1); navigate(`/Bus-review/${val._id}`)}} className='flex flex-col gap-2 py-3 px-5'>
                                                 <div className='grid grid-cols-5 text-left alignCenter'>
                                                     <h1 className=' font-bold text-lg'>{val.name}</h1>
                                                     <div className=' text-right font-bold text-lg'>
@@ -540,7 +541,7 @@ function ShowAllBuses(props) {
                                             {cityListArray?.map((val) => {
                                                 return (
                                                     <>
-                                                        {val?.name === source ?
+                                                        {val?.name === sourceBusTrain ?
                                                             <div key={val.name} className="">
                                                                 <h1 className=" font-bold">{val?.name}-</h1>
                                                             </div> : ""}</>
@@ -549,7 +550,7 @@ function ShowAllBuses(props) {
                                             {cityListArray?.map((val) => {
                                                 return (
                                                     <>
-                                                        {val?.name === destination ?
+                                                        {val?.name === destinationBusTrain ?
                                                             <div key={val.name} className=" ">
                                                                 <h1 className=" font-bold  ">{val?.name}</h1>
                                                             </div> : ""}</>
@@ -670,7 +671,7 @@ function ShowAllBuses(props) {
                                 listOfBuses?.map((val) => {
                                     return (
                                         <div key={val._id} id={val._id} className=' bg-white w-full rounded-2xl overflow-hidden grayBlurShadow borderGray'>
-                                            <div id={val._id + 1} className='flex flex-col gap-2 py-3 px-2'>
+                                            <div id={val._id + 1}  onClick={()=>{ setTrainPassangers(1); navigate(`/Bus-review/${val._id}`)}} className='flex flex-col gap-2 py-3 px-2'>
                                                 <div className='flex justify-between alignCenter'>
                                                 <h1 className=' font-bold text-lg text-left'>{val.name}</h1>
                                                 <div className=' text-right font-bold text-lg'>
@@ -702,7 +703,6 @@ function ShowAllBuses(props) {
                                                         <p className=' text-gray-500 font-normal text-sm'>{val.seats} Available seats</p>
                                                     </div>
                                                 </div>
-
                                             </div>
                                             <div className='flex gap-3 px-4 py-1 borderTopGray prevent-select'>
                                                 <h1 id={val._id + 2} onClick={() => { amenityHandle(val._id) }} className='flex alignCenter px-3 py-1 text-sm cursor-pointer rounded-lg'>Amenities <img id="busAmenitiesArrow" className=" w-3 h-2 mt-1 ml-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></h1>

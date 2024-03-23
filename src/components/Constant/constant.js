@@ -417,6 +417,17 @@ export const getBuses = async (from,to,weekDay) => {
 
   } catch (err) { console.log(err); }
 } 
+export const getBusTicket = async (id) => {
+  try {
+      let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/bus/${id}`,
+          {
+              headers: { "projectId": "ywhyenbsclpi" }
+          });
+      return res.data.data;
+  } catch (err) {
+      console.log(err);
+  }
+}
 export const headerNavlist = [
   {id:"FLIGHTS",name:"Flights", imageOff:"/img/flightOff.png",imageOn:"/img/flightOn.png"},
   {id:"HOTELS",name:"Hotels", imageOff:"/img/hotelOff.png",imageOn:"/img/hotelOn.png"},

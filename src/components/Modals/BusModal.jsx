@@ -6,7 +6,8 @@ import { cityListArray } from '../Constant/constant';
 import ShimmerLocation from '../Loader/ShimmerLocation';
 
 function BusModal(props) {
-    const { isModalOpen, fromOrTo, setFromOrTo, setIsModalOpen,source, setSource,destination, setDestination } = useContext(AppContext);
+    const { isModalOpen, fromOrTo, setFromOrTo, setIsModalOpen,sourceBusTrain, setSourceBusTrain,
+        destinationBusTrain, setDestinationBusTrain,} = useContext(AppContext);
     const [busName, setBusName] = useState(cityListArray);
     const [filterBusName, setFilterBusName] = useState(cityListArray);
     const [searchCityName, setSearchCityName] = useState("");
@@ -39,11 +40,11 @@ function BusModal(props) {
     const handleModal = (e, city) => {
         e.stopPropagation();
         if (fromOrTo === "from") {
-            setSource(city);
+            setSourceBusTrain(city);
             setIsModalOpen(false);
         }
         else if (fromOrTo === "to") {
-            setDestination(city);
+            setDestinationBusTrain(city);
             setIsModalOpen(false);
         }
 
@@ -64,7 +65,7 @@ function BusModal(props) {
                     return (
                         <>
                             {
-                                val.name!==source && val.name!==destination?
+                                val.name!==sourceBusTrain && val.name!==destinationBusTrain?
                                 <div key={val.name} onClick={(e) => { handleModal(e, val.name) }} className=' flex alignCenter w-full px-1 hoverGrayShadow'>
                                     <img className=' w-6 h-6 mr-1' src="/img/busOff.png" alt="bus img" />
                                     <div className='px-1'>

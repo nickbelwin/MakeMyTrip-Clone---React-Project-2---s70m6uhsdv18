@@ -16,8 +16,8 @@ import { BrowserView, MobileView } from "react-device-detect";
 function ShowAllFlights(props) {
     const { from, to, weekDay } = useParams();
     const navigate = useNavigate();
-    const { currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, setFlightArray,
-        destination, setDestination, flightdate, setFlightDate, } = useContext(AppContext);
+    const {token, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, setFlightArray,
+        destination, setDestination, flightdate, setFlightDate, isLogin,setIsLogin } = useContext(AppContext);
     const [editFlight, setEditFlight] = useState(false);
     const [fromCity, setFromCity] = useState(from);
     const [toCity, setToCity] = useState(to);
@@ -206,6 +206,15 @@ function ShowAllFlights(props) {
         document.getElementById(navId1).classList.add("flightDetailsNav");
         document.getElementById(navId2).classList.remove("flightDetailsNav");
     }
+    const handleBook=(id)=>{
+        if(token){
+            setBookingStatus(false); 
+            navigate(`/flight-review/${id}`)
+        }
+        else{
+            setIsLogin({ ...isLogin, status: true });
+        }
+    }
     return (
         <>
             <BrowserView>
@@ -305,7 +314,7 @@ function ShowAllFlights(props) {
                                         <div>
                                             <div className=" bg-white pt-5 px-3">
                                                 <div className=" text-right">
-                                                    <button onClick={() => { navigate(`/flight-review/${val._id}`) }} className=' w-1/6 text-center gradientBlueBack rounded-full text-white font-bold py-1 px-2'>Book Now</button>
+                                                    <button onClick={() => { handleBook(val._id); }} className=' w-1/6 text-center gradientBlueBack rounded-full text-white font-bold py-1 px-2'>Book Now</button>
                                                 </div>
                                                 <div className="flex alignCenter justify-around gap-3 p-4">
                                                     <div className="flex text-left">
