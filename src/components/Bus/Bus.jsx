@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
 import Calendar from "react-calendar";
 function Bus(props) {
     const { isModalOpen, setIsModalOpen, source,
-        destination, fromOrTo, setFromOrTo } = useContext(AppContext);
+        destination, fromOrTo, setFromOrTo,flightDate, setFlightDate} = useContext(AppContext);
     const [sourceModal, setSourceModal] = useState(false);
     const navigate = useNavigate();
     const [destinationModal, setDestinationModal] = useState(false);

@@ -418,8 +418,8 @@ function ShowAllFlights(props) {
                     {editFlight ?
                         <div className="  absolute top-0 fullHeightInVh z-20 w-full">
                             <div className=" mb-6">
-                                <div id="showBookingBar" className="bg-gray-100 fullHeightInVh py-4 px-6 text-left">
-                                    <p onClick={() => { setEditFlight(false); }} className=" text-right text-blue-600 py-2">Cancel</p>
+                                <div id="showBookingBar" className="bg-gray-100 fullHeightInVh py-1 px-2 text-left">
+                                    <p onClick={() => { setEditFlight(false); }} className=" text-right text-blue-600 py-3">Cancel</p>
                                     <div className="  gap-2 rounded-lg cursor-pointer ">
                                         <div onClick={(e) => { handleFrom(e) }} className=" relative bg-white px-3 py-2 mb-3 rounded-lg ">
                                             <span className="flex flex-row gap-1 alignCenter text-xs text-blue-600">FROM <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
