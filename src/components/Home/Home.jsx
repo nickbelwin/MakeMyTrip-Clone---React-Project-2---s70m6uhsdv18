@@ -9,6 +9,7 @@ import Bus from "../Bus/Bus";
 import { getAirportName, getHotelName } from "../Constant/constant";
 import Offers from "../Offers/Offers";
 import { BrowserView, MobileView } from "react-device-detect";
+import Footer from "../footer/Footer";
 
 const Home = () => {
     const { currentTravelOption, setFlightArray, setHotelArray, setCurrentTravelOption, isModalOpen, setIsModalOpen } = useContext(AppContext);
@@ -65,6 +66,7 @@ const Home = () => {
                 </div>
                 </MobileView>
                 <Offers />
+                <Footer/>
             </section>
         </>
     )
