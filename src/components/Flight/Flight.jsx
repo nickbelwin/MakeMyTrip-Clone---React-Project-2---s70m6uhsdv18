@@ -144,8 +144,7 @@ const Flight = (props) => {
                                         <span className=" font-semibold">{monthNames[month]}'{year}</span>
                                         <p className=" text-gray-800">{weekName[day]}</p>
                                         {flightDateModal ?
-                                            <div className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
-                                                <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=' absolute p-2 cursor-pointer bg-white rounded-full top-0 right-0'><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                            <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
                                                 <Calendar onChange={onChange} />
                                             </div> : ""}
                                     </p>
