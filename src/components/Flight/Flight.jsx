@@ -17,7 +17,7 @@ const Flight = (props) => {
     const [destinationModal, setDestinationModal] = useState(false);
     const [flightSourceCode, setFlightSourceCode] = useState("DEL");
     const [flightDestinationCode, setFlightDestinationCode] = useState("BOM");
-    const [flightDateModal, setFlightDateModal] = useState(true);
+    const [flightDateModal, setFlightDateModal] = useState(false);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
