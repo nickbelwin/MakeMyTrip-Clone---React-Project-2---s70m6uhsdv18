@@ -308,7 +308,7 @@ function Payment(props) {
                                                             <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
                                                             <h2>Base Fare</h2>
                                                         </div>
-                                                        <h2 className='text-gray-500'>₹ {fare?.ticketPrice}</h2>
+                                                        <h2 className='text-gray-500'>₹ {fare?.ticketPrice+888}</h2>
                                                     </div>
                                                     <div className='flex alignCenter justify-between py-4 borderBottomBlack'>
                                                         <div className='flex alignCenter'>
@@ -319,7 +319,7 @@ function Payment(props) {
                                                     </div>
                                                     <div className='flex alignCenter justify-between py-4 '>
                                                         <h2 className=' font-bold'>Total Amount</h2>
-                                                        <h2 className=' font-bold '>₹ {fare?.ticketPrice + 369}</h2>
+                                                        <h2 className=' font-bold '>₹ {fare?.ticketPrice + 369+888}</h2>
                                                     </div>
                                                     <div className=' text-right'>
                                                         <button onClick={bookFlightHandle} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2 payBtn'>Pay Now</button>
@@ -707,7 +707,7 @@ function Payment(props) {
                                                             <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
                                                             <h2>Base Fare</h2>
                                                         </div>
-                                                        <h2 className='text-gray-500'>₹ {fare?.ticketPrice}</h2>
+                                                        <h2 className='text-gray-500'>₹ {fare?.ticketPrice+888}</h2>
                                                     </div>
 
                                                     <div className='flex alignCenter justify-between py-4 borderBottomBlack'>
@@ -719,7 +719,7 @@ function Payment(props) {
                                                     </div>
                                                     <div className='flex alignCenter justify-between pt-4 '>
                                                         <h2 className=' font-bold'>Total Amount</h2>
-                                                        <h2 className=' font-bold '>₹ {fare?.ticketPrice + 369}</h2>
+                                                        <h2 className=' font-bold '>₹ {fare?.ticketPrice + 369+888}</h2>
                                                     </div>
                                                     <div className=' fixed flex justify-between alignCenter bottom-0 left-0 w-full bg-gray-900 px-4 py-3 z-20'>
                                                         <h2 className=' font-bold text-white text-3xl'>₹ {fare?.ticketPrice + 369}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
