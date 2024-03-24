@@ -11,7 +11,7 @@ function Payment(props) {
     const { option, fareId, roomId } = useParams();
     console.log(option, fareId, roomId, hotelRoomId);
     const navigate = useNavigate();
-    const { token, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, sourceBusTrain,
+    const { token,setIsLogin, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, sourceBusTrain,
         destinationBusTrain, flightArray, setFlightArray,
         destination, setDestination, flightdate, setFlightDate, hotelInDate, setHotelInDate,
         hotelOutDate, setHotelOutDate, bookingStatus, setBookingStatus, hotelRoomId, setHotelRoomId, paymentOption, setPaymentOption, roomAndGuest, setRoomAndGuest, trainPassangers, setTrainPassangers } = useContext(AppContext);
@@ -162,7 +162,6 @@ function Payment(props) {
                     setBookingStatus(true);
                 }
                 else {
-                    alert(jsonRes.message);
                     setBookingStatus(false);
                 }
             }
