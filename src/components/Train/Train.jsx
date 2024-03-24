@@ -128,9 +128,10 @@ function Train(props) {
                                         <p className=" text-gray-800">{weekName[day - 1]}</p>
                                     </p>
                                     {trainDateModal ?
-                                        <div className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
-                                            <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=' absolute p-2 cursor-pointer bg-white rounded-full top-0 right-0'><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+                                        <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                            <div className="ml-1 mr-2 rounded-md borderGray" onClick={(e) => { e.stopPropagation() }}>
                                             <Calendar onChange={onChange} />
+                                            </div>
                                         </div> : ""}
 
                                 </div>

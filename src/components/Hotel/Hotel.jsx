@@ -148,8 +148,10 @@ const Hotel = (props) => {
                                         <p className=" text-gray-800">{weekName[day]}</p>
                                     </p>
                                     {hotelDateInModal ?
-                                        <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
-                                            <Calendar onChange={onChange} />
+                                        <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                            <div className="ml-1 mr-2 rounded-md borderGray" onClick={(e) => { e.stopPropagation() }}>
+                                                <Calendar onChange={onChange} />
+                                            </div>
                                         </div> : ""}
                                 </div>
                                 <div onClick={handleDateOutModal} className=" relative px-6 py-3 borderRight hoverLightBlue">
@@ -160,8 +162,10 @@ const Hotel = (props) => {
                                         <p className=" text-gray-800">{weekName[dayOut]}</p>
                                     </p>
                                     {hotelDateOutModal ?
-                                        <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
-                                            <Calendar onChange={onChangeOut} />
+                                        <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                            <div className="ml-1 mr-2 rounded-md borderGray" onClick={(e) => { e.stopPropagation() }}>
+                                                <Calendar onChange={onChangeOut} />
+                                            </div>
                                         </div> : ""}
                                 </div>
                                 <div onClick={handleRoomGuestModal} className=" relative px-6 py-3 borderRight hoverLightBlue">
@@ -282,7 +286,7 @@ const Hotel = (props) => {
                                                 <div className="p-5">
                                                     <div className="flex justify-between mb-5">
                                                         <h1 className=" font-bold">Room</h1>
-                                                        
+
                                                         <select onChange={(e) => { setRoomAndGuest({ ...roomAndGuest, room: e.target.value }); }} className="w-20 rounded-md py-1 pl-3 borderblack" name="" id="">
                                                             {roomAndGuestArr?.map((val, idx) => {
                                                                 return idx <= 20 ? <option value={val}>{val}</option> : "";

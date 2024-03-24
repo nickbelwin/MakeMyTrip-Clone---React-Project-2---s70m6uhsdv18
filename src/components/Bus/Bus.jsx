@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
 import Calendar from "react-calendar";
 function Bus(props) {
     const { isModalOpen, setIsModalOpen, sourceBusTrain,
-        destinationBusTrain, fromOrTo, setFromOrTo,flightDate, setFlightDate} = useContext(AppContext);
+        destinationBusTrain, fromOrTo, setFromOrTo, flightDate, setFlightDate } = useContext(AppContext);
     const [sourceModal, setSourceModal] = useState(false);
     const navigate = useNavigate();
     const [destinationModal, setDestinationModal] = useState(false);
@@ -120,14 +120,15 @@ function Bus(props) {
                                 <div onClick={handleDate} className=" relative px-6 py-3 borderRight hoverLightBlue">
                                     <span className=" text-gray-800">Travel Date</span>
                                     <p>
-                                        <span className=" font-extrabold text-3xl">{date + 1}</span>
+                                        <span className=" font-extrabold text-3xl">{date}</span>
                                         <span className=" font-semibold">{monthNames[month]}'{year}</span>
-                                        <p className=" text-gray-800">{weekName[day - 1]}</p>
+                                        <p className=" text-gray-800">{weekName[day]}</p>
                                     </p>
                                     {busDateModal ?
-                                        <div className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
-                                            <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=' absolute p-2 cursor-pointer bg-white rounded-full top-0 right-0'><img className=' w-3' src="/img/cancel.png" alt="" /></div>
-                                            <Calendar onChange={onChange} />
+                                        <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                            <div className="ml-1 mr-2 rounded-md borderGray" onClick={(e) => { e.stopPropagation() }}>
+                                                <Calendar onChange={onChange} />
+                                            </div>
                                         </div> : ""}
                                 </div>
                             </div>
@@ -196,7 +197,7 @@ function Bus(props) {
                                             <h1 className=" px-2 font-extrabold text-xl">Travel Date</h1>
                                             <h1 className=" font-medium px-2 mb-2"><span className=" font-extrabold text-xl">{date}</span> {monthNames[month]} {year}, {weekName[day]}</h1>
                                             <div className="ml-1 mr-2 rounded-md borderGray" onClick={(e) => { e.stopPropagation() }}>
-                                                <Calendar className={"m-auto"} onChange={onChange} />
+                                                <Calendar onChange={onChange} />
                                             </div>
                                         </div> : ""}
                                 </div>

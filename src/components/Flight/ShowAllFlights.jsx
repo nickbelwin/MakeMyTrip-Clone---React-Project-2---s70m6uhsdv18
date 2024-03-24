@@ -17,7 +17,7 @@ function ShowAllFlights(props) {
     const { from, to, weekDay } = useParams();
     const navigate = useNavigate();
     const {token, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, setFlightArray,
-        destination, setDestination, flightdate, setFlightDate, isLogin,setIsLogin } = useContext(AppContext);
+        destination, setDestination, flightdate, setFlightDate, isLogin,setIsLogin,setBookingStatus } = useContext(AppContext);
     const [editFlight, setEditFlight] = useState(false);
     const [fromCity, setFromCity] = useState(from);
     const [toCity, setToCity] = useState(to);
