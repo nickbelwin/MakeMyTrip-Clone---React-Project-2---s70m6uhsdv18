@@ -82,7 +82,7 @@ function LoginPage(props) {
                     <p onClick={() => { setIsLogin({ ...isLogin, page: "signup" }) }} className=' cursor-pointer rounded-full py-1 text-gray-600 font-bold prevent-select'>SIGNUP ACCOUNT</p>
                 </div>
 
-                {userExistErrorMsg ? <div className="ml-4 font-semibold text-left text-lg text-red-600"><p>User Already Exists</p></div> : ""}
+                {userExistErrorMsg ? <div className="ml-4 font-semibold text-left text-lg text-red-600"><p>User Not Exists</p></div> : ""}
                 <div className=' w-full'>
                     <form id="signupForm" className=" flex px-3 pb-3 flex-col gap-1 text-left w-full inputBox" onSubmit={postLogin}>
                         <div>
