@@ -11,9 +11,13 @@ import { BrowserView, MobileView } from 'react-device-detect';
 
 function ShowAllTrains(props) {
     const navigate = useNavigate();
+    const { hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource, fromOrTo, setFromOrTo, setFlightArray,
+        destination, setDestination, currentTravelOption, sourceBusTrain,
+        destinationBusTrain, setCurrentTravelOption, flightdate, setFlightDate,
+        trainPassangers, setTrainPassangers } = useContext(AppContext);
     const [allTrainTickets, setAllTrainTickets] = useState(trainTickets);
-    const [fromTrain, setFromTrain] = useState(source);
-    const [toTrain, setToTrain] = useState(destination);
+    const [fromTrain, setFromTrain] = useState(sourceBusTrain);
+    const [toTrain, setToTrain] = useState(destinationBusTrain);
     const [loading, setLoading] = useState(false);
     const [cardLoading, setCardLoading] = useState(false);
     const [prevCheckbox, setPrevCheckbox] = useState("");
@@ -22,9 +26,7 @@ function ShowAllTrains(props) {
     const [sourceModal, setSourceModal] = useState(false);
     const [destinationModal, setDestinationModal] = useState(false);
     const [flightDateModal, setFlightDateModal] = useState(false);
-    const { hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource, fromOrTo, setFromOrTo, setFlightArray,
-        destination, setDestination, currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate,
-        trainPassangers, setTrainPassangers } = useContext(AppContext);
+
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
@@ -37,6 +39,8 @@ function ShowAllTrains(props) {
         setMonth(chek.getMonth());
         setYear(chek.getFullYear());
         setDay(chek.getDay());
+        setIsModalOpen(false);
+        setFlightDateModal(false);
         // Add any additional logic you need when the date changes
     };
     const handleFrom = (e) => {
@@ -203,12 +207,12 @@ function ShowAllTrains(props) {
                                     flightCodeArray?.map((val) => {
                                         return (
                                             <>
-                                                {val?.city === source ?
+                                                {val?.city === sourceBusTrain ?
                                                     <div key={val.code} className=" mt-2">
                                                         <h1 className=" font-bold text-sm text-white">{val?.city}</h1>
                                                     </div> : ""}</>
                                         )
-                                    }) : <ShimmerLocation />}
+                                    }) : <img className=' m-auto w-7' src="/img/loadingBlue.webp" alt="" />}
                                 {sourceModal ?
                                     <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
                                         <TrainModal />
@@ -220,12 +224,12 @@ function ShowAllTrains(props) {
                                     flightCodeArray?.map((val) => {
                                         return (
                                             <>
-                                                {val?.city === destination ?
+                                                {val?.city === destinationBusTrain ?
                                                     <div key={val.code} className=" mt-2">
                                                         <h1 className=" font-bold text-sm text-white">{val?.city}</h1>
                                                     </div> : ""}</>
                                         )
-                                    }) : <ShimmerLocation />}
+                                    }) : <img className=' m-auto w-7' src="/img/loadingBlue.webp" alt="" />}
                                 {destinationModal ?
                                     <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
                                         <TrainModal />
@@ -238,8 +242,10 @@ function ShowAllTrains(props) {
                                     <span className=" font-semibold">{monthNames[month]}'{year}, </span>
                                     <span className=" ">{weekName[day]}</span>
                                     {flightDateModal ?
-                                        <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-7 bg-white text-black p-2 grayBlurShadow rounded-lg calenderBox" >
+                                         <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                         <div className="ml-1 mr-2 rounded-md text-black borderGray" onClick={(e) => { e.stopPropagation() }}>
                                             <Calendar onChange={onChange} value={flightdate} />
+                                            </div>
                                         </div> : ""}
                                 </div>
                             </div>
@@ -305,7 +311,7 @@ function ShowAllTrains(props) {
                                         <div className='flex gap-5'>
                                             {val.availableTicket?.map((ticket) => {
                                                 return (
-                                                    <div onClick={() => {  setTrainPassangers(1); navigate(`/train/review/${fromTrain}/${toTrain}/${val._id}/${ticket.class}`) }} className=' cursor-pointer p-3 rounded-md grayBlurShadow borderGray text-left'>
+                                                    <div onClick={() => { setTrainPassangers(1); navigate(`/train/review/${fromTrain}/${toTrain}/${val._id}/${ticket.class}`) }} className=' cursor-pointer p-3 rounded-md grayBlurShadow borderGray text-left'>
                                                         <div className='flex justify-between alignCenter font-bold mb-1'>
                                                             <h1>{ticket.class}</h1>
                                                             <h1>₹{ticket.price}</h1>

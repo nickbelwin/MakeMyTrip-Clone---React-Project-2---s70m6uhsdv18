@@ -48,6 +48,7 @@ function ShowAllFlights(props) {
         setYear(chek.getFullYear());
         setDay(chek.getDay());
         setIsModalOpen(false);
+        setFlightDateModal(false);
     };
     const handleFrom = (e) => {
         e.stopPropagation();
@@ -234,7 +235,7 @@ function ShowAllFlights(props) {
                                                             <h1 className=" font-bold text-sm text-white">{val?.city}</h1>
                                                         </div> : ""}</>
                                             )
-                                        }) : <ShimmerLocation />}
+                                        }) : <img className=' m-auto w-7' src="/img/loadingBlue.webp" alt="" />}
                                     {sourceModal ?
                                         <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
                                             <FlightModal />
@@ -251,7 +252,7 @@ function ShowAllFlights(props) {
                                                             <h1 className=" font-bold text-sm text-white">{val?.city}</h1>
                                                         </div> : ""}</>
                                             )
-                                        }) : <ShimmerLocation />}
+                                        }) : <img className=' m-auto w-7' src="/img/loadingBlue.webp" alt="" />}
                                     {destinationModal ?
                                         <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
                                             <FlightModal />
@@ -264,8 +265,10 @@ function ShowAllFlights(props) {
                                         <span className=" font-semibold">{monthNames[month]}'{year}, </span>
                                         <span className=" ">{weekName[day]}</span>
                                         {flightDateModal ?
-                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-7 bg-white text-black p-2 grayBlurShadow rounded-lg calenderBox" >
+                                             <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                             <div className="ml-1 mr-2 rounded-md text-black borderGray" onClick={(e) => { e.stopPropagation() }}>
                                                 <Calendar onChange={onChange} value={flightdate} />
+                                                </div>
                                             </div> : ""}
                                     </div>
                                 </div>
@@ -326,7 +329,12 @@ function ShowAllFlights(props) {
                                                     </div>
                                                     <div>
                                                         <h1 className=" font-bold text-xl">{val.departureTime}</h1>
-                                                        <p className=" text-xs">{source}</p>
+                                                        <p className=" text-xs">{flightCodeArray?.map((val)=>{
+                                                            return (
+                                                                val.code === fromCity?
+                                                                <span>{val.city}</span>:""
+                                                            );
+                                                        })}</p>
                                                     </div>
                                                     <div>
                                                         <p className=" text-xs mb-2">0{val.duration} h 00 m</p>
@@ -335,7 +343,12 @@ function ShowAllFlights(props) {
                                                     </div>
                                                     <div>
                                                         <h1 className=" font-bold text-xl">{val.arrivalTime}</h1>
-                                                        <p className=" text-xs">{destination}</p>
+                                                        <p className=" text-xs">{flightCodeArray?.map((val)=>{
+                                                            return (
+                                                                val.code === toCity?
+                                                                <span>{val.city}</span>:""
+                                                            );
+                                                        })}</p>
                                                     </div>
                                                     <div>
                                                         <h1 className=" text-xl font-bold">₹ {val.ticketPrice + 888}</h1>
@@ -586,7 +599,12 @@ function ShowAllFlights(props) {
 
                                                     <div>
                                                         <h1 className=" font-bold text-xl">{val.departureTime}</h1>
-                                                        <p className=" text-xs">{source}</p>
+                                                        <p className=" text-xs">{flightCodeArray?.map((val)=>{
+                                                            return (
+                                                                val.code === fromCity?
+                                                                <span>{val.city}</span>:""
+                                                            );
+                                                        })}</p>
                                                     </div>
                                                     <div>
                                                         <p className=" text-xs mb-2">0{val.duration} h 00 m</p>
@@ -595,7 +613,12 @@ function ShowAllFlights(props) {
                                                     </div>
                                                     <div>
                                                         <h1 className=" font-bold text-xl">{val.arrivalTime}</h1>
-                                                        <p className=" text-xs">{destination}</p>
+                                                        <p className=" text-xs">{flightCodeArray?.map((val)=>{
+                                                            return (
+                                                                val.code === toCity?
+                                                                <span>{val.city}</span>:""
+                                                            );
+                                                        })}</p>
                                                     </div>
                                                     <div>
                                                         <h1 className=" text-xl font-bold">₹ {val.ticketPrice + 888}</h1>

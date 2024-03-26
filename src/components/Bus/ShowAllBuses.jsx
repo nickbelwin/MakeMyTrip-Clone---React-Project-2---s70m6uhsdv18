@@ -62,6 +62,8 @@ function ShowAllBuses(props) {
         setMonth(chek.getMonth());
         setYear(chek.getFullYear());
         setDay(chek.getDay());
+        setIsModalOpen(false);
+        setBusDateModal(false);
         // Add any additional logic you need when the date changes
     };
     const handleFrom = (e) => {
@@ -332,7 +334,7 @@ function ShowAllBuses(props) {
                                                             <h1 className=" font-bold text-sm text-white">{val?.name}</h1>
                                                         </div> : ""}</>
                                             )
-                                        }) : <ShimmerLocation />}
+                                        }) : <img className=' m-auto w-7' src="/img/loadingBlue.webp" alt="" />}
                                     {sourceModal ?
                                         <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
                                             <BusModal />
@@ -349,7 +351,7 @@ function ShowAllBuses(props) {
                                                             <h1 className=" font-bold text-sm text-white">{val?.name}</h1>
                                                         </div> : ""}</>
                                             )
-                                        }) : <ShimmerLocation />}
+                                        }) : <img className=' m-auto w-7' src="/img/loadingBlue.webp" alt="" />}
                                     {destinationModal ?
                                         <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
                                             <BusModal />
@@ -362,8 +364,10 @@ function ShowAllBuses(props) {
                                         <span className=" font-semibold">{monthNames[month]}'{year}, </span>
                                         <span className=" ">{weekName[day]}</span>
                                         {busDateModal ?
-                                            <div onClick={() => { setIsModalOpen(false); }} className=" absolute w-full z-20 left-0 top-7 bg-white text-black p-2 grayBlurShadow rounded-lg calenderBox" >
+                                            <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
+                                            <div className="ml-1 mr-2 rounded-md text-black borderGray" onClick={(e) => { e.stopPropagation() }}>
                                                 <Calendar onChange={onChange} value={flightdate} />
+                                                </div>
                                             </div> : ""}
                                     </div>
                                 </div>

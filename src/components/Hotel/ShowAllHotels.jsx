@@ -284,7 +284,7 @@ function ShowAllHotels(props) {
                                                             <h1 className=" font-bold text-sm text-white">{val?.name}</h1>
                                                         </div> : ""}</>
                                             )
-                                        }) : <ShimmerLocation />}
+                                        }) : <img className=' m-auto w-7' src="/img/loadingBlue.webp" alt="" />}
                                     {sourceModal ?
                                         <div className=" absolute w-64 z-20 left-0 top-10 flightModal" >
                                             <HotelModal />
