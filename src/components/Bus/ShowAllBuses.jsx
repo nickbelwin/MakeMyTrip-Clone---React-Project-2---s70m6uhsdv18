@@ -27,9 +27,9 @@ function ShowAllBuses(props) {
     const [ac, setAc] = useState(false);
     const [nonAc, setNonAc] = useState(false);
     const [lowHighPrice, setLowHighPrice] = useState("");
-    const { hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation,  sourceBusTrain,
+    const { token,hotelLocation,setBookingStatus, isLogin,setIsLogin, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, sourceBusTrain,
         destinationBusTrain, fromOrTo, setFromOrTo, setFlightArray,
-         currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate, trainPassangers, setTrainPassangers } = useContext(AppContext);
+        currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate, trainPassangers, setTrainPassangers } = useContext(AppContext);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
@@ -167,39 +167,39 @@ function ShowAllBuses(props) {
         }
 
     }
-    const handleMobAc = async (id) => {
-        document.getElementById("acBox")?.classList.remove("mobSortPriceBox");
-        document.getElementById("nonAcBox")?.classList.remove("mobSortPriceBox")
-        if (id === "acBox" && ac != id) {
-            setCardLoading(true);
-            setAc(id);
-            document.getElementById(id)?.classList.add("mobSortPriceBox");
-            setNonAc(false);
-            let res = await getBuses(fromCity, toCity, week);
-            let acArr = res?.buses?.filter((val) => {
-                return val.type === "AC";
-            });
-            setListOfBuses(acArr);
-            setCardLoading(false);
-        }
-        else if (id === "nonAcBox" && ac != id) {
-            setCardLoading(true);
-            setAc(id);
-            document.getElementById(id)?.classList.add("mobSortPriceBox")
-            setNonAc(true);
-            let res = await getBuses(fromCity, toCity, week);
-            let acArr = res?.buses?.filter((val) => {
-                return val.type === "Non-AC";
-            });
-            setListOfBuses(acArr);
-            setCardLoading(false);
-        }
-        else {
-            setAc("");
-            setNonAc(false);
-            getAllBuses();
-        }
-    }
+    // const handleMobAc = async (id) => {
+    //     document.getElementById("acBox")?.classList.remove("mobSortPriceBox");
+    //     document.getElementById("nonAcBox")?.classList.remove("mobSortPriceBox")
+    //     if (id === "acBox" && ac != id) {
+    //         setCardLoading(true);
+    //         setAc(id);
+    //         document.getElementById(id)?.classList.add("mobSortPriceBox");
+    //         setNonAc(false);
+    //         let res = await getBuses(fromCity, toCity, week);
+    //         let acArr = res?.buses?.filter((val) => {
+    //             return val.type === "AC";
+    //         });
+    //         setListOfBuses(acArr);
+    //         setCardLoading(false);
+    //     }
+    //     else if (id === "nonAcBox" && ac != id) {
+    //         setCardLoading(true);
+    //         setAc(id);
+    //         document.getElementById(id)?.classList.add("mobSortPriceBox")
+    //         setNonAc(true);
+    //         let res = await getBuses(fromCity, toCity, week);
+    //         let acArr = res?.buses?.filter((val) => {
+    //             return val.type === "Non-AC";
+    //         });
+    //         setListOfBuses(acArr);
+    //         setCardLoading(false);
+    //     }
+    //     else {
+    //         setAc("");
+    //         setNonAc(false);
+    //         getAllBuses();
+    //     }
+    // }
     const sortPrice = async (id) => {
         document.getElementById("lowPrice")?.classList.remove("sortPriceBox");
         document.getElementById("highPrice")?.classList.remove("sortPriceBox");
@@ -302,11 +302,11 @@ function ShowAllBuses(props) {
             }
         }
     }
-    const handleNav = (id) => {
-        setCurrentTravelOption(id);
-        navigate("/");
-        window.scrollTo(0, 0);
-    }
+    // const handleNav = (id) => {
+    //     setCurrentTravelOption(id);
+    //     navigate("/");
+    //     window.scrollTo(0, 0);
+    // }
 
     useEffect(() => {
         let date = flightdate;
@@ -314,8 +314,18 @@ function ShowAllBuses(props) {
         setMonth(date.getMonth());
         setYear(date.getFullYear());
         setDay(date.getDay());
+        setCurrentTravelOption("BUSES");
     }, []);
-
+    const handleBook=(id)=>{
+        if(token){
+            setBookingStatus(false); 
+            setTrainPassangers(1); 
+            navigate(`/Bus-review/${id}`);
+        }
+        else{
+            setIsLogin({ ...isLogin, status: true });
+        }
+    }
     return (
         <>
             <BrowserView>
@@ -365,8 +375,8 @@ function ShowAllBuses(props) {
                                         <span className=" ">{weekName[day]}</span>
                                         {busDateModal ?
                                             <div onClick={() => { setTimeout(() => { setIsModalOpen(false); }, 10) }} className=" absolute w-full z-10 right-0 top-10 bg-white p-2 grayBlurShadow rounded-lg calenderBox" >
-                                            <div className="ml-1 mr-2 rounded-md text-black borderGray" onClick={(e) => { e.stopPropagation() }}>
-                                                <Calendar onChange={onChange} value={flightdate} />
+                                                <div className="ml-1 mr-2 rounded-md text-black borderGray" onClick={(e) => { e.stopPropagation() }}>
+                                                    <Calendar onChange={onChange} value={flightdate} />
                                                 </div>
                                             </div> : ""}
                                     </div>
@@ -420,7 +430,7 @@ function ShowAllBuses(props) {
                                 listOfBuses?.map((val) => {
                                     return (
                                         <div key={val._id} id={val._id} className=' bg-white rounded-2xl overflow-hidden grayBlurShadow borderGray'>
-                                            <div id={val._id + 1} onClick={()=>{ setTrainPassangers(1); navigate(`/Bus-review/${val._id}`)}} className='flex flex-col gap-2 py-3 px-5'>
+                                            <div id={val._id + 1} className='flex flex-col gap-2 py-3 px-5'>
                                                 <div className='grid grid-cols-5 text-left alignCenter'>
                                                     <h1 className=' font-bold text-lg'>{val.name}</h1>
                                                     <div className=' text-right font-bold text-lg'>
@@ -439,8 +449,11 @@ function ShowAllBuses(props) {
                                                         <h1>₹ {val.fare}</h1>
                                                     </div>
                                                 </div>
-                                                <div className=' text-left'>
+                                                <div className='flex justify-between text-left'>
                                                     <h1>{val.type}</h1>
+                                                    <div className=" text-right">
+                                                        <button onClick={() => { handleBook(val._id); }} className=' text-center gradientBlueBack rounded-full text-white font-bold py-1 px-2'>Book Now</button>
+                                                    </div>
                                                 </div>
                                                 <div className='flex justify-between font-bold'>
                                                     <div className='flex alignCenter pr-1 text-white rounded-md w-fit ratingBack'><img className=' w-5 mt-0.5' src="/img/populer.png" alt="" /><span>3.4</span></div>
@@ -675,12 +688,12 @@ function ShowAllBuses(props) {
                                 listOfBuses?.map((val) => {
                                     return (
                                         <div key={val._id} id={val._id} className=' bg-white w-full rounded-2xl overflow-hidden grayBlurShadow borderGray'>
-                                            <div id={val._id + 1}  onClick={()=>{ setTrainPassangers(1); navigate(`/Bus-review/${val._id}`)}} className='flex flex-col gap-2 py-3 px-2'>
+                                            <div id={val._id + 1}  className='flex flex-col gap-2 py-3 px-2'>
                                                 <div className='flex justify-between alignCenter'>
-                                                <h1 className=' font-bold text-lg text-left'>{val.name}</h1>
-                                                <div className=' text-right font-bold text-lg'>
-                                                    <h1>₹ {val.fare}</h1>
-                                                </div>
+                                                    <h1 className=' font-bold text-lg text-left'>{val.name}</h1>
+                                                    <div className=' text-right font-bold text-lg'>
+                                                        <h1>₹ {val.fare}</h1>
+                                                    </div>
                                                 </div>
                                                 <div className='flex justify-between text-left alignCenter'>
 
@@ -698,8 +711,11 @@ function ShowAllBuses(props) {
                                                     </div>
 
                                                 </div>
-                                                <div className=' text-left'>
+                                                <div className='flex justify-between text-left'>
                                                     <h1>{val.type}</h1>
+                                                    <div className=" text-right">
+                                                        <button onClick={() => { handleBook(val._id); }} className=' text-center gradientBlueBack rounded-full text-white text-sm font-bold py-1 px-2'>Book Now</button>
+                                                    </div>
                                                 </div>
                                                 <div className='flex justify-between font-bold'>
                                                     <div className='flex alignCenter pr-1 text-white rounded-md w-fit ratingBack'><img className=' w-5 mt-0.5' src="/img/populer.png" alt="" /><span>3.4</span></div>

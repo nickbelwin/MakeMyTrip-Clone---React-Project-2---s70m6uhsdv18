@@ -32,7 +32,7 @@ function LoginPage(props) {
                     closeHandler();
                 }
                 else if (jsonData.status == "fail") {
-                    console.log("fail");
+                    console.log("fail", jsonData);
                     setUserExistErrorMsg(true);
                 }
                 clearForm();
@@ -73,16 +73,16 @@ function LoginPage(props) {
     }
     console.log("setUserInfo", user);
     return (
-        <div className=' relative flex w-2/3 mx-9  signUpBox'>
-            <div onClick={() => { setIsLogin({ ...isLogin, status: false }) }} className=' absolute p-2 cursor-pointer bg-white rounded-full logSignCancelBtn'><img className=' w-3' src="/img/cancel.png" alt="" /></div>
-            <img className='my-3 rounded-s-xl loginImg' src="/img/loginPersuassionValley.avif" alt="" />
-            <div className=' bg-white rounded-xl w-full pt-10 px-3'>
+        <div onClick={(e)=>{e.stopPropagation();}}  className=' relative flex w-2/3 mx-9  signUpBox'>
+            <div onClick={() => { setIsLogin({ ...isLogin, status: false }) }} className=' absolute p-2  cursor-pointer bg-white rounded-full logSignCancelBtn'><img className=' w-3' src="/img/cancel.png" alt="" /></div>
+            <img className='mt-12 mb-3 rounded-s-xl loginImg' src="/img/loginPersuassionValley.avif" alt="" />
+            <div className=' bg-white rounded-xl w-full mt-10 pt-10 px-3'>
                 <div className='grid grid-cols-2 gap-3 p-2 rounded-full mb-10 grayBlurShadow'>
                     <p className='cursor-pointer rounded-full py-1 font-bold text-white gradientBlueBack prevent-select'>LOGIN ACCOUNT</p>
                     <p onClick={() => { setIsLogin({ ...isLogin, page: "signup" }) }} className=' cursor-pointer rounded-full py-1 text-gray-600 font-bold prevent-select'>SIGNUP ACCOUNT</p>
                 </div>
 
-                {userExistErrorMsg ? <div className="ml-4 font-semibold text-left text-lg text-red-600"><p>User Not Exists</p></div> : ""}
+                {userExistErrorMsg ? <div className="ml-4 font-semibold text-left text-lg text-red-600"><p>Incorrect EmailId or Password</p></div> : ""}
                 <div className=' w-full'>
                     <form id="signupForm" className=" flex px-3 pb-3 flex-col gap-1 text-left w-full inputBox" onSubmit={postLogin}>
                         <div>

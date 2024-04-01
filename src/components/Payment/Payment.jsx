@@ -721,7 +721,7 @@ function Payment(props) {
                                                         <h2 className=' font-bold '>₹ {fare?.ticketPrice + 369+888}</h2>
                                                     </div>
                                                     <div className=' fixed flex justify-between alignCenter bottom-0 left-0 w-full bg-gray-900 px-4 py-3 z-20'>
-                                                        <h2 className=' font-bold text-white text-3xl'>₹ {fare?.ticketPrice + 369}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
+                                                        <h2 className=' font-bold text-white text-3xl'>₹ {fare?.ticketPrice + 369+888}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
                                                         <button onClick={bookFlightHandle} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2 px-4'>Pay Now</button>
                                                     </div>
 
@@ -753,21 +753,21 @@ function Payment(props) {
                                                                                 <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
                                                                                 <h2>Discount</h2>
                                                                             </div>
-                                                                            <h2 className=' text-green-500'>+₹ 749</h2>
+                                                                            <h2 className=' text-green-500'>₹ 749</h2>
                                                                         </div>
                                                                         <div className='flex alignCenter justify-between py-4 borderBottomBlack'>
                                                                             <div className='flex alignCenter'>
                                                                                 <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
                                                                                 <h2>Taxes and Surcharges</h2>
                                                                             </div>
-                                                                            <h2 className=' text-red-500'>-₹ 369</h2>
+                                                                            <h2 className=' text-red-500'>₹ 369</h2>
                                                                         </div>
                                                                         <div className='flex alignCenter justify-between pt-4 '>
                                                                             <h2 className=' font-bold'>Total Amount</h2>
-                                                                            <h2 className=' font-bold '>₹ {(val?.costPerNight - 749 + 369) * roomAndGuest.room}</h2>
+                                                                            <h2 className=' font-bold '>₹ {((val?.costPerNight* roomAndGuest.room) - 749 + 369)}</h2>
                                                                         </div>
                                                                         <div className=' fixed flex justify-between alignCenter bottom-0 left-0 w-full bg-gray-900 p-4 z-20'>
-                                                                            <h2 className=' font-bold text-white text-3xl'>₹ {(val?.costPerNight - 749 + 369) * roomAndGuest.room}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
+                                                                            <h2 className=' font-bold text-white text-3xl'>₹ {((val?.costPerNight* roomAndGuest.room) - 749 + 369)}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
                                                                             <button onClick={bookRoomHandle} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2 px-4'>Pay Now</button>
                                                                         </div></> : ""
                                                             );

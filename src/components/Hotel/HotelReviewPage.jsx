@@ -9,7 +9,7 @@ function HotelReviewPage(props) {
     console.log("room", roomId);
     const { token, setToken, currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource,
         destination, setDestination, hotelInDate, setHotelInDate,
-        hotelOutDate, setHotelOutDate, bookingStatus, setBookingStatus, hotelRoomId, setHotelRoomId,paymentOption, setPaymentOption,roomAndGuest, setRoomAndGuest } = useContext(AppContext);
+        hotelOutDate, setHotelOutDate, bookingStatus, setBookingStatus, hotelRoomId, setHotelRoomId, paymentOption, setPaymentOption, roomAndGuest, setRoomAndGuest } = useContext(AppContext);
     const navigate = useNavigate();
     const [hotelInfo, sethotelInfo] = useState([]);
     const [hotelRooms, setHotelRooms] = useState([]);
@@ -115,8 +115,8 @@ function HotelReviewPage(props) {
                                                     </div>
                                                     <div className='flex alignCenter p-4 bg-gray-50'>
                                                         <h1 className=' font-semibold'>{dateOut - date <= 0 ? 1 + " NIGHT" : dateOut - date + " NIGHTS"} | </h1>
-                                                        <h1> {roomAndGuest.guest} Adult |</h1>
-                                                        <h1>{roomAndGuest.room} Room</h1>
+                                                        <h1> {roomAndGuest.guest} {roomAndGuest.guest<2? "Adult":"Adults"} |</h1>
+                                                        <h1>{roomAndGuest.room} {roomAndGuest.room<2? "Room":"Rooms"} </h1>
                                                     </div>
                                                 </div>
                                                 <div>
@@ -126,7 +126,7 @@ function HotelReviewPage(props) {
                                                                 <div className='grid grid-cols-3 text-left'>
                                                                     <div className='p-4'>
                                                                         <h1 className=' font-bold text-3xl'>{val.roomType}</h1>
-                                                                        <h1 className=' text-gray-500'>2 Adults</h1>
+                                                                        <h1 className=' text-gray-500'>{roomAndGuest.guest} Adults | {roomAndGuest.room} Room</h1>
                                                                     </div>
                                                                     <div className='p-4 text-gray-500'>
                                                                         <li>Room Only</li>
@@ -151,10 +151,11 @@ function HotelReviewPage(props) {
                                                             <>{val._id === roomId ?
                                                                 <div className=' p-5 borderDottedTopGray borderDottedBottomGray'>
                                                                     <h1 className=' text-left text-2xl font-bold'>Price Breakup</h1>
-                                                                    <div className='grid grid-cols-4 text-xl font-semibold alignCenter text-gray-600'>
+                                                                    <div className='grid grid-cols-5 text-xl font-semibold alignCenter text-gray-600'>
                                                                         <h1 className=' text-left'>Price: ₹{Math.floor(val?.costPerNight)}</h1>
-                                                                        <h1 className=' text-left text-green-500'>Discount: -₹749</h1>
-                                                                        <h1 className=' text-left'>Total: {Math.floor(val?.costPerNight - 749)}</h1>
+                                                                        <h1 className=' text-left text-green-500'>Discount: ₹749</h1>
+                                                                        <h1 className=' text-left text-red-500'>Taxes: ₹369</h1>
+                                                                        <h1 className='text-left'>Total: {(Math.floor(val?.costPerNight - 749) * roomAndGuest.room) + 369}</h1>
                                                                         <button onClick={bookRoomHandle} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2'>Book Now</button>
                                                                     </div>
                                                                 </div> : ""}</>
@@ -174,7 +175,7 @@ function HotelReviewPage(props) {
                                             <div></div>
                                         </div>
                                     )
-                                })}        
+                                })}
                             </div>
                         </div>
                     </div> :
@@ -259,8 +260,8 @@ function HotelReviewPage(props) {
                                                 </div>
                                                 <div className='flex alignCenter justify-center p-4  borderDottedTopGray'>
                                                     <h1 className=' font-semibold'>{dateOut - date <= 0 ? 1 + " NIGHT" : dateOut - date + " NIGHTS"} | </h1>
-                                                    <h1> {roomAndGuest.guest} Adult |</h1>
-                                                    <h1>{roomAndGuest.room} Room</h1>
+                                                    <h1> {roomAndGuest.guest} {roomAndGuest.guest<2? "Adult":"Adults"} |</h1>
+                                                    <h1>{roomAndGuest.room} {roomAndGuest.room<2? "Room":"Rooms"}</h1>
                                                 </div>
                                             </div>
                                             <div>
@@ -291,15 +292,17 @@ function HotelReviewPage(props) {
                                                                 <div className='grid grid-cols-2 text-sm font-semibold alignCenter text-gray-600'>
                                                                     <div>
                                                                         <h1 className=' text-left'>Price: </h1>
-                                                                        <h1 className=' text-left pt-2'>{roomAndGuest.room<2? "Room":"Rooms"}: </h1>
-                                                                        <h1 className=' text-left text-green-500 borderBottomGray py-2'>Discount: </h1>
+                                                                        <h1 className=' text-left pt-2'>{roomAndGuest.room < 2 ? "Room" : "Rooms"}: </h1>
+                                                                        <h1 className=' text-left text-green-500 py-2'>Discount: </h1>
+                                                                        <h1 className=' text-left text-red-500 borderBottomGray py-2'>Taxes and Surcharges: </h1>
                                                                         <h1 className=' text-left text-xl pt-2'>Total:</h1>
                                                                     </div>
                                                                     <div>
                                                                         <h1 className=' text-right'>₹{Math.floor(val?.costPerNight)}</h1>
                                                                         <h1 className=' text-right pt-2'>{roomAndGuest.room}</h1>
-                                                                        <h1 className=' text-right text-green-500 borderBottomGray py-2'>-₹749</h1>
-                                                                        <h1 className=' text-right text-xl pt-2'>₹{Math.floor(val?.costPerNight - 749)*roomAndGuest.room}</h1>
+                                                                        <h1 className=' text-right text-green-500 py-2'>₹749</h1>
+                                                                        <h1 className=' text-right text-red-500 borderBottomGray py-2'>₹369</h1>
+                                                                        <h1 className=' text-right text-xl pt-2'>₹{((val?.costPerNight* roomAndGuest.room) - 749 + 369)}</h1>
                                                                     </div>
                                                                 </div>
                                                             </div> : ""}</>

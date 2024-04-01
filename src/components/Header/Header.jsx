@@ -10,7 +10,7 @@ const Header = () => {
     const isSticky = (e) => {
         const header = document.getElementById('showHeader');
         const scrollTop = window.scrollY;
-        scrollTop < 81 ? header?.classList.add('noSticky') : header.classList.remove('noSticky')
+        scrollTop < 81 ? header?.classList.add('noSticky') : header.classList.remove('noSticky') 
         scrollTop >= 80 ? header?.classList.add('sticky') : header.classList.remove('sticky');
     };
     const handleNav = (id) => {
@@ -46,7 +46,7 @@ const Header = () => {
                                 <span className=" w-6 relative flex alignCenter justify-center mr-2"><img className=" absolute text-white " src="/img/loginLogo.png" alt="" />
                                 </span>
                                 <span className="flex alignCenter justify-between w-full text-xs text-left">
-                                    <p className="font-bold ">{token ? <h1 className='text-lg userNameWidth'>Hi {nameOfUser}</h1> : "Login or Create Account"}</p>
+                                    <p className="font-bold ">{token ? <h1 className=''>Hi, {nameOfUser}</h1> : "Login or Create Account"}</p>
                                     <span><img className=" w-3 opacity-80" src="/img/downArrow.png" alt="" /></span>
                                 </span>
                             </li>
@@ -71,12 +71,12 @@ const Header = () => {
                                 })}
                             </ul>
                         </div>
-                        <div onClick={() => { setIsLogin({ ...isLogin, status: true }) }} className=" flex flex-row alignCenter p-3 rounded cursor-pointer loginGreenBtn">
+                        <div onClick={() => { setIsLogin({ ...isLogin, status: true }) }} className=" flex flex-row alignCenter p-3 rounded cursor-pointer loginGreenBtn grayBlurShadow">
                             <span className=" w-8 relative flex alignCenter justify-center mr-2"><img className=" absolute text-white" src="/img/mmtLoginLogoGreen.png" alt="" />
                             </span>
                             <span className="flex alignCenter justify-between w-full text-xs text-left">
-                                <p className=" font-bold">{token ? <h1 className='text-lg'>{nameOfUser}</h1> : "Login or Create Account"}</p>
-                                <span><img className=" w-3 opacity-80" src="/img/downArrow.png" alt="" /></span>
+                                <p className=" font-bold">{token ? <h1 className=''>{nameOfUser}</h1> : "Login or Create Account"}</p>
+                                <span><img className=" w-3 opacity-80" src="/img/blueDownArrow.png" alt="" /></span>
                             </span>
                         </div>
                     </div>
@@ -105,7 +105,7 @@ const Header = () => {
                             <span className=" w-8 relative flex alignCenter justify-center mr-2"><img className=" absolute text-white" src="/img/mmtLoginLogoGreen.png" alt="" />
                             </span>
                             <span className="flex alignCenter justify-between w-full text-xs text-left">
-                                <p className=" font-bold">{token ? <h1 className='text-lg userNameWidth'>{nameOfUser.split(" ").join("_")}</h1> : "Login" }</p>
+                                <p className=" font-bold text-base">{token ? <h1 className=' userNameWidth'>{nameOfUser.split(" ")[0]}</h1> : "Login" }</p>
                                 <span><img className=" w-3 opacity-80" src="/img/blueDownArrow.png" alt="" /></span>
                             </span>
                         </div>
@@ -133,8 +133,8 @@ const Header = () => {
                             <span className=" w-8 relative flex alignCenter justify-center mr-2"><img className=" absolute text-white" src="/img/mmtLoginLogoGreen.png" alt="" />
                             </span>
                             <span className="flex alignCenter justify-between w-full text-xs text-left">
-                                <p className=" font-bold">{token ? <h1 className='text-lg userNameWidth'>{nameOfUser.split(" ").join("_")}</h1> : "Login"}</p>
-                                <span><img className=" w-3 opacity-80" src="/img/blueDownArrow.png" alt="" /></span>
+                                <p className=" text-base font-bold">{token ? <h1 className=' userNameWidth'>{nameOfUser.split(" ")[0]}</h1> : "Login"}</p>
+                                <span><img className=" w-3 opacity-80" src="/img/blueDownArrow.png" alt="" /></span> 
                             </span>
                         </div>
                     </div>

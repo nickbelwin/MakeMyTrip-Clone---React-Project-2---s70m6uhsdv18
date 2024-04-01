@@ -34,7 +34,7 @@ function TravelOptions(props) {
                 </div>
             </BrowserView>
             <MobileView>
-                <div className=" absolute mt-2 m-auto rounded-2xl grid grid-cols-4 gap-2 w-full alignCenter ">
+                <div className=" absolute mt-2 pr-3 pl-1 m-auto rounded-2xl grid grid-cols-4 gap-2 w-full alignCenter ">
                     <div onClick={() => { setCurrentTravelOption('FLIGHTS') }} className=" bg-white cursor-pointer flex justify-center flex-col alignCenter rounded-lg py-1">
                         {currentTravelOption === "FLIGHTS" ? <img className="w-10" src="/img/flightOn.png" alt="flight img" /> : <img className="w-10" src="/img/flightOff.png" alt="flight img" />}
                         <p>{currentTravelOption === "FLIGHTS" ? <span className=" blueText font-bold  blueBottomBorder">Flights</span> : <span>Flights</span>}</p>

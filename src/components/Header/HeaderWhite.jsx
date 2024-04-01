@@ -38,7 +38,7 @@ function HeaderWhite(props) {
                         <span className=" w-8 relative flex alignCenter justify-center mr-2"><img className=" absolute text-white" src="/img/mmtLoginLogoGreen.png" alt="" />
                         </span>
                         <span className="flex alignCenter justify-between w-full text-xs text-center">
-                            <p className=" font-bold">{token ? <h1 className='text-base userNameWidth'>Hi {nameOfUser}</h1> : "Login or Create Account"}</p>
+                            <p className=" font-bold">{token ? <h1 className=''>Hi, {nameOfUser}</h1> : "Login or Create Account"}</p>
                             <span><img className=" w-3 opacity-80" src="/img/blueDownArrow.png" alt="" /></span>
                         </span>
                     </div>
@@ -68,9 +68,9 @@ function HeaderWhite(props) {
                             <span className=" w-8 relative flex alignCenter justify-center mr-2"><img className=" absolute text-white" src="/img/mmtLoginLogoGreen.png" alt="" />
                             </span>
                             <span className="flex alignCenter justify-between w-full text-xs text-left">
-                                <p className=" font-bold">{token ? <h1 className='text-lg userNameWidth'>{nameOfUser.split(" ").join("_")}</h1> : "Login"}</p>
+                                <p className=" font-bold text-base">{token ? <h1 className=' userNameWidth'>{nameOfUser.split(" ")[0]}</h1> : "Login"}</p>
                                 <span><img className=" w-3 opacity-80" src="/img/blueDownArrow.png" alt="" /></span>
-                            </span>
+                            </span> 
                         </div>
                     </div>
                 </header>

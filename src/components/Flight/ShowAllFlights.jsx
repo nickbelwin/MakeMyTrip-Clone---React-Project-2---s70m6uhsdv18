@@ -220,7 +220,6 @@ function ShowAllFlights(props) {
         <>
             <BrowserView>
                 <div className=" bg-blue-50 fullHeightInVh" onClick={() => { setIsModalOpen(false); }}>
-
                     <div className="mb-6">
                         <div id="showBookingBar" className=" flex alignCenter justify-center gap-9  pt-2 pb-2 px-6 text-left gradientBackgroundBlue">
                             <div className=" grid gap-2 rounded-lg cursor-pointer allFlightsBookingBox">
@@ -592,7 +591,7 @@ function ShowAllFlights(props) {
                                                         </div>
                                                     </div>
                                                     <div className=" text-right">
-                                                        <button onClick={() => { navigate(`/flight-review/${val._id}`) }} className=' text-center gradientBlueBack rounded-full text-white font-bold py-1 px-2'>Book Now</button>
+                                                        <button onClick={()=>{ handleBook(val._id); }} className=' text-center gradientBlueBack rounded-full text-white font-bold py-1 px-2'>Book Now</button>
                                                     </div>
                                                 </div>
                                                 <div className="flex alignCenter justify-between gap-3 py-5">
