@@ -29,7 +29,7 @@ const Header = () => {
             <BrowserView>
                 <header className=" overflow-hidden headerOne">
                     <div className=" flex flex-row m-auto alignCenter justify-between headerBox">
-                        <div className=" cursor-pointer mmtlogo">
+                        <div onClick={()=>{navigate("/"); window.scrollTo(0, 0);}} className=" cursor-pointer mmtlogo">
                             <img className=" w-28 mt-2" src="https://imgak.mmtcdn.com/pwa_v3/pwa_hotel_assets/header/mmtLogoWhite.png" alt="" />
                         </div>
                         <ul className=" flex flex-row gap-6 text-white">
@@ -56,7 +56,7 @@ const Header = () => {
                 <header id="showHeader" className=" overflow-hidden bg-white headerTwo noSticky">
                     <div className=" flex flex-row m-auto alignCenter justify-between py-3 headerBox">
                         <div className=" flex flex-row alignCenter">
-                            <div className=" cursor-pointer mmtlogo">
+                            <div onClick={()=>{navigate("/"); window.scrollTo(0, 0);}} className=" cursor-pointer mmtlogo">
                                 <img className=" w-28 " src="/img/mmtBlueLogo.png" alt="" />
                             </div>
                             <ul className=" flex flex-row alignCenter ml-8 gap-10">
@@ -86,7 +86,7 @@ const Header = () => {
                 <header className=" headerTwo">
                     <div className=" flex flex-row m-auto alignCenter justify-between py-3 px-3 headerBox">
                         <div className=" flex flex-row alignCenter">
-                            <div onClick={()=>{navigate("/")}} className=" cursor-pointer ">
+                            <div onClick={()=>{navigate("/"); window.scrollTo(0, 0);}} className=" cursor-pointer ">
                                 <img className=" w-28 " src="/img/mmtBlueLogo.png" alt="" />
                             </div>
                             {/* <ul className=" flex flex-row justify-around alignCenter ml-3 gap-2 ">
@@ -139,7 +139,6 @@ const Header = () => {
                         </div>
                     </div>
                 </header>
-                
             </MobileView>
             <Outlet />
         </>

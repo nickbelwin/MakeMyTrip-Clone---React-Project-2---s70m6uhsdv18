@@ -1,6 +1,5 @@
 const { createContext, useState, useEffect, memo } = require("react");
 
-
 export const AppContext= createContext();
 
 const AppContextProvider=({children})=>{

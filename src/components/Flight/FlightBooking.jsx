@@ -8,8 +8,8 @@ import { BrowserView, MobileView } from 'react-device-detect';
 function FlightBooking(props) {
     const { flightId } = useParams();
     const navigate = useNavigate();
-    const { currentTravelOption, setCurrentTravelOption, hotelLocation, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, source, setSource, flightArray, setFlightArray,
-        destination, setDestination, flightdate, setFlightDate,setBookingStatus,paymentOption, setPaymentOption } = useContext(AppContext);
+    const { setCurrentTravelOption, flightArray, setFlightArray,
+        flightdate, setBookingStatus, setPaymentOption } = useContext(AppContext);
     const [flightTicket, setFlightTicket] = useState([]);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
@@ -111,7 +111,7 @@ function FlightBooking(props) {
                                             <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
                                             <h2>Base Fare</h2>
                                         </div>
-                                        <h2 className='text-gray-500'>₹ {flightTicket?.ticketPrice+888}</h2>
+                                        <h2 className='text-gray-500'>₹ {flightTicket?.ticketPrice + 888}</h2>
                                     </div>
                                     <div className='flex alignCenter justify-between py-4 borderBottomBlack'>
                                         <div className='flex alignCenter'>
@@ -122,7 +122,7 @@ function FlightBooking(props) {
                                     </div>
                                     <div className='flex alignCenter justify-between py-4 '>
                                         <h2 className=' font-bold'>Total Amount</h2>
-                                        <h2 className=' font-bold '>₹ {flightTicket?.ticketPrice + 369+888}</h2>
+                                        <h2 className=' font-bold '>₹ {flightTicket?.ticketPrice + 369 + 888}</h2>
                                     </div>
                                     <div className=' text-right'>
                                         <button onClick={() => { setBookingStatus(false); setPaymentOption(false); navigate(`/payment/FLIGHTS/${flightId}/""`) }} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2 payBtn'>Book Now</button>
@@ -201,7 +201,7 @@ function FlightBooking(props) {
                                             <img className='w-4 h-4 mr-3' src="/img/addIcon.png" alt="" />
                                             <h2>Base Fare</h2>
                                         </div>
-                                        <h2 className='text-gray-500'>₹ {flightTicket?.ticketPrice+888}</h2>
+                                        <h2 className='text-gray-500'>₹ {flightTicket?.ticketPrice + 888}</h2>
                                     </div>
                                     <div className='flex alignCenter justify-between py-4 borderBottomBlack'>
                                         <div className='flex alignCenter'>
@@ -212,14 +212,14 @@ function FlightBooking(props) {
                                     </div>
                                     <div className='flex alignCenter justify-between pt-4 '>
                                         <h2 className=' font-bold'>Total Amount</h2>
-                                        <h2 className=' font-bold '>₹ {flightTicket?.ticketPrice + 369+888}</h2>
+                                        <h2 className=' font-bold '>₹ {flightTicket?.ticketPrice + 369 + 888}</h2>
                                     </div>
                                     <img className=' w-1/3 pr-2 m-auto' src="/img/mmtbackWhiteImage.png" alt="" />
                                 </div>
                             </div>
                         </div>
                         <div className=' fixed flex justify-between alignCenter bottom-0 w-full bg-gray-900 px-4 py-3 z-20'>
-                            <h2 className=' font-bold text-white text-3xl'>₹ {flightTicket?.ticketPrice + 369+888}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
+                            <h2 className=' font-bold text-white text-3xl'>₹ {flightTicket?.ticketPrice + 369 + 888}<span className=' text-xs font-normal ml-1'>DUE</span></h2>
                             <button onClick={() => { setBookingStatus(false); setPaymentOption(false); navigate(`/payment/FLIGHTS/${flightId}/""`) }} className=' text-center gradientBlueBack rounded-full text-white font-bold py-2 px-4 '>CONTINUE</button>
                         </div>
                     </div>

@@ -7,16 +7,16 @@ import { BrowserView, MobileView } from 'react-device-detect';
 function BusReview(props) {
     const { busId } = useParams();
     const navigate = useNavigate();
-    const { token, hotelLocation, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, source, setSource, fromOrTo, setFromOrTo, setFlightArray, sourceBusTrain,
-        destinationBusTrain, isLogin, setIsLogin,
-        destination, setDestination, currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate, setBookingStatus, setPaymentOption, trainPassangers, setTrainPassangers } = useContext(AppContext);
+    const { token, sourceBusTrain, destinationBusTrain, isLogin, setIsLogin,
+        setCurrentTravelOption, flightdate, setBookingStatus, setPaymentOption,
+        trainPassangers, setTrainPassangers } = useContext(AppContext);
     const [busTicket, setBusTicket] = useState([]);
     const [loading, setLoading] = useState(false);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
     const [day, setDay] = useState("");
-
+    // get bus ticket info
     const getTicket = async () => {
         setLoading(true);
         let res = await getBusTicket(busId);
@@ -24,7 +24,7 @@ function BusReview(props) {
         setBusTicket(res);
         setLoading(false);
     }
-
+    // set date and travel option
     useState(() => {
         getTicket();
         setCurrentTravelOption("BUSES")
@@ -33,7 +33,8 @@ function BusReview(props) {
         setMonth(date.getMonth());
         setYear(date.getFullYear());
         setDay(date.getDay());
-    }, [])
+    }, []);
+    // move to payment section if user login
     const handlePay = () => {
         if (token) {
             navigate(`/payment/BUSES/${busId}/"`)
@@ -104,7 +105,7 @@ function BusReview(props) {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div className=' rounded-md borderGray fareWidth'>
                                 <div className=' bg-blue-50 p-4 borderBottomGray'>

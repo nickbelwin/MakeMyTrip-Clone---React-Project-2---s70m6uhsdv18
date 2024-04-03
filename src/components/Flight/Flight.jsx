@@ -12,7 +12,8 @@ import { useNavigate } from "react-router";
 
 const Flight = (props) => {
     const { loading, } = props;
-    const { flightArray, setFlightArray, source, destination, isModalOpen, setIsModalOpen, fromOrTo, setFromOrTo, flightdate, setFlightDate } = useContext(AppContext);
+    const { flightArray, source, destination, isModalOpen, setIsModalOpen,
+        setFromOrTo, setFlightDate } = useContext(AppContext);
     const [sourceModal, setSourceModal] = useState(false);
     const [destinationModal, setDestinationModal] = useState(false);
     const [flightSourceCode, setFlightSourceCode] = useState("DEL");
@@ -23,7 +24,7 @@ const Flight = (props) => {
     const [year, setYear] = useState("");
     const [day, setDay] = useState("");
     const navigate = useNavigate();
-
+    // set flight source and destination code
     useEffect(() => {
         let from = flightCodeArray?.filter((val) => {
             if (source === val.city) {
@@ -38,7 +39,8 @@ const Flight = (props) => {
         setFlightSourceCode(from[0]?.code);
         setFlightDestinationCode(to[0]?.code);
         console.log(from[0]?.code, to[0]?.code);
-    }, [source, destination])
+    }, [source, destination]);
+    // set date
     const onChange = (newDate) => {
         let chek = newDate;
         setFlightDate(chek);
@@ -48,8 +50,8 @@ const Flight = (props) => {
         setDay(chek.getDay());
         setIsModalOpen(false);
         setFlightDateModal(false);
-        // Add any additional logic you need when the date changes
     };
+    //open source modal
     const handleFrom = (e) => {
         e.stopPropagation();
         setSourceModal(true);
@@ -60,6 +62,7 @@ const Flight = (props) => {
         document.getElementById("fromArrow").style.transform = "rotate(180deg)";
         document.getElementById("toArrow").style.transform = "rotate(0deg)";
     }
+    // open destination modal
     const handleTo = (e) => {
         e.stopPropagation();
         setDestinationModal(true);
@@ -70,6 +73,7 @@ const Flight = (props) => {
         document.getElementById("toArrow").style.transform = "rotate(180deg)";
         document.getElementById("fromArrow").style.transform = "rotate(0deg)";
     }
+    //open date modal
     const handleDateModal = (e) => {
         e.stopPropagation();
         setDestinationModal(false);
@@ -77,6 +81,7 @@ const Flight = (props) => {
         setFlightDateModal(true);
         setIsModalOpen(true);
     }
+    // close modal
     useEffect(() => {
         if (!isModalOpen) {
             setSourceModal(false);
@@ -86,6 +91,7 @@ const Flight = (props) => {
             document.getElementById("toArrow").style.transform = "rotate(0deg)";
         }
     }, [isModalOpen]);
+    // set default date
     useEffect(() => {
         let date = new Date();
         setDate(date.getDate());

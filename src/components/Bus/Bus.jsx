@@ -7,9 +7,9 @@ import TravelOptions from "../TravelOptions/TravelOptions";
 import BusModal from "../Modals/BusModal";
 import { useNavigate } from "react-router";
 import Calendar from "react-calendar";
-function Bus(props) {
+function Bus() {
     const { isModalOpen, setIsModalOpen, sourceBusTrain,
-        destinationBusTrain, fromOrTo, setFromOrTo, flightDate, setFlightDate } = useContext(AppContext);
+        destinationBusTrain, setFromOrTo, setFlightDate } = useContext(AppContext);
     const [sourceModal, setSourceModal] = useState(false);
     const navigate = useNavigate();
     const [destinationModal, setDestinationModal] = useState(false);
@@ -18,7 +18,7 @@ function Bus(props) {
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
     const [day, setDay] = useState("");
-
+    // set travel date
     const onChange = (newDate) => {
         let chek = newDate;
         setFlightDate(chek);
@@ -28,8 +28,8 @@ function Bus(props) {
         setDay(chek.getDay());
         setIsModalOpen(false);
         setBusDateModal(false);
-        // Add any additional logic you need when the date changes
     };
+    // source modal open 
     const handleFrom = (e) => {
         e.stopPropagation();
         setSourceModal(true);
@@ -40,6 +40,7 @@ function Bus(props) {
         document.getElementById("fromArrow").style.transform = "rotate(180deg)";
         document.getElementById("toArrow").style.transform = "rotate(0deg)";
     }
+    // open destination modal  
     const handleTo = (e) => {
         e.stopPropagation();
         setDestinationModal(true);
@@ -50,6 +51,7 @@ function Bus(props) {
         document.getElementById("fromArrow").style.transform = "rotate(0deg)";
         document.getElementById("toArrow").style.transform = "rotate(180deg)";
     }
+    //open date modal
     const handleDate = (e) => {
         e.stopPropagation();
         setDestinationModal(false);
@@ -57,6 +59,7 @@ function Bus(props) {
         setBusDateModal(true);
         setIsModalOpen(true);
     }
+    //close modal
     useEffect(() => {
         if (!isModalOpen) {
             setSourceModal(false);
@@ -66,6 +69,7 @@ function Bus(props) {
             document.getElementById("toArrow").style.transform = "rotate(0deg)";
         }
     }, [isModalOpen]);
+    // set default date
     useEffect(() => {
         let date = new Date();
         setDate(date.getDate());
@@ -82,7 +86,9 @@ function Bus(props) {
                         <TravelOptions />
                         <div className=" bg-white  rounded-2xl pt-16 pb-12 px-6 text-left mt-12 ">
                             <p className=" w-full mb-2 text-center font-bold text-gray-700">Bus Ticket Booking.</p>
+                            {/* booking sections */}
                             <div className=" grid borderGray rounded-lg w-full cursor-pointer busBookingBox">
+                                {/* source section */}
                                 <div onClick={handleFrom} className=" relative px-6 py-3 borderRight  hoverLightBlue">
                                     <span className="flex flex-row gap-1 alignCenter text-gray-800">From <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {cityListArray?.map((val) => {
@@ -100,6 +106,7 @@ function Bus(props) {
                                             <BusModal />
                                         </div> : ""}
                                 </div>
+                                {/* destination section */}
                                 <div onClick={handleTo} className=" relative px-6 py-3 borderRight hoverLightBlue">
                                     <span className="flex flex-row gap-1 alignCenter text-gray-800">To <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {cityListArray?.map((val) => {
@@ -117,6 +124,7 @@ function Bus(props) {
                                             <BusModal />
                                         </div> : ""}
                                 </div>
+                                {/* date section */}
                                 <div onClick={handleDate} className=" relative px-6 py-3 borderRight hoverLightBlue">
                                     <span className=" text-gray-800">Travel Date</span>
                                     <p>
@@ -132,6 +140,7 @@ function Bus(props) {
                                         </div> : ""}
                                 </div>
                             </div>
+                            {/* search button */}
                             <button onClick={() => { navigate(`/Buses/${sourceBusTrain}/${destinationBusTrain}/${weekName[day]}`) }} className=" absolute px-6 w-1/6 py-1 text-2xl font-bold text-white blueSearch rounded-full">SEARCH</button>
                         </div>
                     </div>
@@ -143,7 +152,9 @@ function Bus(props) {
                         <TravelOptions />
                         <div className=" w-full bg-white  rounded-2xl pt-3 pb-12 px-3 text-left mt-20 ">
                             <p className=" w-full mb-2 text-center font-bold text-gray-700">Bus Ticket Booking.</p>
+                            {/* booking sections */}
                             <div className=" w-full cursor-pointer">
+                                {/* source section */}
                                 <div onClick={handleFrom} className="  px-3 py-1 borderGray mb-2  hoverLightBlue">
                                     <span className="flex flex-row gap-1 text-xs alignCenter text-gray-800">From <img id="fromArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {cityListArray?.map((val) => {
@@ -164,6 +175,7 @@ function Bus(props) {
                                             </div>
                                         </div> : ""}
                                 </div>
+                                {/* destination section */}
                                 <div onClick={handleTo} className=" relative px-3 py-1  borderGray mb-2  hoverLightBlue">
                                     <span className="flex flex-row gap-1 text-xs alignCenter text-gray-800">To <img id="toArrow" className=" w-3 h-2 mt-1 arrowAnime" src="/img/blueDownArrow.png" alt="" /></span>
                                     {cityListArray?.map((val) => {
@@ -184,6 +196,7 @@ function Bus(props) {
                                             </div>
                                         </div> : ""}
                                 </div>
+                                {/* date section */}
                                 <div onClick={handleDate} className=" px-3 py-1  borderGray mb-2  hoverLightBlue">
                                     <span className=" text-gray-800 text-xs">Travel Date</span>
                                     <p>
@@ -202,6 +215,7 @@ function Bus(props) {
                                         </div> : ""}
                                 </div>
                             </div>
+                            {/* search button */}
                             <button onClick={() => { navigate(`/Buses/${sourceBusTrain}/${destinationBusTrain}/${weekName[day]}`) }} className=" w-full px-6 py-2 text-lg font-bold text-white blueSearch rounded-lg mt-3">SEARCH</button>
                         </div>
                     </div>

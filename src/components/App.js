@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router";
 import AppContextProvider from "./ContextAPI/AppContext";
 import Home from "./Home/Home";
 import Header from "./Header/Header";
-import Hotel from "./Hotel/Hotel";
 import ShowAllHotels from "./Hotel/ShowAllHotels";
 import HotelDetails from "./Hotel/HotelDetails";
 import ShowAllFlights from "./Flight/ShowAllFlights";
@@ -14,14 +13,13 @@ import HeaderWhite from "./Header/HeaderWhite";
 import HotelReviewPage from "./Hotel/HotelReviewPage";
 import FlightBooking from "./Flight/FlightBooking";
 import Payment from "./Payment/Payment";
-import Demo from "./Demo";
 import TrainReview from "./Train/TrainReview";
 import BusReview from "./Bus/BusReview";
 
-
-
 function App() {
+
   // Project Hosted Link: https://make-my-trip-clone-react-project-2-s70m6uhsdv18.vercel.app/
+  
   return (<div className="App">
     <AppContextProvider>
       <div className=" overflow-hidden">

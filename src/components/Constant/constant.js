@@ -1,5 +1,4 @@
 import axios from "axios";
-
 export const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
   "July", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
@@ -338,6 +337,7 @@ export const getAirportName = async () => {
 
   } catch (err) { throw new Error(err) }
 }
+// below api for get all flight tickets
 export const getAirports = async (from,to,weekDay) => {
   try {
     let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${from}","destination":"${to}"}&day=${weekDay}`,
@@ -351,6 +351,7 @@ export const getAirports = async (from,to,weekDay) => {
 
   } catch (err) { console.log(err); }
 }
+// below api for get flight ticket details
 export const getFLightTicket = async (id) => {
   try {
       let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/flight/${id}`,
@@ -373,6 +374,7 @@ export const getHotelName = async () => {
 
   } catch (err) { throw new Error(err) }
 }
+// below api for get all hotels
 export const searchHotels=async(city)=>{
   try {
     let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${city}"}`,
@@ -383,6 +385,7 @@ export const searchHotels=async(city)=>{
 
   } catch (err) { throw new Error(err) }
 }
+// filter hotels
 export const filterHotels=async(city,fields)=>{
   try {
     let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${city}"}&filter=${JSON.stringify(fields)}`,
@@ -393,6 +396,7 @@ export const filterHotels=async(city,fields)=>{
 
   } catch (err) { throw new Error(err) }
 }
+// get hotel details
 export const getHotelDetails=async(hotelId)=>{
   try {
     let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/hotel/${hotelId}`,
@@ -417,6 +421,7 @@ export const getBuses = async (from,to,weekDay) => {
 
   } catch (err) { console.log(err); }
 } 
+// get bus ticket details
 export const getBusTicket = async (id) => {
   try {
       let res = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/bus/${id}`,

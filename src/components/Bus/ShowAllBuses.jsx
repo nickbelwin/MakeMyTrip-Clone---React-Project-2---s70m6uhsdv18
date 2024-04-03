@@ -1,10 +1,8 @@
 import React, { memo, useContext, useEffect, useState } from 'react';
-import { cityListArray, flightCodeArray, getBuses, headerNavlist, monthNames, suggetionFilterArray, weekName } from '../Constant/constant';
+import { cityListArray, getBuses, monthNames, weekName } from '../Constant/constant';
 import { AppContext } from '../ContextAPI/AppContext';
 import { useNavigate, useParams } from 'react-router';
 import ShimmerLocation from '../Loader/ShimmerLocation';
-import FlightModal from '../Modals/FlightModal';
-import TrainModal from '../Modals/TrainModal';
 import Calendar from 'react-calendar';
 import BusModal from '../Modals/BusModal';
 import { BrowserView, MobileView } from 'react-device-detect';
@@ -27,14 +25,14 @@ function ShowAllBuses(props) {
     const [ac, setAc] = useState(false);
     const [nonAc, setNonAc] = useState(false);
     const [lowHighPrice, setLowHighPrice] = useState("");
-    const { token,hotelLocation,setBookingStatus, isLogin,setIsLogin, isModalOpen, setIsModalOpen, hotelArray, setHotelArray, setHotelLocation, sourceBusTrain,
-        destinationBusTrain, fromOrTo, setFromOrTo, setFlightArray,
-        currentTravelOption, setCurrentTravelOption, flightdate, setFlightDate, trainPassangers, setTrainPassangers } = useContext(AppContext);
+    const { token, setBookingStatus, isLogin, setIsLogin, isModalOpen, setIsModalOpen,
+        sourceBusTrain, destinationBusTrain, setFromOrTo, setCurrentTravelOption,
+        flightdate, setFlightDate, setTrainPassangers } = useContext(AppContext);
     const [date, setDate] = useState("");
     const [month, setMonth] = useState("");
     const [year, setYear] = useState("");
     const [day, setDay] = useState("");
-
+    // get all bus tickets
     const getAllBuses = async () => {
         setCardLoading(true);
         let res = await getBuses(fromCity, toCity, week);
@@ -44,7 +42,8 @@ function ShowAllBuses(props) {
     useEffect(() => {
         getAllBuses();
     }, [fromCity, toCity]);
-    const isSticky = (e) => {
+    // onscroll make booking section sticky
+    const isSticky = () => {
         const header = document.getElementById('showBookingBar');
         const scrollTop = window.scrollY;
         scrollTop >= 60 ? header?.classList.add('sticky') : header.classList.remove('sticky');
@@ -55,6 +54,7 @@ function ShowAllBuses(props) {
             window.removeEventListener('scroll', isSticky);
         };
     });
+    // set bus date
     const onChange = (newDate) => {
         let chek = newDate;
         setFlightDate(chek);
@@ -64,8 +64,8 @@ function ShowAllBuses(props) {
         setDay(chek.getDay());
         setIsModalOpen(false);
         setBusDateModal(false);
-        // Add any additional logic you need when the date changes
     };
+    // open source modal
     const handleFrom = (e) => {
         e.stopPropagation();
         setDestinationModal(false);
@@ -75,6 +75,7 @@ function ShowAllBuses(props) {
         setFromOrTo("from");
         document.getElementById("fromArrow").style.transform = "rotate(180deg)";
     }
+    // open destination modal
     const handleTo = (e) => {
         e.stopPropagation();
         setSourceModal(false);
@@ -84,6 +85,7 @@ function ShowAllBuses(props) {
         setFromOrTo("to");
         document.getElementById("toArrow").style.transform = "rotate(180deg)";
     }
+    //open date modal
     const handleDateModal = (e) => {
         e.stopPropagation();
         setDestinationModal(false);
@@ -91,6 +93,7 @@ function ShowAllBuses(props) {
         setBusDateModal(true);
         setIsModalOpen(true);
     }
+    //close modal
     useEffect(() => {
         if (!isModalOpen) {
             setSourceModal(false);
@@ -100,11 +103,12 @@ function ShowAllBuses(props) {
             document.getElementById("toArrow").style.transform = "rotate(0deg)";
         }
     }, [isModalOpen]);
-
+    // set source and destination code
     const handleSearch = () => {
         setFromCity(sourceBusTrain);
         setToCity(destinationBusTrain);
     }
+    //open and close amenity box
     const amenityHandle = (id) => {
         if (prevAmenity !== id) {
             document.getElementById(id + 1).style.background = "#EAF5FF";
@@ -123,6 +127,7 @@ function ShowAllBuses(props) {
             setPrevAmenity("");
         }
     }
+    // open and close mobile site filter modal
     const mobileFilterHandle = (check) => {
         if (check === "open") {
             document.getElementById("mobFilter").classList.remove("mobileFilterClose")
@@ -133,6 +138,7 @@ function ShowAllBuses(props) {
             document.getElementById("mobFilter").classList.remove("mobileFilterOpen");
         }
     }
+    // sort ac buses and non ac buses
     const handleAc = async (id) => {
         document.getElementById("acBox")?.classList.remove("sortPriceBox");
         document.getElementById("nonAcBox")?.classList.remove("sortPriceBox")
@@ -165,41 +171,8 @@ function ShowAllBuses(props) {
             setNonAc(false);
             getAllBuses();
         }
-
     }
-    // const handleMobAc = async (id) => {
-    //     document.getElementById("acBox")?.classList.remove("mobSortPriceBox");
-    //     document.getElementById("nonAcBox")?.classList.remove("mobSortPriceBox")
-    //     if (id === "acBox" && ac != id) {
-    //         setCardLoading(true);
-    //         setAc(id);
-    //         document.getElementById(id)?.classList.add("mobSortPriceBox");
-    //         setNonAc(false);
-    //         let res = await getBuses(fromCity, toCity, week);
-    //         let acArr = res?.buses?.filter((val) => {
-    //             return val.type === "AC";
-    //         });
-    //         setListOfBuses(acArr);
-    //         setCardLoading(false);
-    //     }
-    //     else if (id === "nonAcBox" && ac != id) {
-    //         setCardLoading(true);
-    //         setAc(id);
-    //         document.getElementById(id)?.classList.add("mobSortPriceBox")
-    //         setNonAc(true);
-    //         let res = await getBuses(fromCity, toCity, week);
-    //         let acArr = res?.buses?.filter((val) => {
-    //             return val.type === "Non-AC";
-    //         });
-    //         setListOfBuses(acArr);
-    //         setCardLoading(false);
-    //     }
-    //     else {
-    //         setAc("");
-    //         setNonAc(false);
-    //         getAllBuses();
-    //     }
-    // }
+    // sort by lowest and highest price
     const sortPrice = async (id) => {
         document.getElementById("lowPrice")?.classList.remove("sortPriceBox");
         document.getElementById("highPrice")?.classList.remove("sortPriceBox");
@@ -221,12 +194,10 @@ function ShowAllBuses(props) {
         }
         else {
             setLowHighPrice("");
-
             if (!ac) {
                 getAllBuses();
             }
             else {
-
                 if (ac === "acBox") {
                     setCardLoading(true);
 
@@ -251,6 +222,7 @@ function ShowAllBuses(props) {
             }
         }
     }
+    // mobile site sort by lowest and highest price
     const mobSortBox = async (id) => {
         document.getElementById("lowPrice")?.classList.remove("mobSortPriceBox");
         document.getElementById("highPrice")?.classList.remove("mobSortPriceBox");
@@ -302,12 +274,7 @@ function ShowAllBuses(props) {
             }
         }
     }
-    // const handleNav = (id) => {
-    //     setCurrentTravelOption(id);
-    //     navigate("/");
-    //     window.scrollTo(0, 0);
-    // }
-
+    // set date
     useEffect(() => {
         let date = flightdate;
         setDate(date.getDate());
@@ -316,13 +283,14 @@ function ShowAllBuses(props) {
         setDay(date.getDay());
         setCurrentTravelOption("BUSES");
     }, []);
-    const handleBook=(id)=>{
-        if(token){
-            setBookingStatus(false); 
-            setTrainPassangers(1); 
+    // move to ticket review section if user login
+    const handleBook = (id) => {
+        if (token) {
+            setBookingStatus(false);
+            setTrainPassangers(1);
             navigate(`/Bus-review/${id}`);
         }
-        else{
+        else {
             setIsLogin({ ...isLogin, status: true });
         }
     }
@@ -688,7 +656,7 @@ function ShowAllBuses(props) {
                                 listOfBuses?.map((val) => {
                                     return (
                                         <div key={val._id} id={val._id} className=' bg-white w-full rounded-2xl overflow-hidden grayBlurShadow borderGray'>
-                                            <div id={val._id + 1}  className='flex flex-col gap-2 py-3 px-2'>
+                                            <div id={val._id + 1} className='flex flex-col gap-2 py-3 px-2'>
                                                 <div className='flex justify-between alignCenter'>
                                                     <h1 className=' font-bold text-lg text-left'>{val.name}</h1>
                                                     <div className=' text-right font-bold text-lg'>

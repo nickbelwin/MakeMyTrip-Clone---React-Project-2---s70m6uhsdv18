@@ -19,7 +19,7 @@ function HeaderWhite(props) {
             <header id="showHeader" className=" overflow-hidden bg-white headerTwo">
                 <div className=" flex flex-row m-auto px-4 alignCenter justify-between py-3 headerBox">
                     <div className=" flex flex-row alignCenter">
-                        <div className=" cursor-pointer mmtlogo">
+                        <div onClick={()=>{navigate("/"); window.scrollTo(0, 0);}} className=" cursor-pointer mmtlogo">
                             <img className=" w-28 " src="/img/mmtBlueLogo.png" alt="" />
                         </div>
                         <ul className=" flex flex-row alignCenter ml-8 gap-10">
